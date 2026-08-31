@@ -66,4 +66,6 @@ templates/kit-common/   CLAUDE.md/SKILL.md templates + craft.md (DS-independent 
 docs/                   concept + research
 ```
 
+You never pick a stack: the generator derives it from your input (a design system that ships code brings its own framework; everything else uses the default template). Override it with a single sentence in your request if you care.
+
 [MIT License](LICENSE)
