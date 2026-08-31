@@ -10,12 +10,12 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router'
 
 export function Shell({
-  titel,
-  zurueck,
+  title,
+  back,
   children,
 }: {
-  titel: string
-  zurueck?: { to: string; label: string }
+  title: string
+  back?: { to: string; label: string }
   children: ReactNode
 }) {
   return (
@@ -23,12 +23,12 @@ export function Shell({
       <header className="border-b border-line">
         <div className="mx-auto flex max-w-4xl flex-wrap items-baseline gap-4 px-6 py-4">
           <Link
-            to={zurueck?.to ?? '/'}
+            to={back?.to ?? '/'}
             className="text-sm text-ink-muted underline-offset-4 hover:text-accent hover:underline"
           >
-            ← {zurueck?.label ?? 'Overview'}
+            ← {back?.label ?? 'Overview'}
           </Link>
-          <h1 className="text-lg font-medium text-ink">{titel}</h1>
+          <h1 className="text-lg font-medium text-ink">{title}</h1>
         </div>
       </header>
 

@@ -8,39 +8,39 @@
 import { Link } from 'react-router'
 
 import { DsButton } from '../../components'
-import { auftraege, statusFarbe } from './_shared/data'
+import { statusColor, workOrders } from './_shared/data'
 import { Shell } from './_shared/Shell'
 
-export default function Uebersicht() {
+export default function Overview() {
   return (
-    <Shell titel="Work orders">
+    <Shell title="Work orders">
       <div className="flex flex-wrap items-baseline justify-between gap-4">
         <p className="text-base text-ink-muted">
-          {auftraege.length} work orders this week
+          {workOrders.length} work orders this week
         </p>
         <DsButton>Create work order</DsButton>
       </div>
 
       <ul className="mt-6 divide-y divide-line rounded-lg border border-line">
-        {auftraege.map((auftrag) => (
-          <li key={auftrag.id} className="flex flex-wrap items-center gap-4 p-6">
+        {workOrders.map((workOrder) => (
+          <li key={workOrder.id} className="flex flex-wrap items-center gap-4 p-6">
             <div className="min-w-0 flex-1">
               <Link
-                to={`/p/example/detail?id=${auftrag.id}`}
+                to={`/p/example/detail?id=${workOrder.id}`}
                 className="text-base font-medium text-ink underline-offset-4 hover:text-accent hover:underline"
               >
-                {auftrag.titel}
+                {workOrder.title}
               </Link>
               <p className="mt-1 text-sm text-ink-muted">
-                <span className="font-mono">{auftrag.id}</span> · {auftrag.kunde} · due{' '}
-                {auftrag.faellig}
+                <span className="font-mono">{workOrder.id}</span> · {workOrder.customer} · due{' '}
+                {workOrder.dueDate}
               </p>
             </div>
 
             <span
-              className={`rounded-full px-3 py-1 text-xs font-medium ${statusFarbe[auftrag.status]}`}
+              className={`rounded-full px-3 py-1 text-xs font-medium ${statusColor[workOrder.status]}`}
             >
-              {auftrag.status}
+              {workOrder.status}
             </span>
           </li>
         ))}

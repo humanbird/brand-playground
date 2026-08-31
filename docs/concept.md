@@ -1,4 +1,4 @@
-# Concept: Prototype Builder Framework (final, v1)
+# brand-playground (concept, v1)
 
 As of 2026-08-29. Based on research in `docs/research/01–06` and a distilled reference implementation from an internal Vue prototyping repository.
 

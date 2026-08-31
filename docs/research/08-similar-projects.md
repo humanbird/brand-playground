@@ -37,7 +37,7 @@ No major design system is fully “agent-ready” (best audit result: shadcn at 
 - Registry approach > prompt context (CHI 2026, see above).
 - Screenshot-to-code benchmarks from 2026 (DesignBench, WebGen-V, WebMMU): the consensus favors “screenshots + tokens combined”—tokens alone do not capture rhythm, density, or hierarchy.
 - Structured schemas significantly outperform prose in API fidelity, but incur 40–60% token overhead—supporting our separation of “machine-readable facts, concept as a prose skill.”
-- No published study on “story code vs. prop lists” was found; our practical finding from the primer (story code eliminates guesswork) remains practitioner knowledge.
+- No published study on “story code vs. prop lists” was found; our practical finding from the Primer field test (story code eliminates guesswork) remains practitioner knowledge.
 
 ## Market/Publishing
 

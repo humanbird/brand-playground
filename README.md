@@ -4,7 +4,7 @@
 
 The design system compiler: feed it design system input in any form (Figma library, code library, live website, specifications, screenshots—or any combination), and it produces an AI-ready foundation for rapidly building prototypes that faithfully follow the corporate identity.
 
-Status: **M1+M2 are complete** and have been tested across four real-world scenarios: a public corporate website, code-first Onyx, and both sparse and comprehensive Figma inputs—including blind tests and E2E runs. The concept is documented in `docs/concept.md`, with research in `docs/research/`.
+Status: **M1–M3 are complete** and have been tested across four real-world scenarios: a public corporate website, a code-first Vue component library, and both sparse and comprehensive Figma inputs—including blind tests and E2E runs. The concept is documented in `docs/concept.md`, with research in `docs/research/`.
 
 ## Setup
 

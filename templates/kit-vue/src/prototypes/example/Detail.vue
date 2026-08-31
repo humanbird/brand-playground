@@ -13,7 +13,7 @@ import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
 import { DsButton } from '../../components'
-import { auftragById, statusFarbe } from './_shared/data'
+import { statusColor, workOrderById } from './_shared/data'
 import Shell from './_shared/Shell.vue'
 
 const route = useRoute()
@@ -21,12 +21,12 @@ const id = computed(() => {
   const value = route.query.id
   return typeof value === 'string' ? value : null
 })
-const auftrag = computed(() => auftragById(id.value))
-const zurueck = { to: '/p/example', label: 'Work orders' }
+const workOrder = computed(() => workOrderById(id.value))
+const back = { to: '/p/example', label: 'Work orders' }
 </script>
 
 <template>
-  <Shell v-if="!auftrag" titel="Work order" :zurueck="zurueck">
+  <Shell v-if="!workOrder" title="Work order" :back="back">
     <p class="text-base text-ink">This work order does not exist.</p>
     <p class="mt-3 text-sm text-ink-muted">
       Empty state: considered explicitly, not omitted.
@@ -36,43 +36,43 @@ const zurueck = { to: '/p/example', label: 'Work orders' }
     </RouterLink>
   </Shell>
 
-  <Shell v-else :titel="auftrag.titel" :zurueck="zurueck">
+  <Shell v-else :title="workOrder.title" :back="back">
     <div class="flex flex-wrap items-center gap-4">
-      <span class="font-mono text-sm text-ink-muted">{{ auftrag.id }}</span>
+      <span class="font-mono text-sm text-ink-muted">{{ workOrder.id }}</span>
       <span
         class="rounded-full px-3 py-1 text-xs font-medium"
-        :class="statusFarbe[auftrag.status]"
+        :class="statusColor[workOrder.status]"
       >
-        {{ auftrag.status }}
+        {{ workOrder.status }}
       </span>
     </div>
 
     <dl class="mt-6 grid gap-4 sm:grid-cols-2">
       <div>
         <dt class="text-xs text-ink-muted">Customer</dt>
-        <dd class="mt-1 text-base text-ink">{{ auftrag.kunde }}</dd>
+        <dd class="mt-1 text-base text-ink">{{ workOrder.customer }}</dd>
       </div>
       <div>
         <dt class="text-xs text-ink-muted">Service location</dt>
-        <dd class="mt-1 text-base text-ink">{{ auftrag.ort }}</dd>
+        <dd class="mt-1 text-base text-ink">{{ workOrder.location }}</dd>
       </div>
       <div>
         <dt class="text-xs text-ink-muted">Due</dt>
-        <dd class="mt-1 text-base text-ink">{{ auftrag.faellig }}</dd>
+        <dd class="mt-1 text-base text-ink">{{ workOrder.dueDate }}</dd>
       </div>
     </dl>
 
-    <p class="mt-6 max-w-2xl text-base text-ink">{{ auftrag.beschreibung }}</p>
+    <p class="mt-6 max-w-2xl text-base text-ink">{{ workOrder.description }}</p>
 
     <h2 class="mt-8 text-lg font-medium text-ink">Line items</h2>
     <ul class="mt-4 divide-y divide-line rounded-lg border border-line">
       <li
-        v-for="position in auftrag.positionen"
-        :key="position.bezeichnung"
+        v-for="item in workOrder.items"
+        :key="item.name"
         class="flex justify-between gap-4 p-4"
       >
-        <span class="text-base text-ink">{{ position.bezeichnung }}</span>
-        <span class="font-mono text-sm text-ink-muted">{{ position.menge }}×</span>
+        <span class="text-base text-ink">{{ item.name }}</span>
+        <span class="font-mono text-sm text-ink-muted">{{ item.quantity }}×</span>
       </li>
     </ul>
 

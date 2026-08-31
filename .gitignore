@@ -1,9 +1,9 @@
 .DS_Store
 node_modules/
 
-# lokal, nicht Teil des Produkts
+# local only, not part of the product
 ingest/
 tasks/
 .claude/launch.json
 .tmp-*/
-docs/research/07-vorbild-onyx-rapidprototype.md
+docs/research/07-*

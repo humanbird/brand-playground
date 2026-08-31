@@ -9,9 +9,9 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 
-const { titel, zurueck } = defineProps<{
-  titel: string
-  zurueck?: { to: string; label: string }
+const { title, back } = defineProps<{
+  title: string
+  back?: { to: string; label: string }
 }>()
 </script>
 
@@ -20,12 +20,12 @@ const { titel, zurueck } = defineProps<{
     <header class="border-b border-line">
       <div class="mx-auto flex max-w-4xl flex-wrap items-baseline gap-4 px-6 py-4">
         <RouterLink
-          :to="zurueck?.to ?? '/'"
+          :to="back?.to ?? '/'"
           class="text-sm text-ink-muted underline-offset-4 hover:text-accent hover:underline"
         >
-          ← {{ zurueck?.label ?? 'Overview' }}
+          ← {{ back?.label ?? 'Overview' }}
         </RouterLink>
-        <h1 class="text-lg font-medium text-ink">{{ titel }}</h1>
+        <h1 class="text-lg font-medium text-ink">{{ title }}</h1>
       </div>
     </header>
 

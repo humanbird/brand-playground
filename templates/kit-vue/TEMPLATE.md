@@ -14,8 +14,8 @@ listed here is carried over unchanged.
 
 ## When to Use This Template Instead of kit-react
 
-Use it when the target design system is available as a **Vue code library** (Onyx/`sit-onyx`,
-Vuetify, PrimeVue, and so on). Pin and **use** the library directly; do not reimplement it—
+Use it when the target design system is available as a **Vue code library** (Vuetify, PrimeVue,
+a company-internal library, and so on). Pin and **use** the library directly; do not reimplement it—
 `src/components/index.ts` re-exports it, so prototypes do not see the difference. If no
 design-system code is available, `kit-react` remains the default.
 
@@ -103,7 +103,7 @@ These are the only differences; everything else is identical.
 
 The template uses Tailwind because it must run without a design system. If the target
 design system **provides its own styles** (a base stylesheet, CSS variables, and a grid,
-for example, `sit-onyx`), Tailwind becomes unnecessary weight and a second, competing
+for example, a component library that ships its own styles), Tailwind becomes unnecessary weight and a second, competing
 layout system. In that case:
 
 1. Remove `@tailwindcss/vite` and `tailwindcss` from `package.json` and `vite.config.ts`.

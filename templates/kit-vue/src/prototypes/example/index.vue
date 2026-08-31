@@ -9,41 +9,41 @@
 import { RouterLink } from 'vue-router'
 
 import { DsButton } from '../../components'
-import { auftraege, statusFarbe } from './_shared/data'
+import { statusColor, workOrders } from './_shared/data'
 import Shell from './_shared/Shell.vue'
 </script>
 
 <template>
-  <Shell titel="Work orders">
+  <Shell title="Work orders">
     <div class="flex flex-wrap items-baseline justify-between gap-4">
-      <p class="text-base text-ink-muted">{{ auftraege.length }} work orders this week</p>
+      <p class="text-base text-ink-muted">{{ workOrders.length }} work orders this week</p>
       <DsButton>Create work order</DsButton>
     </div>
 
     <ul class="mt-6 divide-y divide-line rounded-lg border border-line">
       <li
-        v-for="auftrag in auftraege"
-        :key="auftrag.id"
+        v-for="workOrder in workOrders"
+        :key="workOrder.id"
         class="flex flex-wrap items-center gap-4 p-6"
       >
         <div class="min-w-0 flex-1">
           <RouterLink
-            :to="`/p/example/detail?id=${auftrag.id}`"
+            :to="`/p/example/detail?id=${workOrder.id}`"
             class="text-base font-medium text-ink underline-offset-4 hover:text-accent hover:underline"
           >
-            {{ auftrag.titel }}
+            {{ workOrder.title }}
           </RouterLink>
           <p class="mt-1 text-sm text-ink-muted">
-            <span class="font-mono">{{ auftrag.id }}</span> · {{ auftrag.kunde }} · due
-            {{ auftrag.faellig }}
+            <span class="font-mono">{{ workOrder.id }}</span> · {{ workOrder.customer }} · due
+            {{ workOrder.dueDate }}
           </p>
         </div>
 
         <span
           class="rounded-full px-3 py-1 text-xs font-medium"
-          :class="statusFarbe[auftrag.status]"
+          :class="statusColor[workOrder.status]"
         >
-          {{ auftrag.status }}
+          {{ workOrder.status }}
         </span>
       </li>
     </ul>

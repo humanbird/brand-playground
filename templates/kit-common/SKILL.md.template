@@ -54,7 +54,7 @@ permission to guess.
 
 ## Page anatomy
 
-{{ANATOMIE: Describe the 3–5 regions of a typical {{DS_NAME}} page in a table (Region | Component/Pattern | Role), followed by ONE functional scaffold example in a code block that correctly combines the header/navigation, content container, and footer using real component names from this kit. Include rules for a shared shell across multiple screens (_shared/AppShell.tsx, _shared/data.ts as a reactive mock store).}}
+{{ANATOMY: Describe the 3–5 regions of a typical {{DS_NAME}} page in a table (Region | Component/Pattern | Role), followed by ONE functional scaffold example in a code block that correctly combines the header/navigation, content container, and footer using real component names from this kit. Include rules for a shared shell across multiple screens (_shared/AppShell.tsx, _shared/data.ts as a reactive mock store).}}
 
 A `.tsx` file in `_shared/` may export **components only**. An additional constant or helper export
 from the same file breaks Fast Refresh (the page reloads completely after every change and resets
@@ -62,7 +62,7 @@ the prototype store); place such exports in a separate `.ts` file.
 
 ## Layout
 
-{{LAYOUT: Document container widths, grid/column logic, and the DS layout model with specific values from ingestion—viewport breakpoints OR container-based behavior (some design systems such as Onyx calculate by container width; in that case, container tiers apply, not viewport widths). Explicitly identify non-obvious pitfalls (for example, what happens in narrow containers). State the preferred layout tool; use custom flex constructions only when it demonstrably cannot meet the need.}}
+{{LAYOUT: Document container widths, grid/column logic, and the DS layout model with specific values from ingestion—viewport breakpoints OR container-based behavior (some design systems calculate by container width; in that case, container tiers apply, not viewport widths). Explicitly identify non-obvious pitfalls (for example, what happens in narrow containers). State the preferred layout tool; use custom flex constructions only when it demonstrably cannot meet the need.}}
 
 ## Tokens, not values
 
@@ -79,9 +79,9 @@ All colors, spacing, and typography must still come exclusively from tokens.
 
 Native elements are almost always the wrong answer. `<button>` → `<DsButton>`, `<input>` →
 the form components in this kit. Before building anything custom, check `components-meta.json`—
-{{ANZAHL}} components exist.
+{{COUNT}} components exist.
 
-{{KOMPONENTENWAHL: Provide a table mapping native element/intent → kit component, including selection patterns (radio/checkbox/option tile). Then add “Typical compositions”: 5–10 recurring patterns (data page, form, card/teaser, empty state, confirmation dialog, and so on), each with the specific component combination used in this kit and described in 1–3 lines. Always include the TABLE/DATA PATTERN—line color, header weight, alignment, number formatting (tabular-nums), horizontal scrolling—because otherwise every agent invents its own table design.}}
+{{COMPONENT_CHOICE: Provide a table mapping native element/intent → kit component, including selection patterns (radio/checkbox/option tile). Then add “Typical compositions”: 5–10 recurring patterns (data page, form, card/teaser, empty state, confirmation dialog, and so on), each with the specific component combination used in this kit and described in 1–3 lines. Always include the TABLE/DATA PATTERN—line color, header weight, alignment, number formatting (tabular-nums), horizontal scrolling—because otherwise every agent invents its own table design.}}
 
 For image placeholders smaller than roughly 120px on either side (list rows, table headers,
 thumbnails), text no longer fits on the surface. Center an icon there and provide the subject
@@ -89,16 +89,16 @@ description as `sr-only` text—clipped placeholder text looks like an error, no
 
 ## Pitfalls
 
-{{STOLPERSTEINE: Document known pitfalls of this kit/DS version. This section grows with use—record EVERY pitfall discovered during implementation HERE (and, where appropriate, document the correction in design/fixes.css). Initially, the generator fills it with issues found while recreating the reference screen.}}
+{{PITFALLS: Document known pitfalls of this kit/DS version. This section grows with use—record EVERY pitfall discovered during implementation HERE (and, where appropriate, document the correction in design/fixes.css). Initially, the generator fills it with issues found while recreating the reference screen.}}
 
 ## Visual stance
 
-{{HALTUNG: Distill 4–6 principles of this corporate design's visual language from the ingestion report (for example, alignment, whitespace versus borders, image style, copy tone). Always include: content determines structure, not the other way around. Design for states—a prototype without empty/loading/error states looks more complete than it is.}}
+{{STANCE: Distill 4–6 principles of this corporate design's visual language from the ingestion report (for example, alignment, whitespace versus borders, image style, copy tone). Always include: content determines structure, not the other way around. Design for states—a prototype without empty/loading/error states looks more complete than it is.}}
 
 ## Done means
 
 1. `pnpm typecheck` passes.
-2. Checked in a browser at a width of at least 1280px{{BREITE_HINWEIS: add any DS-specific note about what happens below this width}}.
+2. Checked in a browser at a width of at least 1280px{{WIDTH_NOTE: add any DS-specific note about what happens below this width}}.
 3. No console errors.
-4. No hardcoded color or spacing values in the diff. {{GREP_AUSNAHMEN: If the DS has sanctioned exception tokens (for example, a 1px border width represented by a token), list them here; otherwise the check flags correctly built borders.}}
+4. No hardcoded color or spacing values in the diff. {{GREP_EXCEPTIONS: If the DS has sanctioned exception tokens (for example, a 1px border width represented by a token), list them here; otherwise the check flags correctly built borders.}}
 5. Every flow has been clicked through once, including the empty state.

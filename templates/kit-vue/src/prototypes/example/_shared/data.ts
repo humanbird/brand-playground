@@ -10,68 +10,68 @@
 
 export type Status = 'open' | 'in progress' | 'completed'
 
-export type Auftrag = {
+export type WorkOrder = {
   id: string
-  titel: string
-  kunde: string
-  ort: string
-  faellig: string
+  title: string
+  customer: string
+  location: string
+  dueDate: string
   status: Status
-  beschreibung: string
-  positionen: { bezeichnung: string; menge: number }[]
+  description: string
+  items: { name: string; quantity: number }[]
 }
 
-export const auftraege: Auftrag[] = [
+export const workOrders: WorkOrder[] = [
   {
     id: 'A-2481',
-    titel: 'Replace cafeteria water dispenser filters',
-    kunde: 'Harborview Utilities',
-    ort: 'Harborview, 25 Dockyard Avenue',
-    faellig: 'Sep 2, 2026',
+    title: 'Replace cafeteria water dispenser filters',
+    customer: 'Harborview Utilities',
+    location: 'Harborview, 25 Dockyard Avenue',
+    dueDate: 'Sep 2, 2026',
     status: 'open',
-    beschreibung:
+    description:
       'Scheduled filter replacement for two dispensers in the cafeteria. Access is available only between 7:00 and 9:00 a.m.; the serving area is occupied afterward.',
-    positionen: [
-      { bezeichnung: 'P3000 filter cartridge', menge: 2 },
-      { bezeichnung: 'Standard gasket set', menge: 2 },
+    items: [
+      { name: 'FX-300 filter cartridge', quantity: 2 },
+      { name: 'Standard gasket set', quantity: 2 },
     ],
   },
   {
     id: 'A-2477',
-    titel: 'Fault: CO₂ supply interrupted',
-    kunde: 'Green Valley Medical Center',
-    ort: 'Green Valley, 9 Willow Crescent',
-    faellig: 'Aug 30, 2026',
+    title: 'Fault: CO₂ supply interrupted',
+    customer: 'Green Valley Medical Center',
+    location: 'Green Valley, 9 Willow Crescent',
+    dueDate: 'Aug 30, 2026',
     status: 'in progress',
-    beschreibung:
+    description:
       'The unit has reported no pressure since Wednesday. A replacement cylinder is available on site; the connection is probably leaking. Contact Facilities, not the ward.',
-    positionen: [
-      { bezeichnung: '6 bar pressure regulator', menge: 1 },
-      { bezeichnung: '1.5 m CO₂ hose', menge: 1 },
+    items: [
+      { name: '6 bar pressure regulator', quantity: 1 },
+      { name: '1.5 m CO₂ hose', quantity: 1 },
     ],
   },
   {
     id: 'A-2465',
-    titel: 'Commission new reception unit',
-    kunde: 'Riverstone Brewing Company',
-    ort: 'Riverstone, 250 Malt Lane',
-    faellig: 'Aug 27, 2026',
+    title: 'Commission new reception unit',
+    customer: 'Riverstone Brewing Company',
+    location: 'Riverstone, 250 Malt Lane',
+    dueDate: 'Aug 27, 2026',
     status: 'completed',
-    beschreibung:
+    description:
       'Install and commission the unit in the visitor reception area. The reception team has been trained and the handover report signed.',
-    positionen: [
-      { bezeichnung: 'Model L water dispenser', menge: 1 },
-      { bezeichnung: 'Under-counter connection kit', menge: 1 },
+    items: [
+      { name: 'Model L water dispenser', quantity: 1 },
+      { name: 'Under-counter connection kit', quantity: 1 },
     ],
   },
 ]
 
-export function auftragById(id: string | null): Auftrag | undefined {
+export function workOrderById(id: string | null): WorkOrder | undefined {
   if (!id) return undefined
-  return auftraege.find((auftrag) => auftrag.id === id)
+  return workOrders.find((workOrder) => workOrder.id === id)
 }
 
-export const statusFarbe: Record<Status, string> = {
+export const statusColor: Record<Status, string> = {
   open: 'bg-surface text-ink-muted',
   'in progress': 'bg-accent text-on-accent',
   completed: 'bg-surface text-success',

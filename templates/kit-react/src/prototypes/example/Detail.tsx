@@ -11,16 +11,16 @@
 import { Link, useSearchParams } from 'react-router'
 
 import { DsButton } from '../../components'
-import { auftragById, statusFarbe } from './_shared/data'
+import { statusColor, workOrderById } from './_shared/data'
 import { Shell } from './_shared/Shell'
 
 export default function Detail() {
   const [params] = useSearchParams()
-  const auftrag = auftragById(params.get('id'))
+  const workOrder = workOrderById(params.get('id'))
 
-  if (!auftrag) {
+  if (!workOrder) {
     return (
-      <Shell titel="Work order" zurueck={{ to: '/p/example', label: 'Work orders' }}>
+      <Shell title="Work order" back={{ to: '/p/example', label: 'Work orders' }}>
         <p className="text-base text-ink">This work order does not exist.</p>
         <p className="mt-3 text-sm text-ink-muted">
           Empty state: considered explicitly, not omitted.
@@ -33,39 +33,39 @@ export default function Detail() {
   }
 
   return (
-    <Shell titel={auftrag.titel} zurueck={{ to: '/p/example', label: 'Work orders' }}>
+    <Shell title={workOrder.title} back={{ to: '/p/example', label: 'Work orders' }}>
       <div className="flex flex-wrap items-center gap-4">
-        <span className="font-mono text-sm text-ink-muted">{auftrag.id}</span>
+        <span className="font-mono text-sm text-ink-muted">{workOrder.id}</span>
         <span
-          className={`rounded-full px-3 py-1 text-xs font-medium ${statusFarbe[auftrag.status]}`}
+          className={`rounded-full px-3 py-1 text-xs font-medium ${statusColor[workOrder.status]}`}
         >
-          {auftrag.status}
+          {workOrder.status}
         </span>
       </div>
 
       <dl className="mt-6 grid gap-4 sm:grid-cols-2">
         <div>
           <dt className="text-xs text-ink-muted">Customer</dt>
-          <dd className="mt-1 text-base text-ink">{auftrag.kunde}</dd>
+          <dd className="mt-1 text-base text-ink">{workOrder.customer}</dd>
         </div>
         <div>
           <dt className="text-xs text-ink-muted">Service location</dt>
-          <dd className="mt-1 text-base text-ink">{auftrag.ort}</dd>
+          <dd className="mt-1 text-base text-ink">{workOrder.location}</dd>
         </div>
         <div>
           <dt className="text-xs text-ink-muted">Due</dt>
-          <dd className="mt-1 text-base text-ink">{auftrag.faellig}</dd>
+          <dd className="mt-1 text-base text-ink">{workOrder.dueDate}</dd>
         </div>
       </dl>
 
-      <p className="mt-6 max-w-2xl text-base text-ink">{auftrag.beschreibung}</p>
+      <p className="mt-6 max-w-2xl text-base text-ink">{workOrder.description}</p>
 
       <h2 className="mt-8 text-lg font-medium text-ink">Line items</h2>
       <ul className="mt-4 divide-y divide-line rounded-lg border border-line">
-        {auftrag.positionen.map((position) => (
-          <li key={position.bezeichnung} className="flex justify-between gap-4 p-4">
-            <span className="text-base text-ink">{position.bezeichnung}</span>
-            <span className="font-mono text-sm text-ink-muted">{position.menge}×</span>
+        {workOrder.items.map((item) => (
+          <li key={item.name} className="flex justify-between gap-4 p-4">
+            <span className="text-base text-ink">{item.name}</span>
+            <span className="font-mono text-sm text-ink-muted">{item.quantity}×</span>
           </li>
         ))}
       </ul>

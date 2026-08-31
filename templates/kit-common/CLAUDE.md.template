@@ -46,7 +46,7 @@ others, and never use `pkill` by name.
 - **proto** (default): build a specific idea as a clickable prototype. If the request
   describes a flow, build and link multiple screens.
 - **ideate**: work divergently—create 3–5 deliberately distinct directions for a question as
-  rough standalone screens under `src/prototypes/idea-<thema>-<variante>/` (keep the topic short and
+  rough standalone screens under `src/prototypes/idea-<topic>-<variant>/` (keep the topic short and
   identical across all variants so the home page groups them). Use little detail and maximize the
   difference between approaches. State each direction's hypothesis in one sentence in the
   file-header comment. “Done means” applies in a reduced form: typecheck, console, and tokens still

@@ -17,7 +17,7 @@
  * it (`export { default as X }`); types come from the regular
  * <script lang="ts"> block in the same file and are re-exported separately.
  *
- * If the kit uses an existing component library (such as sit-onyx), this barrel
+ * If the kit uses an existing component library (such as a published Vue component library), this barrel
  * points to the package instead of local files; prototypes do not need to know
  * the difference.
  */

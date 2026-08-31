@@ -116,7 +116,7 @@ Creating a folder creates a route. No configuration file and no registration.
   in `src/styles.css`; the generator adds a comment there explaining the duplication.
   **Verification:** load a page at two widths and measure an element that depends on a
   breakpoint variant.
-- **Tailwind recognizes only fully written class names.** `` `text-${stufe}` ``,
+- **Tailwind recognizes only fully written class names.** `` `text-${level}` ``,
   `` `shadow-level${n}` ``, or `` `rounded-${r}` `` generate nothing. This is especially
   relevant to component matrices and reference screens that iterate over variants—write
   the complete classes in a table and iterate over the table only.
