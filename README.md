@@ -66,6 +66,6 @@ templates/kit-common/   CLAUDE.md/SKILL.md templates + craft.md (DS-independent 
 docs/                   concept + research
 ```
 
-You never pick a stack: the generator derives it from your input (a design system that ships code brings its own framework; everything else uses the default template). Override it with a single sentence in your request if you care.
+You never pick a stack upfront: the generator derives it from your input (a design system that ships code brings its own framework; everything else uses the default template). If the input is genuinely ambiguous — say, the design system ships both React and Vue packages — it asks instead of guessing. And you can always override it with a single sentence in your request.
 
 [MIT License](LICENSE)
