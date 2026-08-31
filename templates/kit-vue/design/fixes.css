@@ -1,0 +1,19 @@
+/*
+ * design/fixes.css — dokumentierte Mini-Korrekturen.
+ *
+ * Wird als LETZTE Stylesheet-Datei geladen und gewinnt deshalb gegen Tokens
+ * und Utilities. Genau dafür ist sie da — und nur dafür.
+ *
+ * Regeln:
+ *  - Jede Regel bekommt einen Kommentar: WAS ist kaputt, WARUM hier, WANN prüfbar.
+ *  - Keine neuen Design-Entscheidungen. Wer hier Farben erfindet, umgeht die Tokens.
+ *  - Beim Versionswechsel des Designsystems: Liste durchgehen, Erledigtes löschen.
+ *
+ * Beispiel:
+ *
+ *   // DsSelect v2.4: Pfeil-Icon sitzt 2px zu tief (Upstream-Bug, Issue #123).
+ *   // Prüfen, sobald v2.5 gepinnt ist.
+ *   .ds-select__icon { transform: translateY(-2px); }
+ *
+ * Im frisch generierten Kit ist diese Datei leer.
+ */

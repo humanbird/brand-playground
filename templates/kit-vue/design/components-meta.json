@@ -1,0 +1,42 @@
+[
+  {
+    "name": "DsButton",
+    "extends": "Fallthrough-Attribute (Vue `$attrs`) landen am `<button>` — inkl. `disabled`, `aria-*` und Listenern wie `@click`. `class` wird von Vue automatisch mit den Basisklassen gemerged. Dieses Feld ist Pflicht: es sagt, welche Attribute durchgereicht werden und wo `class` landet — bei Komponenten mit `inheritAttrs: false` steht hier, an welches innere Element die Attribute gebunden werden (oder \"— keine Fallthrough-Attribute\").",
+    "description": "Beispiel-Komponente des Templates. Zeigt die erwartete Form eines Eintrags — der Generator ersetzt dieses Array vollständig durch das Inventar des Ziel-Designsystems.",
+    "props": [
+      {
+        "name": "variant",
+        "type": "'primary' | 'secondary' | 'ghost'",
+        "default": "'primary'",
+        "required": false,
+        "description": "Visuelle Gewichtung. Pro Screen höchstens eine primary-Aktion."
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md'",
+        "default": "'md'",
+        "required": false,
+        "description": "Höhe und Innenabstand."
+      },
+      {
+        "name": "type",
+        "type": "'button' | 'submit' | 'reset'",
+        "default": "'button'",
+        "required": false,
+        "description": "HTML-Buttontyp. Default bewusst 'button', damit kein Formular ungewollt abschickt."
+      }
+    ],
+    "variants": {
+      "variant": ["primary", "secondary", "ghost"],
+      "size": ["sm", "md"]
+    },
+    "events": [],
+    "slots": [
+      {
+        "name": "default",
+        "description": "Label des Buttons. Verb im Imperativ, kein Satzzeichen."
+      }
+    ],
+    "source": "src/components/DsButton.vue"
+  }
+]

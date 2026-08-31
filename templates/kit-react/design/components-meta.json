@@ -1,0 +1,41 @@
+[
+  {
+    "name": "DsButton",
+    "extends": "ButtonHTMLAttributes<HTMLButtonElement>; className wird an die Basisklassen angehängt. Dieses Feld ist Pflicht: es sagt, welche HTML-Attribute durchgereicht werden und wo className landet — bei Komponenten ohne Spread steht hier \"— keine Rest-Props\".",
+    "description": "Beispiel-Komponente des Templates. Zeigt die erwartete Form eines Eintrags — der Generator ersetzt dieses Array vollständig durch das Inventar des Ziel-Designsystems.",
+    "props": [
+      {
+        "name": "variant",
+        "type": "'primary' | 'secondary' | 'ghost'",
+        "default": "'primary'",
+        "required": false,
+        "description": "Visuelle Gewichtung. Pro Screen höchstens eine primary-Aktion."
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md'",
+        "default": "'md'",
+        "required": false,
+        "description": "Höhe und Innenabstand."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "description": "Standard-Button-Attribut."
+      }
+    ],
+    "variants": {
+      "variant": ["primary", "secondary", "ghost"],
+      "size": ["sm", "md"]
+    },
+    "slots": [
+      {
+        "name": "children",
+        "description": "Label des Buttons. Verb im Imperativ, kein Satzzeichen."
+      }
+    ],
+    "source": "src/components/DsButton.tsx"
+  }
+]

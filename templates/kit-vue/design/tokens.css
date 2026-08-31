@@ -1,0 +1,76 @@
+/*
+ * design/tokens.css — die eingefrorenen Tokens des Designsystems.
+ *
+ * GENERATOR-DATEI: `/basis` überschreibt diese Datei einmalig beim Anlegen des Kits.
+ * Danach wird sie NIE automatisch regeneriert, nur bewusst von Hand editiert.
+ *
+ * Hier stehen nur Werte. Die Zuordnung auf Tailwind-Utilities passiert in
+ * src/styles.css (@theme). Wer Token-Namen ändert, muss dort mitziehen.
+ *
+ * Die Werte unten sind neutrale Platzhalter, damit das Template solo lauffähig ist.
+ * Sie sind bewusst unauffällig — kein Ziel-CD, kein Anspruch auf Treue.
+ */
+
+:root {
+  /* ---- Farben ------------------------------------------------------- */
+  --ds-color-canvas: #ffffff;
+  --ds-color-surface: #f5f6f8;
+  --ds-color-line: #dde1e6;
+  --ds-color-ink: #16191d;
+  --ds-color-ink-muted: #5b6470;
+  --ds-color-accent: #2f6fed;
+  --ds-color-accent-hover: #2456bf;
+  --ds-color-on-accent: #ffffff;
+  --ds-color-success: #1d7a4c;
+  --ds-color-danger: #c02b2b;
+
+  /* ---- Abstände ------------------------------------------------------ */
+  /*
+   * Grundeinheit der Abstandsskala. Alle Tailwind-Abstände leiten sich daraus
+   * ab: p-4 = 4 × unit = 1rem. Wer die Einheit ändert, skaliert das ganze Kit.
+   *
+   * Die Stufen darunter sind die Referenz-Skala des Designsystems (Dokumentation
+   * und Nutzung in eigenem CSS). In Prototypen wird die numerische
+   * Tailwind-Skala benutzt — die Werte sind identisch: xs=2, sm=3, md=4, lg=6,
+   * xl=8, 2xl=12.
+   */
+  --ds-spacing-unit: 0.25rem;
+  --ds-spacing-xs: 0.5rem;
+  --ds-spacing-sm: 0.75rem;
+  --ds-spacing-md: 1rem;
+  --ds-spacing-lg: 1.5rem;
+  --ds-spacing-xl: 2rem;
+  --ds-spacing-2xl: 3rem;
+
+  /* ---- Radien -------------------------------------------------------- */
+  --ds-radius-none: 0px;
+  --ds-radius-sm: 0.25rem;
+  --ds-radius-md: 0.5rem;
+  --ds-radius-lg: 0.75rem;
+  --ds-radius-full: 9999px;
+
+  /* ---- Typografie ---------------------------------------------------- */
+  --ds-font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --ds-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  --ds-font-size-xs: 0.75rem;
+  --ds-font-size-sm: 0.875rem;
+  --ds-font-size-base: 1rem;
+  --ds-font-size-lg: 1.25rem;
+  --ds-font-size-xl: 1.75rem;
+  --ds-font-size-2xl: 2.25rem;
+
+  --ds-font-weight-regular: 400;
+  --ds-font-weight-medium: 500;
+  --ds-font-weight-bold: 700;
+
+  --ds-line-height-tight: 1.2;
+  --ds-line-height-normal: 1.55;
+
+  /* ---- Sonstiges ----------------------------------------------------- */
+  --ds-border-width: 1px;
+  --ds-shadow-sm: 0 1px 2px rgb(16 25 29 / 0.06);
+  --ds-shadow-md: 0 2px 8px rgb(16 25 29 / 0.08);
+}

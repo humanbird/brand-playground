@@ -1,0 +1,124 @@
+/*
+ * src/styles.css — Tailwind + Zuordnung der Designsystem-Tokens auf Utilities.
+ *
+ * GENERATOR-DATEI (Teil): der @theme-Block spiegelt die Token-Namen aus
+ * design/tokens.css. Ändert der Generator dort die Namen, muss er hier mitziehen.
+ * Der Rest der Datei bleibt, wie er ist.
+ *
+ * Grundsatz: In Prototypen gibt es keine Hex- und keine px-Werte. Alles, was
+ * gebraucht wird, ist hier als Utility verfügbar — bg-accent, text-ink,
+ * border-line, rounded-md, p-6 …
+ *
+ * Die Default-Paletten von Tailwind (Farben, Radien, Schatten, Schriftgrößen,
+ * Breakpoints) sind mit `*: initial` gelöscht. Das ist die wichtigste Zeile
+ * jedes Namespace: ohne sie erzeugt Tailwind `bg-gray-100`, `rounded-3xl`,
+ * `text-9xl` oder `2xl:` klaglos weiter — der Prototyp sieht richtig aus und
+ * hat trotzdem Fremdfarben im Build. Der Generator darf die Guards NICHT
+ * entfernen; er ersetzt nur die Listen darunter durch die des Ziel-DS.
+ */
+
+@import "tailwindcss" source(none);
+@source "../index.html";
+@source "./**/*.{ts,vue}";
+
+@theme {
+  /*
+   * Farben → bg-accent, text-ink, border-line …
+   *
+   * Die Namen hier sind generisch (Rolle statt Marke), damit die nicht
+   * gepflegten Gerüstdateien (HomeView, router, NotFound) in jedem Kit
+   * funktionieren. Ein generiertes Kit ergänzt darüber die Namen des
+   * Ziel-DS und behält diese Aliasse als Zuordnung auf dessen Tokens.
+   */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-canvas: var(--ds-color-canvas);
+  --color-surface: var(--ds-color-surface);
+  --color-line: var(--ds-color-line);
+  --color-ink: var(--ds-color-ink);
+  --color-ink-muted: var(--ds-color-ink-muted);
+  --color-accent: var(--ds-color-accent);
+  --color-accent-hover: var(--ds-color-accent-hover);
+  --color-on-accent: var(--ds-color-on-accent);
+  --color-success: var(--ds-color-success);
+  --color-danger: var(--ds-color-danger);
+
+  /*
+   * Abstände: die numerische Skala leitet sich aus der DS-Grundeinheit ab,
+   * p-4 = 4 × unit. Damit ist jeder Abstand token-gebunden.
+   *
+   * STOLPERSTEIN für den Generator: benannte Stufen (--spacing-md, --spacing-2xl …)
+   * hier NICHT ergänzen. Der spacing-Namespace beschattet in Tailwind v4 die
+   * container-Skala — `--spacing-2xl: 3rem` macht aus `max-w-2xl` stillschweigend
+   * 3rem statt 42rem. Hat das Ziel-DS eine nicht-lineare Spacing-Skala, gehören
+   * deren Stufen unter einen kollisionsfreien Präfix (z.B. --spacing-ds-200).
+   */
+  --spacing: var(--ds-spacing-unit);
+
+  /*
+   * Breakpoints → sm: md: lg: xl:
+   *
+   * Ebenfalls geguarded: die Default-Stufen von Tailwind sind eine fremde
+   * Design-Entscheidung. Das Ziel-DS hat fast immer eigene Werte (und oft
+   * andere Namen) — hier die belegten eintragen, nicht die geerbten stehen
+   * lassen. `2xl:` gibt es bewusst nicht, bis ein DS es belegt.
+   */
+  --breakpoint-*: initial;
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+
+  /* Radien → rounded-md */
+  --radius-*: initial;
+  --radius-none: var(--ds-radius-none);
+  --radius-sm: var(--ds-radius-sm);
+  --radius-md: var(--ds-radius-md);
+  --radius-lg: var(--ds-radius-lg);
+  --radius-full: var(--ds-radius-full);
+
+  /* Typografie → font-sans, text-lg, font-medium */
+  --font-sans: var(--ds-font-sans);
+  --font-mono: var(--ds-font-mono);
+
+  --text-*: initial;
+  --text-xs: var(--ds-font-size-xs);
+  --text-xs--line-height: var(--ds-line-height-normal);
+  --text-sm: var(--ds-font-size-sm);
+  --text-sm--line-height: var(--ds-line-height-normal);
+  --text-base: var(--ds-font-size-base);
+  --text-base--line-height: var(--ds-line-height-normal);
+  --text-lg: var(--ds-font-size-lg);
+  --text-lg--line-height: var(--ds-line-height-tight);
+  --text-xl: var(--ds-font-size-xl);
+  --text-xl--line-height: var(--ds-line-height-tight);
+  --text-2xl: var(--ds-font-size-2xl);
+  --text-2xl--line-height: var(--ds-line-height-tight);
+
+  --font-weight-regular: var(--ds-font-weight-regular);
+  --font-weight-medium: var(--ds-font-weight-medium);
+  --font-weight-bold: var(--ds-font-weight-bold);
+
+  /* Schatten → shadow-sm */
+  --shadow-*: initial;
+  --shadow-sm: var(--ds-shadow-sm);
+  --shadow-md: var(--ds-shadow-md);
+}
+
+@layer base {
+  html {
+    font-family: var(--ds-font-sans);
+    line-height: var(--ds-line-height-normal);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--ds-color-canvas);
+    color: var(--ds-color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ds-color-accent);
+    outline-offset: 2px;
+  }
+}

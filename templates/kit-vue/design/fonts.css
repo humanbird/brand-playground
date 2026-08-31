@@ -1,0 +1,34 @@
+/*
+ * design/fonts.css — selbst gehostete Schriften.
+ *
+ * GENERATOR-DATEI: `/basis` füllt sie aus `ingest/<ds>/assets.md`. Im Template
+ * ist sie leer — die Platzhalter-Tokens fahren einen System-Font-Stack, der
+ * keine Datei braucht.
+ *
+ * Kein CDN, kein <link> auf Google Fonts: der Einzeldatei-Export
+ * (`pnpm export`) muss offline per Doppelklick laufen. Deshalb kommen die
+ * woff2-Dateien aus npm-Paketen (@fontsource/*) oder liegen unter
+ * design/fonts/ — Vite löst die url() beim Build auf und bettet sie als
+ * data-URI in die eine HTML-Datei ein. Eine url() auf http(s) bricht das.
+ *
+ * LIZENZ: Corporate-Schriften sind fast immer lizenzpflichtig und dürfen
+ * nicht mitgeliefert werden. Dann eine freie, metrisch nahe Ersatzschrift
+ * wählen, den Ersatz HIER dokumentieren (Original, Ersatz, Begründung) und
+ * in design/tokens.css den Font-Stack entsprechend setzen. Kein
+ * Komponentencode fasst Schriftnamen an — der Wechsel passiert an genau
+ * diesen zwei Stellen.
+ *
+ * Muster:
+ *
+ *   @font-face {
+ *     font-family: "Montserrat";
+ *     font-style: normal;
+ *     font-weight: 400;
+ *     font-display: swap;
+ *     src: url("@fontsource/montserrat/files/montserrat-latin-400-normal.woff2")
+ *       format("woff2");
+ *   }
+ *
+ * Pro Schnitt ein Block — nur die Gewichte einbinden, die das DS wirklich
+ * benutzt; jedes weitere woff2 landet als data-URI im Export.
+ */

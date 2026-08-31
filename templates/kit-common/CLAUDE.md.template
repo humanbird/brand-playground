@@ -1,0 +1,71 @@
+{{STACK: bei kit-vue durch Vue-Entsprechungen ersetzen}}
+
+# {{KIT_NAME}}
+
+Ein Satz Anforderung rein, laufendes {{DS_NAME}}-Frontend raus. Das ist der ganze Zweck.
+
+## Vor jeder UI-Arbeit
+
+Die Skill `{{DS_SLUG}}` lesen. Sie enthält das Design System auf Konzeptebene — Seiten-Anatomie,
+Layout, Tokens, Komponentenwahl — und `craft.md` daneben das DS-unabhängige Handwerk (Zustände,
+Motion, Anti-Patterns). Exakte Komponenten-APIs kommen aus `design/components-meta.json` und dem
+Quellcode unter `src/components/`, nie aus dem Gedächtnis.
+
+Es gibt bewusst nur diese eine Skill. Wenn Wissen fehlt, gehört es dort hinein — nicht in eine zweite.
+
+## Aufbau
+
+Vite + React + TypeScript + Tailwind, ein einziges Paket, kein Workspace.
+
+```
+src/prototypes/<slug>/*.tsx    Prototypen — Datei anlegen, Route existiert (/p/<slug>)
+src/prototypes/<slug>/_shared  Gemeinsame Shell/Mockdaten eines Prototyps (wird nicht geroutet)
+src/router.tsx                 Auto-Routing, nicht anfassen
+src/HomeView.tsx               Automatische Übersicht aller Prototypen
+src/components/                Die {{DS_NAME}}-Komponenten — benutzen, nicht neu erfinden
+design/tokens.css              Eingefrorene Tokens — nie regenerieren, nur bewusst editieren
+design/components-meta.json    API-Wahrheit: alle Komponenten mit Props/Varianten
+design/fixes.css               Dokumentierte Mini-Korrekturen
+.claude/skills/{{DS_SLUG}}/    Die Skill (+ craft.md)
+```
+
+## Befehle
+
+```bash
+pnpm dev        # Port 5300
+pnpm typecheck
+pnpm export     # Statischer Einzeldatei-Export aller Prototypen nach export/index.html
+```
+
+Läuft auf dem Port bereits ein Dev-Server dieses Kits, mitnutzen; sonst eigenen starten und
+am Ende den eigenen Prozess (per PID) beenden. Nie fremde Prozesse beenden, nie `pkill` nach
+Namen.
+
+## Modi
+
+- **proto** (Default): eine konkrete Idee als durchklickbaren Prototyp bauen. Beschreibt der
+  Auftrag einen Ablauf, mehrere Screens bauen und verlinken.
+- **ideate**: divergent — zu einer Fragestellung 3–5 bewusst unterschiedliche Richtungen als
+  grobe Einzel-Screens unter `src/prototypes/idea-<thema>-<variante>/` (Thema kurz und über
+  alle Varianten identisch — es gruppiert die Startseite). Wenig Detail, maximale
+  Unterschiedlichkeit der Ansätze. Jede Richtung benennt ihre Wette in einem Satz im
+  Datei-Header-Kommentar. „Fertig heißt" gilt abgeschwächt: typecheck, Konsole und Tokens ja —
+  Zustands-Vollständigkeit und Abläufe nur, wo sie die Idee tragen. Header/Footer-Shell ist
+  optional; ein nackter Content-Screen reicht, wenn die Idee nicht vom Rahmen lebt. Die beste
+  Richtung wird danach als richtiger Prototyp ausgebaut.
+
+## Arbeitsweise
+
+Nicht nachfragen, was der Nutzer genau meint — bauen. Annahmen im Prototyp sichtbar machen
+und danach benennen, statt vorher zu klären. Der Prototyp ist die Frage, nicht die Antwort.
+
+Realistische Inhalte: echte Begriffe der Domäne, plausible Zahlen, kein Lorem Ipsum, keine
+`Item 1/Item 2`-Listen. Der Prototyp wird nach dem Inhalt beurteilt, nicht nach dem Layout.
+
+## Fertig heißt
+
+1. `pnpm typecheck` läuft durch.
+2. Im Browser bei mindestens 1280px Breite geprüft, keine Konsolenfehler.
+3. Kein hartkodierter Farb- oder Abstandswert im Diff — alles kommt aus Tokens.
+4. Jeder Ablauf einmal durchgeklickt; Leer-, Lade- und Fehlerzustände existieren, wo sie
+   im echten Produkt existieren würden.

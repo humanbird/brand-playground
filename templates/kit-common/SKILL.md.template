@@ -1,0 +1,106 @@
+---
+name: {{DS_SLUG}}
+description: Das {{DS_NAME}} Design System auf Konzeptebene — Seiten-Anatomie, Layout, Tokens, Komponentenwahl und der Weg zur exakten API. Nutze diese Skill immer, wenn in diesem Repo ein Screen, eine Ansicht, ein Formular, ein Prototyp oder irgendeine UI gebaut oder geändert wird.
+---
+
+{{STACK: bei kit-vue durch Vue-Entsprechungen ersetzen}}
+
+# {{DS_NAME}} bauen
+
+Dieses Repo hat genau einen Zweck: aus einem Satz Anforderung ein laufendes {{DS_NAME}}-Frontend
+machen. Diese Skill erklärt das System — nicht die Komponenten. Komponenten schlägst du nach.
+Das DS-unabhängige Handwerk (Zustände, Motion, Anti-Patterns) steht in `craft.md` im selben
+Ordner — bei jeder UI-Arbeit mitlesen.
+
+## Der Loop
+
+Ein Prototyp ist ein Ordner. Mehr Registrierung gibt es nicht.
+
+```
+src/prototypes/<slug>/index.tsx    ->  /p/<slug>
+src/prototypes/<slug>/Detail.tsx   ->  /p/<slug>/detail
+```
+
+Datei anlegen, Route existiert. Startseite listet alles automatisch. `pnpm dev` läuft auf
+Port 5300. Kein Config-File anfassen, kein Router-Eintrag, keine Registry.
+
+Routen laufen hinter dem Hash: `/p/<slug>` heißt im Browser `/#/p/<slug>` — der
+Einzeldatei-Export braucht das; direkte Pfade ohne `#` landen auf der Startseite.
+
+**Eine Datei = eine feste Route. Keine Pfadparameter.** `Detail.tsx` wird `/p/<slug>/detail`
+— ein `/p/<slug>/detail/:id` gibt es nicht. IDs reisen im Query-String (`?id=…`, gelesen mit
+`useSearchParams`), gemeinsamer Zustand im Store unter `_shared/`. Den Scroll-Reset beim
+Routenwechsel bringt der Router mit; keine Shell baut ihn nach.
+
+Baue **mehrere Screens**, sobald der Auftrag einen Ablauf beschreibt, und verlinke sie.
+Ein Prototyp, den man nicht durchklicken kann, beantwortet keine Frage.
+
+## Nie raten
+
+Props und Varianten **nie** aus dem Gedächtnis schreiben. Eine Prop, die nicht in
+`components-meta.json` oder im Quellcode steht, existiert nicht — nicht verwenden, nicht
+erfinden. Fehlt etwas wirklich, ist das ein Kit-Befund (Stolperstein/Meta ergänzen), kein
+Freibrief zum Raten.
+
+1. `design/components-meta.json` — alle Komponenten mit Props, Varianten, Slots und dem Feld
+   `extends` (welche HTML-Attribute durchgereicht werden und wo `className` landet). Mit
+   einem Dreizeiler filtern; das ist schneller und sicherer als jede Erinnerung.
+2. Echte Verwendung: der Quellcode unter `src/components/<Name>.tsx` (importiert wird
+   über den Barrel: `import { … } from '../../components'`).
+   {{CODE_FIRST: Ist das DS ein gepinntes Paket, gibt es src/components/ und src/icons/ NICHT — Punkt 2 verweist dann auf node_modules-Quellen und offizielle examples/stories, importiert wird direkt aus dem Paket. Der Generator schreibt alle src/components/-Verweise in dieser Skill und in CLAUDE.md entsprechend um.}}
+3. Token-Namen stehen vollständig in `design/tokens.css` — es gibt keine anderen.
+
+{{ICONS: Wie Icons eingebunden werden. Das Set ist als React-Komponenten in `src/icons/index.tsx` eingefroren: `import { DsIcon } from '../../icons'`, Name aus dem Typ `DsIconName` (Laufzeitliste: `dsIconNames`), Größe über Utilities (`h-5 w-5`), Farbe über den Textkontext (currentColor) — nie eine fill-Prop, nie ein zweites Icon-Set. Hier ergänzen: Quelle und Stil des Sets, die Rendergrößen des Originals und die 5–10 am häufigsten gebrauchten Namen. Vom Generator füllen oder Abschnitt entfernen, wenn das DS keine Icons hat.}}
+
+## Seiten-Anatomie
+
+{{ANATOMIE: Die 3–5 Regionen einer typischen {{DS_NAME}}-Seite als Tabelle (Region | Komponente/Muster | Rolle), danach EIN funktionierendes Gerüst-Beispiel als Code-Block, das Header/Nav, Content-Container und Footer korrekt zusammensteckt — mit echten Komponenten-Namen aus diesem Kit. Regeln für gemeinsame Shell mehrerer Screens (_shared/AppShell.tsx, _shared/data.ts als reaktiver Mock-Store).}}
+
+Aus einer `.tsx` in `_shared/` werden **nur Komponenten** exportiert. Ein zusätzlicher
+Konstanten- oder Helfer-Export in derselben Datei bricht Fast Refresh (die Seite lädt bei
+jeder Änderung komplett neu, der Prototyp-Store ist wieder leer) — solche Exporte gehören in
+eine eigene `.ts`.
+
+## Layout
+
+{{LAYOUT: Container-Breiten, Grid-/Spalten-Logik und das Layout-Modell des DS mit konkreten Werten aus dem Ingest — Viewport-Breakpoints ODER container-basiert (manche DS wie Onyx rechnen nach Containerbreite; dann gelten Container-Stufen, nicht Fensterbreiten). Die nicht-offensichtlichen Fallen explizit (z.B. was bei schmalen Containern passiert). Regel: Layoutwerkzeug erster Wahl benennen; eigene Flex-Konstruktionen erst, wenn das nachweislich nicht reicht.}}
+
+## Tokens statt Werte
+
+Alles Visuelle kommt aus den semantischen CSS-Variablen in `design/tokens.css`. Hex, rgb, hsl
+und px-Abstände im Prototyp-Code sind Fehler, keine Abkürzungen.
+
+{{TOKENS: Die Token-Gruppen mit Namensmuster und Anwendungsregel (welche Farbe wofür, Spacing-Stufen, Typo-Stufen mit Line-Heights, Radius-Sprache, Schatten). Kurz halten — die Datei selbst ist die Referenz. Zu jeder Rolle das WARUM in einem Halbsatz (z.B. „Schatten nur am Header, weil das System sonst flächenbasiert trennt") — Begründungen lassen den Agenten bei fehlenden Patterns systemkonform extrapolieren statt zu driften. Explizit: welche Rolle hat die Markenfarbe, was ist Text-Hierarchie (primär/sekundär/soft), was sind Flächen-Abstufungen. IMMER benennen: welche Fläche/Farbe markiert Auswahl bzw. den aktiven Zustand (gewählte Option, aktiver Filter, aktive Navigation) — und welche ähnliche Farbe dafür NICHT gemeint ist. Ohne diesen Satz greift jeder Prototyp-Agent zur nächstbesten Pastellfläche. Kategorien, die das DS bewusst NICHT hat (z.B. keine Schatten, keine Animationen, keine Verläufe), als „Fehlt bewusst: … — Grund" deklarieren statt still wegzulassen — sonst erfindet der nächste Agent sie.}}
+
+Breiten aus der Utility-Skala des CSS-Frameworks (`max-w-*`, `min-w-*`) sind erlaubt, solange
+sie rem-basiert sind und es kein Token-Äquivalent gibt — sie deckeln Inhalte innerhalb einer
+Sektion. Alles Farbige, Abstände und Typo kommen weiterhin ausschließlich aus Tokens.
+
+## Komponenten wählen
+
+Native Elemente sind fast immer die falsche Antwort. `<button>` → `<DsButton>`, `<input>` →
+die Formular-Komponenten dieses Kits. Vor dem Selbstbauen: `components-meta.json` prüfen —
+{{ANZAHL}} Komponenten existieren.
+
+{{KOMPONENTENWAHL: Tabelle native/Absicht → Kit-Komponente; die Auswahl-Muster (Radio/Checkbox/Optionskachel) gehören mit hinein. Danach „Typische Kompositionen": 5–10 wiederkehrende Muster (Datenseite, Formular, Karte/Teaser, Leerzustand, Bestätigungsdialog, …) mit den konkreten Komponenten-Kombinationen dieses Kits, je 1–3 Zeilen. Immer dabei: das TABELLEN-/DATENMUSTER — Linienfarbe, Kopfzeilen-Gewicht, Ausrichtung, Zahlenformatierung (tabular-nums), horizontales Scrollen — denn eine Tabelle baut jeder Agent sonst frei erfunden.}}
+
+Bildplatzhalter: unterhalb von etwa 120px Kantenlänge (Listenzeilen, Tabellenköpfe,
+Thumbnails) passt kein Text mehr auf die Fläche. Dort ein Icon zentrieren und die
+Motivbeschreibung als `sr-only`-Text mitgeben — beschnittener Platzhaltertext sieht nach
+Fehler aus, nicht nach Platzhalter.
+
+## Stolpersteine
+
+{{STOLPERSTEINE: Bekannte Fallen dieses Kits/dieser DS-Version. Wächst mit der Nutzung — jede beim Bauen gefundene Falle wird HIER eingetragen (und ggf. in design/fixes.css dokumentiert korrigiert). Initial vom Generator mit dem befüllen, was beim Referenz-Screen-Nachbau auffiel.}}
+
+## Haltung
+
+{{HALTUNG: 4–6 Grundsätze der visuellen Sprache dieses CD, aus dem Ingest-Report destilliert (z.B. Ausrichtung, Weißraum vs. Rahmen, Bildsprache, Tonalität der Texte). Plus immer: Inhalt bestimmt Struktur, nicht umgekehrt. Zustände mitdenken — ein Prototyp ohne Leer-/Lade-/Fehlerzustand sieht fertiger aus, als er ist.}}
+
+## Fertig heißt
+
+1. `pnpm typecheck` läuft durch.
+2. Im Browser bei mindestens 1280px geprüft{{BREITE_HINWEIS: ggf. DS-spezifischen Hinweis ergänzen, was unterhalb passiert}}.
+3. Keine Konsolenfehler.
+4. Kein hartkodierter Farb- oder Abstandswert im Diff. {{GREP_AUSNAHMEN: Falls das DS sanktionierte Ausnahme-Tokens hat (z.B. eine 1px-Rahmenbreite als Token), hier benennen — sonst schlägt die Prüfung auf korrekt gebaute Borders an.}}
+5. Jeder Ablauf einmal durchgeklickt, inkl. Leerzustand.
