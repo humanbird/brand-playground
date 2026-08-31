@@ -1,24 +1,23 @@
 /*
- * design/fonts.css — selbst gehostete Schriften.
+ * design/fonts.css: self-hosted fonts.
  *
- * GENERATOR-DATEI: `/basis` füllt sie aus `ingest/<ds>/assets.md`. Im Template
- * ist sie leer — die Platzhalter-Tokens fahren einen System-Font-Stack, der
- * keine Datei braucht.
+ * GENERATOR FILE: `/basis` populates it from `ingest/<ds>/assets.md`. It is empty
+ * in the template because the placeholder tokens use a system font stack that
+ * requires no file.
  *
- * Kein CDN, kein <link> auf Google Fonts: der Einzeldatei-Export
- * (`pnpm export`) muss offline per Doppelklick laufen. Deshalb kommen die
- * woff2-Dateien aus npm-Paketen (@fontsource/*) oder liegen unter
- * design/fonts/ — Vite löst die url() beim Build auf und bettet sie als
- * data-URI in die eine HTML-Datei ein. Eine url() auf http(s) bricht das.
+ * No CDN and no <link> to Google Fonts: the single-file export (`pnpm export`)
+ * must run offline when opened directly. Therefore, woff2 files come from npm
+ * packages (@fontsource/*) or live under design/fonts/. Vite resolves url()
+ * during the build and embeds each file as a data URI in the single HTML file.
+ * An http(s) url() breaks this constraint.
  *
- * LIZENZ: Corporate-Schriften sind fast immer lizenzpflichtig und dürfen
- * nicht mitgeliefert werden. Dann eine freie, metrisch nahe Ersatzschrift
- * wählen, den Ersatz HIER dokumentieren (Original, Ersatz, Begründung) und
- * in design/tokens.css den Font-Stack entsprechend setzen. Kein
- * Komponentencode fasst Schriftnamen an — der Wechsel passiert an genau
- * diesen zwei Stellen.
+ * LICENSE: corporate fonts almost always require a license and cannot be
+ * distributed. In that case, choose a free, metrically similar replacement,
+ * document it HERE (original, replacement, rationale), and update the font stack
+ * in design/tokens.css. Component code never touches font names; the change
+ * happens in exactly these two places.
  *
- * Muster:
+ * Pattern:
  *
  *   @font-face {
  *     font-family: "Montserrat";
@@ -29,6 +28,6 @@
  *       format("woff2");
  *   }
  *
- * Pro Schnitt ein Block — nur die Gewichte einbinden, die das DS wirklich
- * benutzt; jedes weitere woff2 landet als data-URI im Export.
+ * One block per style. Include only the weights the design system actually uses;
+ * every additional woff2 becomes a data URI in the export.
  */

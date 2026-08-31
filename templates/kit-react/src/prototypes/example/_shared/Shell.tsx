@@ -1,9 +1,9 @@
 /*
- * Gemeinsame Shell der Screens von `beispiel`.
+ * Shared shell for the `example` screens.
  *
- * Liegt bewusst in _shared/ — und ist deshalb KEINE Route, obwohl es eine
- * .tsx-Datei mit Default-Export ist. Genau das ist die Probe auf die Konvention:
- * geroutet wird nur, was direkt in src/prototypes/<slug>/ liegt.
+ * It intentionally lives in _shared/ and is therefore NOT a route, even though
+ * it is a .tsx file with a default export. This verifies the convention: only
+ * files directly under src/prototypes/<slug>/ are routed.
  */
 
 import type { ReactNode } from 'react'
@@ -26,7 +26,7 @@ export function Shell({
             to={zurueck?.to ?? '/'}
             className="text-sm text-ink-muted underline-offset-4 hover:text-accent hover:underline"
           >
-            ← {zurueck?.label ?? 'Übersicht'}
+            ← {zurueck?.label ?? 'Overview'}
           </Link>
           <h1 className="text-lg font-medium text-ink">{titel}</h1>
         </div>

@@ -1,17 +1,17 @@
 /*
- * Auto-Routing, nicht anfassen.
+ * Automatic routing. Do not edit.
  *
- * Die Routen entstehen aus der Ordnerstruktur unter src/prototypes/ (siehe
- * src/prototypes.ts). Hier wird nichts eingetragen, hier wird nichts gepflegt.
+ * Routes are derived from the folder structure under src/prototypes/ (see
+ * src/prototypes.ts). Nothing is registered or maintained here.
  *
- * Hash-History statt History-API, damit der Einzeldatei-Export
- * (`pnpm export` → export/index.html) ohne Server funktioniert: Routen leben
- * hinter dem #, das Dateisystem sieht nur eine index.html.
+ * Hash history is used instead of the History API so the single-file export
+ * (`pnpm export` → export/index.html) works without a server: routes live after
+ * the #, while the file system only sees one index.html.
  *
- * Der Scroll-Reset beim Routenwechsel sitzt ebenfalls hier — einmal für alle
- * Prototypen. Sonst startet der nächste Screen mittendrin. In Vue ist das
- * `scrollBehavior` des Routers die dafür vorgesehene Stelle; es braucht keine
- * eigene Komponente.
+ * The scroll reset on route changes also lives here, once for all prototypes.
+ * Otherwise, the next screen could open halfway down the page. In Vue, the
+ * router's `scrollBehavior` is the intended place for this; no separate
+ * component is required.
  */
 
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
@@ -34,6 +34,6 @@ const routes: RouteRecordRaw[] = [
 export const router = createRouter({
   history: createWebHashHistory(),
   routes,
-  // Jeder Screen beginnt oben. Ankersprünge gibt es im Hash-Modus ohnehin nicht.
+  // Every screen starts at the top. Anchor navigation is unavailable in hash mode anyway.
   scrollBehavior: () => ({ top: 0 }),
 })

@@ -1,9 +1,9 @@
 <!--
-  Automatische Übersicht aller Prototypen. Wird nie von Hand gepflegt —
-  sie liest, was unter src/prototypes/ liegt.
+  Automatic overview of all prototypes. It is never maintained manually;
+  it reads the contents of src/prototypes/.
 
-  Zwei Gruppen: konvergente Prototypen (/proto) und Ideen (/ideate, Slug-Präfix
-  `idea-`). Die Ideen-Gruppe erscheint erst, wenn es Ideen gibt.
+  Two groups: convergent prototypes (/proto) and ideas (/ideate, slug prefix
+  `idea-`). The ideas group appears only when ideas exist.
 -->
 
 <script setup lang="ts">
@@ -14,10 +14,10 @@ import { ideaPrototypes, protoPrototypes, type Prototype } from './prototypes'
 const hasAny = protoPrototypes.length + ideaPrototypes.length > 0
 
 const gruppen: { title: string; hint: string; items: Prototype[] }[] = [
-  { title: 'Prototypen', hint: 'Ein Strang, sauber durchgebaut.', items: protoPrototypes },
+  { title: 'Prototypes', hint: 'One path, developed end to end.', items: protoPrototypes },
   {
-    title: 'Ideen',
-    hint: 'Divergente Varianten zu einer Fragestellung — grob, schnell, nebeneinander.',
+    title: 'Ideas',
+    hint: 'Divergent approaches to one question: rough, fast, and side by side.',
     items: ideaPrototypes,
   },
 ].filter((gruppe) => gruppe.items.length > 0)
@@ -30,17 +30,17 @@ function screenCountLabel(count: number) {
 <template>
   <main class="mx-auto max-w-5xl px-6 py-12">
     <header>
-      <h1 class="text-2xl font-bold text-ink">Prototypen</h1>
+      <h1 class="text-2xl font-bold text-ink">Prototypes</h1>
       <p class="mt-3 max-w-2xl text-base text-ink-muted">
-        Der Prototyp ist die Frage, nicht die Antwort.
+        The prototype is the question, not the answer.
       </p>
     </header>
 
     <div v-if="!hasAny" class="mt-12 rounded-lg border border-line border-dashed p-8">
-      <p class="text-base text-ink">Noch kein Prototyp vorhanden.</p>
+      <p class="text-base text-ink">No prototypes yet.</p>
       <p class="mt-3 text-sm text-ink-muted">
-        Ordner unter <code class="font-mono">src/prototypes/</code> anlegen, darin eine
-        <code class="font-mono">index.vue</code> — die Route existiert dann sofort.
+        Create a folder under <code class="font-mono">src/prototypes/</code> and add an
+        <code class="font-mono">index.vue</code>; the route will be available immediately.
       </p>
     </div>
 
@@ -63,7 +63,7 @@ function screenCountLabel(count: number) {
 
           <p class="mt-1 text-sm text-ink-muted">
             {{ screenCountLabel(prototype.screens.length) }}
-            <template v-if="prototype.missingIndex"> · keine index.vue</template>
+            <template v-if="prototype.missingIndex"> · no index.vue</template>
           </p>
 
           <ul v-if="prototype.screens.length > 1" class="mt-4 flex flex-wrap gap-2">

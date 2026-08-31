@@ -1,9 +1,9 @@
 <!--
-  Wurzelkomponente. Enthält bewusst nichts außer dem RouterView — jede Shell,
-  jede Navigation, jeder Rahmen gehört in den jeweiligen Prototyp
-  (src/prototypes/<slug>/_shared/), nicht hierher.
+  Root component. Intentionally contains only RouterView. Each shell, navigation
+  element, and frame belongs in its respective prototype
+  (src/prototypes/<slug>/_shared/), not here.
 
-  Nicht anfassen.
+  Do not edit.
 -->
 
 <script setup lang="ts">

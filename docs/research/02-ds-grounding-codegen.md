@@ -1,35 +1,35 @@
-# Recherche: Designsystem-Grounding für AI-Codegen (Stand 2026-08)
+# Research: Design System Grounding for AI Code Generation (as of 2026-08)
 
-## Kernbefunde
+## Core Findings
 
-### Design Tokens: DTCG ist der De-facto-Standard
-- DTCG Format Module 2025.10 seit Okt. 2025 stabil (W3C Community Group, kein offizieller Standard, aber industrieweit adoptiert: Figma, Penpot, Sketch, Tokens Studio, Style Dictionary, Terrazzo). Format: JSON mit `$value`, `$type`, `$description`, `$extensions`.
-- Style Dictionary v4 unterstützt DTCG nativ (Alias-Resolution, Transformer-Pipeline).
-- Empfehlung: DTCG-JSON als kanonisches Austauschformat, Style Dictionary als Build zu CSS-Variablen/JS/Tailwind.
+### Design Tokens: DTCG Is the De Facto Standard
+- DTCG Format Module 2025.10 has been stable since October 2025 (W3C Community Group; not an official standard, but adopted across the industry by Figma, Penpot, Sketch, Tokens Studio, Style Dictionary, and Terrazzo). Format: JSON with `$value`, `$type`, `$description`, `$extensions`.
+- Style Dictionary v4 supports DTCG natively (alias resolution, transformer pipeline).
+- Recommendation: use DTCG JSON as the canonical exchange format and Style Dictionary to build CSS variables/JS/Tailwind.
 
 ### Figma MCP + Code Connect
-- Offizieller Figma Dev Mode MCP Server: 14 Tools, liefert Komponenten-Metadaten, Variablen, Layer-Tree, Spacing direkt in den Agenten-Kontext.
-- **Code Connect** = Schlüssel für treue Codegen: mappt Figma-Node → reale Code-Komponente (Import-Pfad, Props, Snippet). Ohne Mapping generiert der Agent Duplikate. Seit Nov. 2025 KI-gestützte Mapping-Vorschläge in der Code-Connect-UI.
+- Official Figma Dev Mode MCP server: 14 tools that provide component metadata, variables, the layer tree, and spacing directly in the agent context.
+- **Code Connect** = the key to faithful code generation: maps a Figma node → a real code component (import path, props, snippet). Without this mapping, the agent generates duplicates. The Code Connect UI has offered AI-assisted mapping suggestions since November 2025.
 
-### Komponenten-Distribution
-- shadcn registry.json: „open code" — Komponenten werden in den eigenen Code kopiert, keine Blackbox → für LLMs lesbar und editierbar. Private Registries für interne DS sind Standard-Praxis.
-- Storybook MCP (`@storybook/addon-mcp`, ab Storybook 10.3): Doku-Discovery + Story-Erzeugung + Story-Tests = „generate → test → fix"-Schleife. Stand 03/2026 nur React.
-- Komponenten-Docs als Markdown bleiben der robusteste Kanal ohne Tooling.
+### Component Distribution
+- shadcn registry.json: "open code"—components are copied into the project's own code, with no black box → readable and editable by LLMs. Private registries for internal design systems are standard practice.
+- Storybook MCP (`@storybook/addon-mcp`, from Storybook 10.3): documentation discovery + story generation + story tests = a "generate → test → fix" loop. React only as of 2026-03.
+- Component documentation in Markdown remains the most robust channel without tooling.
 
-### Stack-Empfehlung: React + Tailwind + shadcn-Muster
-- Marktkonsens 2026. Gründe: Trainingsdaten-Dominanz von React, Copy-Paste/open-code ohne Abstraktionslayer, Tailwind-Utilities zuverlässiger für LLMs als tiefe Prop-Hierarchien. TypeScript verbessert Agenten-Erfolg messbar (Constraints).
-- Plain HTML+CSS-Variablen: nicht als Best Practice belegt, aber auch nicht widerlegt — offene Frage für sehr einfache Protos.
+### Stack Recommendation: React + Tailwind + the shadcn Pattern
+- Market consensus in 2026. Reasons: React's dominance in training data, copy-paste/open code without an abstraction layer, and Tailwind utilities being more reliable for LLMs than deep prop hierarchies. TypeScript measurably improves agent success (constraints).
+- Plain HTML + CSS variables: neither established nor disproven as a best practice—an open question for very simple prototypes.
 
-### Drei Säulen „AI-readable DS" (aus Case-Study-Aggregaten)
-1. Maschinenlesbare Tokens (semantische Namen → deutlich bessere Codegen-Genauigkeit)
-2. MCP-/Registry-Zugriff
-3. Komponenten-Contracts (Varianten/States/Kombinationsregeln als Metadaten)
-- Kernthese: 2026 lautet die Frage nicht mehr „kann KI UI generieren?", sondern „konsumiert das DS, was generiert wird, ohne Drift?"
+### Three Pillars of an "AI-Readable DS" (from Aggregated Case Studies)
+1. Machine-readable tokens (semantic names → significantly better code-generation accuracy)
+2. MCP/registry access
+3. Component contracts (variants/states/composition rules as metadata)
+- Core thesis: in 2026, the question is no longer "can AI generate UI?" but "can the DS consume what is generated without drift?"
 
-## Empfohlene Pipeline (Scout)
-Figma Variables/Tokens Studio → DTCG-JSON → Style Dictionary → CSS-Vars/Tailwind/TS-Types → Komponenten-Registry (shadcn-Format) + Code Connect + Storybook-MCP → Agent generiert gegen reale Komponenten.
+## Recommended Pipeline (Scout)
+Figma Variables/Tokens Studio → DTCG JSON → Style Dictionary → CSS variables/Tailwind/TS types → component registry (shadcn format) + Code Connect + Storybook MCP → the agent generates against real components.
 
-## Quellen
+## Sources
 - https://styledictionary.com/info/dtcg/ · https://www.designtokens.org/tr/drafts/format/
 - https://docs.tokens.studio/manage-settings/token-format
 - https://developers.figma.com/docs/code-connect/code-connect-ui-setup/

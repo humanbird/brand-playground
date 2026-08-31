@@ -1,142 +1,144 @@
-# Template `kit-react` — was der Generator füllt
+# Template `kit-react` — What the Generator Populates
 
-Der generische Kern eines Prototyping-Kits: Vite + React + TypeScript + Tailwind v4,
-ein einziges pnpm-Paket. Solo lauffähig — mit neutralen Platzhalter-Tokens und einem
-Beispiel-Prototyp, damit sich Konvention und Aufbau ohne Designsystem prüfen lassen.
+The generic core of a prototyping kit: Vite + React + TypeScript + Tailwind v4,
+a single pnpm package. Runs on its own—with neutral placeholder tokens and a sample
+prototype, so the conventions and structure can be validated without a design system.
 
-`/basis` kopiert diesen Ordner und füllt die unten markierten Stellen. Alles, was hier
-nicht genannt ist, wird unverändert übernommen.
+`/basis` copies this folder and populates the marked sections below. Everything not
+listed here is carried over unchanged.
 
-## Was ersetzt wird
+## What Gets Replaced
 
-| Stelle | Was hinein muss |
+| Location | Required content |
 |---|---|
-| `package.json` → `name`, `.claude/launch.json` → `name` | Platzhalter `{{KIT_NAME}}` durch den Kit-Namen ersetzen (npm-tauglich: klein, keine Leerzeichen). Der Platzhalter ist die **einzige** Textersetzung im Template — er steht an genau diesen zwei Stellen. |
-| Port (nur bei Abweichung vom Default 5300) | In `vite.config.ts`, `.claude/launch.json` und der Befehlstabelle der Kit-CLAUDE.md **synchron** ändern — sonst laufen Doku und Server auseinander. |
-| `AGENTS.md` (neu anlegen) | Identischer Inhalt wie die Kit-CLAUDE.md — Cursor/Copilot/andere Agenten lesen diese Datei; bei Änderungen beide synchron halten. |
-| `llms.txt` (neu anlegen) | Einstiegs-Index für beliebige Tools: ein Satz Zweck + Pfade (tokens.css, components-meta.json, Skill, Komponenten, Befehle) mit je einer Zeile. |
-| Diese Datei (`TEMPLATE.md`) | Nach dem Füllen aus dem Kit **löschen** — Generator-Doku gehört nicht ins Konsumenten-Repo. |
-| `design/tokens.css` | Die eingefrorenen Tokens des Ziel-Designsystems. Datei wird komplett ersetzt. Werden Token-**Namen** geändert, muss der `@theme`-Block in `src/styles.css` mitziehen. |
-| `design/tokens.json` | DTCG-Quelle aus dem Ingest, jedes Token mit `$extensions.provenance`. Datei wird komplett ersetzt; das Gerüst zeigt die erwartete Form. |
-| `design/components-meta.json` | Das Komponenteninventar des Ziel-DS (Props, Varianten, Slots, Beschreibung) — **plus `extends` je Komponente**: welche HTML-Attribute durchgereicht werden und wo `className` landet (z.B. `"InputHTMLAttributes<HTMLInputElement> ohne placeholder und className — Rest an das <input>, className an den Feldrahmen"`, oder `"— keine Rest-Props"`). Ohne dieses Feld rät jeder Prototyp-Agent bei jedem Feld neu. Das Array wird komplett ersetzt — der `DsButton`-Eintrag ist nur das Formbeispiel. |
-| `src/components/` | Die Komponenten des Ziel-DS (übernommen oder generiert), flach als `src/components/<Name>.tsx`. `DsButton.tsx` fliegt raus, sobald es einen echten Button gibt. |
-| `src/components/index.ts` | Der Barrel — jede Komponente mit Wert- und Typ-Exporten. Prototypen importieren ausschließlich darüber (`from '../../components'`). |
-| `src/icons/index.tsx` | Das Icon-Set des Ziel-DS, eingefroren als React-Komponenten (`ICONS`-Objekt austauschen, `DsIcon` bleibt). Die zwei Symbole im Template sind nur das Formbeispiel. Konvention: `fill="currentColor"`, Größe über Utilities, nie ein zweites Set dazumischen. |
-| `design/fonts.css` | Die `@font-face`-Blöcke des Ziel-DS. Im Template leer (System-Font-Stack). Nur lokale `url()` — der Einzeldatei-Export bettet sie als data-URI ein; Lizenzlage und ggf. der Ersatzfont werden im Kopf der Datei dokumentiert. |
-| `src/styles.css` → `@theme`-Block plus ggf. Breakpoints, Resets und `@layer components` für die Layoutsprache des DS | Der `@theme`-Block spiegelt die Token-Namen; die `*: initial`-Guards bleiben in jedem Namespace stehen und nur die Listen darunter werden ersetzt. Hat das DS eine eigene Layoutsprache (Container, Vertikalrhythmus, Full-Bleed), kommt sie als `@layer components` dazu. Die generischen Farb-Aliasse (`canvas`, `surface`, `line`, `ink`, `ink-muted`, `accent`, `accent-hover`, `on-accent`, `success`, `danger`) bleiben erhalten — die nicht gepflegten Gerüstdateien (`HomeView`, `router`) benutzen sie. |
-| `CLAUDE.md` | Nicht im Template. Der Generator legt sie an: Zweck, Loop, Befehle, Arbeitsweise, „Fertig heißt". |
-| `.claude/skills/<ds>/SKILL.md` | Nicht im Template. Der Generator legt genau **eine** Skill pro Designsystem an. |
-| `src/prototypes/beispiel/` | Löschen, sobald der erste echte Prototyp steht. Bis dahin ist er die lebende Doku der Konvention. |
-| `index.html` → `<title>` | Optional auf den Projektnamen setzen. |
+| `package.json` → `name`, `.claude/launch.json` → `name` | Replace the `{{KIT_NAME}}` placeholder with the kit name (npm-compatible: lowercase, no spaces). The placeholder is the **only** text substitution in the template—it appears in exactly these two locations. |
+| Port (only if different from the default 5300) | Update `vite.config.ts`, `.claude/launch.json`, and the command table in the kit's CLAUDE.md **in sync**—otherwise the documentation and server will diverge. |
+| `AGENTS.md` (create) | Identical content to the kit's CLAUDE.md—Cursor, Copilot, and other agents read this file; keep both files synchronized whenever they change. |
+| `llms.txt` (create) | Entry-point index for any tool: one sentence describing the purpose, followed by one line per relevant path (tokens.css, components-meta.json, skill, components, commands). |
+| This file (`TEMPLATE.md`) | **Delete** it from the kit after populating the template—generator documentation does not belong in the consumer repository. |
+| `design/tokens.css` | The frozen tokens from the target design system. Replace the entire file. If token **names** change, update the `@theme` block in `src/styles.css` accordingly. |
+| `design/tokens.json` | DTCG source produced by ingestion, with `$extensions.provenance` on every token. Replace the entire file; the scaffold illustrates the expected shape. |
+| `design/components-meta.json` | The target design system's component inventory (props, variants, slots, description)—**plus `extends` for each component**: which HTML attributes are passed through and where `className` is applied (for example, `"InputHTMLAttributes<HTMLInputElement> excluding placeholder and className—the remaining props go to <input>, className goes to the field frame"`, or `"— no remaining props"`). Without this field, every prototype agent has to infer the behavior for every field. Replace the entire array—the `DsButton` entry only illustrates the expected shape. |
+| `src/components/` | The target design system's components (adopted or generated), kept flat as `src/components/<Name>.tsx`. Remove `DsButton.tsx` as soon as a real button is available. |
+| `src/components/index.ts` | The barrel file—every component with value and type exports. Prototypes import exclusively through it (`from '../../components'`). |
+| `src/icons/index.tsx` | The target design system's icon set, frozen as React components (replace the `ICONS` object; retain `DsIcon`). The two symbols in the template only illustrate the expected shape. Convention: `fill="currentColor"`, size via utilities, and never mix in a second icon set. |
+| `design/fonts.css` | The target design system's `@font-face` blocks. Empty in the template (system font stack). Use local `url()` references only—the single-file export embeds them as data URIs; document the licensing status and any substitute font at the top of the file. |
+| `src/styles.css` → `@theme` block plus any breakpoints, resets, and `@layer components` rules for the design system's layout language | The `@theme` block mirrors the token names; keep the `*: initial` guards in every namespace and replace only the lists beneath them. If the design system has its own layout language (containers, vertical rhythm, full bleed), add it via `@layer components`. Retain the generic color aliases (`canvas`, `surface`, `line`, `ink`, `ink-muted`, `accent`, `accent-hover`, `on-accent`, `success`, `danger`)—the unmaintained scaffold files (`HomeView`, `router`) use them. |
+| `CLAUDE.md` | Not included in the template. The generator creates it with the purpose, loop, commands, workflow, and definition of done. |
+| `.claude/skills/<ds>/SKILL.md` | Not included in the template. The generator creates exactly **one** skill per design system. |
+| `src/prototypes/example/` | Delete it as soon as the first real prototype exists. Until then, it serves as living documentation of the conventions. |
+| `index.html` → `<title>` | Optionally set it to the project name. |
 
-## Was der Generator NICHT anfassen darf
+## What the Generator Must NOT Change
 
-- `src/router.tsx`, `src/prototypes.ts` — Auto-Routing. Keine Registry, kein Eintrag.
-- `src/HomeView.tsx` — liest, was da ist. Wird nie gepflegt.
-- `src/main.tsx` — die Stylesheet-Reihenfolge ist bedeutsam und steht fest:
+- `src/router.tsx`, `src/prototypes.ts`—automatic routing. No registry and no entry.
+- `src/HomeView.tsx`—reads whatever is present. It is never maintained.
+- `src/main.tsx`—stylesheet order is significant and fixed:
   `design/fonts.css` → `design/tokens.css` → `src/styles.css` → `design/fixes.css`.
-  Fonts vor Tokens, Fixes zuletzt (sie sollen gewinnen). Der Generator füllt die
-  vier Dateien, er ändert die Imports nicht.
-- `vite.config.ts`, `tsconfig.json` — außer bei begründeten Stack-Abweichungen.
-- `design/fixes.css` — bleibt leer, bis eine konkrete Falle dokumentiert wird.
+  Fonts before tokens, fixes last (they are intended to win). The generator populates
+  the four files; it does not change the imports.
+- `vite.config.ts`, `tsconfig.json`—except for justified stack deviations.
+- `design/fixes.css`—remains empty until a specific pitfall is documented.
 
-## Konvention (gilt im generierten Kit)
+## Convention (Applies to the Generated Kit)
 
 ```
 src/prototypes/<slug>/index.tsx     →  /p/<slug>
-src/prototypes/<slug>/<Name>.tsx    →  /p/<slug>/<name>      (klein geschrieben)
-src/prototypes/<slug>/_shared/…     →  keine Route (Shell, Mockdaten, Helfer)
-src/prototypes/idea-<slug>/…        →  auf der Übersicht als „Ideen" gruppiert
+src/prototypes/<slug>/<Name>.tsx    →  /p/<slug>/<name>      (lowercase)
+src/prototypes/<slug>/_shared/…     →  no route (shell, mock data, helpers)
+src/prototypes/idea-<slug>/…        →  grouped as “Ideas” on the overview
 ```
 
-Ordner anlegen heißt: Route existiert. Kein Config-File, keine Registrierung.
+Creating a folder creates a route. No configuration file and no registration.
 
-## Befehle
+## Commands
 
-| Befehl | Wirkung |
+| Command | Effect |
 |---|---|
-| `pnpm install` | einmalig |
-| `pnpm dev` | Dev-Server auf festem Port **5300** (`strictPort`) |
+| `pnpm install` | once |
+| `pnpm dev` | development server on fixed port **5300** (`strictPort`) |
 | `pnpm typecheck` | `tsc --noEmit` |
-| `pnpm export` | statischer **Einzeldatei**-Export nach `export/index.html` — per Doppelklick im Browser lauffähig, deshalb HashRouter und `base: './'` |
+| `pnpm export` | static **single-file** export to `export/index.html`—runs in a browser when opened directly, hence HashRouter and `base: './'` |
 
-`.claude/launch.json` beschreibt denselben Dev-Server für die Browser-Vorschau des Agenten
-(`pnpm dev`, Port 5300). Ohne die Datei kann er den Prototyp nicht selbst ansehen.
+`.claude/launch.json` describes the same development server for the agent's browser preview
+(`pnpm dev`, port 5300). Without this file, the agent cannot inspect the prototype itself.
 
-## Stolpersteine
+## Pitfalls
 
-- **kit-vue pinnt TypeScript `^6`, weil `vue-tsc` TS 7 nicht unterstützt — kein Versehen.**
-- **Spacing-Namen kollidieren.** In Tailwind v4 beschattet der `--spacing-*`-Namespace
-  die container-Skala: `--spacing-2xl: 3rem` macht aus `max-w-2xl` stillschweigend 3rem
-  statt 42rem. Deshalb mappt `src/styles.css` nur `--spacing` (die Grundeinheit); die
-  numerische Skala `p-4`, `gap-6` … leitet sich daraus ab und ist damit token-gebunden.
-  Hat das Ziel-DS eine nicht-lineare Spacing-Skala, gehören deren Stufen unter einen
-  kollisionsfreien Präfix (z.B. `--spacing-ds-200`).
-- **Schriftgrößen** heißen wie in Tailwind (`--text-xs/sm/base/lg/xl/2xl`), damit es
-  keine zwei Namen für dieselbe Stufe gibt. Führt das Ziel-DS eigene Stufennamen
-  (`xs · s · m · l · xl · xxl · xxxl` statt `sm/base/lg/2xl`), darf der Generator sie
-  übernehmen — dann aber KONSEQUENT, inklusive der Gerüstdateien (`HomeView.tsx`,
-  `router.tsx` benutzen `text-base`, `text-2xl`, `font-bold`, `rounded-lg`, `shadow-sm`,
-  `sm:`, `lg:`, `max-w-2xl`, `max-w-5xl`). Zwei Namenssysteme nebeneinander sind schlimmer
-  als ein fremdes: der Prototyp-Agent rät dann bei jeder Klasse.
-- **Die `--spacing`-Grundeinheit skaliert AUCH `w-*` und `h-*`.** Setzt der Generator sie
-  auf die Einheit des Ziel-DS (z.B. `0.3125rem` für eine 5px-Skala), sind `h-6` plötzlich
-  30px statt 24 und `w-52` 260px statt 208. Das trifft jede Icon- und Bedienelement-Größe
-  und fällt nur auf, wenn man misst — der Screen sieht „fast richtig" aus. Die gemessenen
-  Maße des DS (Icon 24px, Bedienhöhe 44px …) liegen fast nie auf der Spacing-Skala, weil
-  DS sie in `em` relativ zur Schrift rechnen. Lösung: eigene `@utility`-Regeln am Ende von
-  `src/styles.css` mit sprechenden Namen, die der Skill dann als Vokabular dienen:
+- **kit-vue pins TypeScript to `^6` because `vue-tsc` does not support TS 7—this is intentional.**
+- **Spacing names collide.** In Tailwind v4, the `--spacing-*` namespace shadows the
+  container scale: `--spacing-2xl: 3rem` silently turns `max-w-2xl` into 3rem instead
+  of 42rem. For that reason, `src/styles.css` maps only `--spacing` (the base unit); the
+  numeric scale `p-4`, `gap-6`, and so on is derived from it and therefore tied to the
+  tokens. If the target design system has a nonlinear spacing scale, its steps belong
+  under a collision-free prefix (for example, `--spacing-ds-200`).
+- **Font sizes** use Tailwind names (`--text-xs/sm/base/lg/xl/2xl`), avoiding two names
+  for the same step. If the target design system defines its own step names
+  (`xs · s · m · l · xl · xxl · xxxl` instead of `sm/base/lg/2xl`), the generator may
+  adopt them—but must do so CONSISTENTLY, including in the scaffold files (`HomeView.tsx`,
+  `router.tsx` use `text-base`, `text-2xl`, `font-bold`, `rounded-lg`, `shadow-sm`,
+  `sm:`, `lg:`, `max-w-2xl`, `max-w-5xl`). Two naming systems side by side are worse
+  than an unfamiliar one: the prototype agent otherwise has to guess for every class.
+- **The `--spacing` base unit ALSO scales `w-*` and `h-*`.** If the generator sets it
+  to the target design system's unit (for example, `0.3125rem` for a 5px scale), `h-6`
+  suddenly becomes 30px instead of 24, and `w-52` becomes 260px instead of 208. This
+  affects every icon and control size and is noticeable only when measured—the screen
+  looks “almost right.” The design system's measured dimensions (24px icon, 44px control
+  height, and so on) almost never lie on the spacing scale because design systems
+  calculate them in `em` relative to the font. Solution: define custom `@utility` rules
+  with descriptive names at the end of `src/styles.css`; the skill then uses these as
+  its vocabulary:
 
       @utility icon-m   { width: 1.5rem; height: 1.5rem; }   /* 24px */
       @utility control-m { height: 2.75rem; width: 2.75rem; } /* 44px */
 
-  Das ist besser, als arbitrary values (`h-[1.5rem]`) über das ganze Kit zu streuen —
-  und es hält die Prüfung „kein px-Wert im Diff" ehrlich.
-- **Tailwind-Default-Paletten driften stillschweigend ein.** `src/styles.css` löscht
-  sie deshalb pro Namespace mit `--color-*: initial`, `--radius-*: initial`,
-  `--shadow-*: initial`, `--text-*: initial`, `--breakpoint-*: initial`. Ohne diese
-  Zeilen erzeugt Tailwind `bg-gray-100`, `rounded-3xl` oder `2xl:` klaglos weiter — der
-  Screen sieht plausibel aus und hat trotzdem Fremdfarben im Build. Die Guards bleiben
-  stehen; ersetzt werden nur die Listen darunter.
-- **`-*/` in einem CSS-Kommentar beendet ihn vorzeitig.** Wer in `src/styles.css` oder
-  `design/tokens.css` Token-Namensmuster im Fließtext erwähnt (`--fgColor-*/--bgColor-*`),
-  schließt damit versehentlich den Kommentarblock: Tailwind bricht danach mit einem
-  `CssSyntaxError` ab, dessen Meldung den deutschen Kommentartext zitiert und nicht im
-  Entferntesten auf die Ursache zeigt. In Kommentaren die Muster durch Komma trennen
-  (`--fgColor-*, --bgColor-*`) oder in Backticks setzen. Betrifft jedes DS, dessen
-  Token-Namen auf `*` enden können — also jedes.
-- **Breakpoints in `@theme` MÜSSEN Literale sein.** `--breakpoint-md: var(--ds-breakpoint-md)`
-  wird zu einer `@media`-Bedingung mit einer CSS-Variablen — die ist ungültig, Tailwind
-  erzeugt die Variante gar nicht erst, und `md:` fällt aus, ohne dass irgendwo ein Fehler
-  auftaucht. Der Screen sieht dann bei jeder Breite gleich aus, und man sucht den Fehler im
-  Layout statt in der Theme-Datei. Nur Media Queries sind davon betroffen — Farben, Radien,
-  Schriftgrößen und Schatten dürfen weiterhin auf `var()` zeigen. Die Werte gehören trotzdem
-  in `design/tokens.css` (Dokumentation und Herkunft) und werden in `src/styles.css`
-  ausgeschrieben wiederholt; der Generator vermerkt das dort als Kommentar.
-  **Prüfbar:** eine Seite bei zwei Breiten laden und ein Element messen, das an einer
-  Breakpoint-Variante hängt.
-- **Tailwind erkennt nur vollständig geschriebene Klassennamen.** `` `text-${stufe}` ``,
-  `` `shadow-level${n}` `` oder `` `rounded-${r}` `` erzeugen nichts. Das trifft vor allem
-  Komponenten-Matrizen und Referenz-Screens, die über Varianten iterieren — dort die
-  fertigen Klassen in einer Tabelle ausschreiben und nur die Tabelle durchlaufen.
-- **Keine externen Ressourcen.** Der Einzeldatei-Export muss offline funktionieren:
-  keine Google Fonts per `<link>`, keine CDN-Skripte, Bilder als Data-URI oder in
-  `public/` (dann ist der Export aber nicht mehr eine Datei).
-- **Frisch veröffentlichte Pakete brechen `pnpm install`.** pnpm 11 lehnt per
-  `minimumReleaseAge` (Default 24 h) Versionen ab, die zu jung sind, und legt sonst
-  ungefragt eine `pnpm-workspace.yaml` mit einer Ausnahmeliste an. Deshalb werden im
-  Template nur ausgereifte Versionen gelockt (`react-router` steht bewusst auf 8.3.0
-  statt 8.3.1). Wer Abhängigkeiten hochzieht: eine Version wählen, die älter als einen
-  Tag ist — keine Ausnahmeliste committen.
+  This is preferable to scattering arbitrary values (`h-[1.5rem]`) throughout the kit,
+  and it keeps the “no px value in the diff” check honest.
+- **Tailwind's default palettes silently creep in.** `src/styles.css` therefore clears
+  them per namespace with `--color-*: initial`, `--radius-*: initial`,
+  `--shadow-*: initial`, `--text-*: initial`, and `--breakpoint-*: initial`. Without these
+  lines, Tailwind continues to generate `bg-gray-100`, `rounded-3xl`, or `2xl:` without
+  complaint—the screen looks plausible but still contains foreign colors in the build.
+  Keep the guards; replace only the lists beneath them.
+- **`-*/` in a CSS comment terminates it early.** Mentioning token-name patterns in prose
+  inside `src/styles.css` or `design/tokens.css` (`--fgColor-*/--bgColor-*`) accidentally
+  closes the comment block: Tailwind then stops with a `CssSyntaxError` whose message
+  quotes the comment text and gives no useful indication of the cause. Separate patterns
+  in comments with commas (`--fgColor-*, --bgColor-*`) or wrap them in backticks. This
+  affects any design system whose token names can end in `*`—in other words, every one.
+- **Breakpoints in `@theme` MUST be literals.** `--breakpoint-md: var(--ds-breakpoint-md)`
+  becomes an `@media` condition containing a CSS variable, which is invalid. Tailwind
+  does not generate the variant at all, and `md:` disappears without any reported error.
+  The screen then looks the same at every width, encouraging a search in the layout
+  instead of the theme file. This limitation applies only to media queries—colors, radii,
+  font sizes, and shadows may continue to refer to `var()`. The values still belong in
+  `design/tokens.css` for documentation and provenance, and must be repeated as literals
+  in `src/styles.css`; the generator adds a comment there explaining the duplication.
+  **Verification:** load a page at two widths and measure an element that depends on a
+  breakpoint variant.
+- **Tailwind recognizes only fully written class names.** `` `text-${stufe}` ``,
+  `` `shadow-level${n}` ``, or `` `rounded-${r}` `` generate nothing. This is especially
+  relevant to component matrices and reference screens that iterate over variants—write
+  the complete classes in a table and iterate over the table only.
+- **No external resources.** The single-file export must work offline: no Google Fonts
+  via `<link>`, no CDN scripts, and images must be data URIs or reside in `public/`
+  (in the latter case, the export is no longer a single file).
+- **Newly published packages break `pnpm install`.** pnpm 11 rejects versions that are
+  too recent according to `minimumReleaseAge` (default 24 hours), and otherwise creates
+  a `pnpm-workspace.yaml` with an exception list without prompting. The template therefore
+  locks only mature versions (`react-router` deliberately uses 8.3.0 instead of 8.3.1).
+  When upgrading dependencies, choose a version more than a day old—do not commit an
+  exception list.
 
-## Verifiziert am 2026-08-29
+## Verified on 2026-08-29
 
-- Clean-Room: Kopie ohne `node_modules`, dann `pnpm install` (mit `name: {{KIT_NAME}}`),
-  `pnpm typecheck` (exit 0), `pnpm export` (exit 0) — Node 26.8.1 / pnpm 11.24.0
-- `export/index.html` ist self-contained: eine Datei, ein inline `<script>`, ein inline
-  `<style>`, keine externen `src`/`href`, kein `url()`/`@import` in CSS
-- In Chrome per `file://` geöffnet: Übersicht und Deep-Link
-  `…/export/index.html#/p/beispiel/detail?id=A-2477` rendern, Tokens greifen
-  (Button `rgb(47,111,237)`, Radius 8px), keine Konsolenmeldungen
-- `_shared/Shell.tsx` wird trotz Default-Export nicht geroutet
-- Neuer Ordner `idea-*` erscheint ohne Config-Änderung in der Gruppe „Ideen"
+- Clean-room test: copy without `node_modules`, then `pnpm install` (with
+  `name: {{KIT_NAME}}`), `pnpm typecheck` (exit 0), `pnpm export` (exit 0)—Node 26.8.1 /
+  pnpm 11.24.0
+- `export/index.html` is self-contained: one file, one inline `<script>`, one inline
+  `<style>`, no external `src`/`href`, and no `url()`/`@import` in CSS
+- Opened in Chrome via `file://`: the overview and deep link
+  `…/export/index.html#/p/example/detail?id=A-2477` render, tokens are applied
+  (button `rgb(47,111,237)`, 8px radius), and there are no console messages
+- `_shared/Shell.tsx` is not routed despite its default export
+- A new `idea-*` folder appears in the “Ideas” group without a configuration change

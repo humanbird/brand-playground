@@ -1,9 +1,9 @@
 <!--
-  Gemeinsame Shell der Screens von `beispiel`.
+  Shared shell for the `example` screens.
 
-  Liegt bewusst in _shared/ — und ist deshalb KEINE Route, obwohl es eine
-  .vue-Datei mit Default-Export ist. Genau das ist die Probe auf die Konvention:
-  geroutet wird nur, was direkt in src/prototypes/<slug>/ liegt.
+  It intentionally lives in _shared/ and is therefore NOT a route, even though
+  it is a .vue file with a default export. This verifies the convention: only
+  files directly under src/prototypes/<slug>/ are routed.
 -->
 
 <script setup lang="ts">
@@ -23,7 +23,7 @@ const { titel, zurueck } = defineProps<{
           :to="zurueck?.to ?? '/'"
           class="text-sm text-ink-muted underline-offset-4 hover:text-accent hover:underline"
         >
-          ← {{ zurueck?.label ?? 'Übersicht' }}
+          ← {{ zurueck?.label ?? 'Overview' }}
         </RouterLink>
         <h1 class="text-lg font-medium text-ink">{{ titel }}</h1>
       </div>

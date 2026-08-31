@@ -1,69 +1,69 @@
-# Recherche: Ähnliche Projekte, Markt und Übernahme-Kandidaten (Stand 2026-09)
+# Research: Similar Projects, Market, and Adoption Candidates (as of 2026-09)
 
-Groß angelegte Recherche über 7 parallele Läufe: OSS-Landschaft, Hands-on-Code-Inspektion (6 Repos geklont und gelesen), Produkt-Konkurrenz, Team-Praktiken, DS-Hersteller-Seite, Wissenschaft, Markt/Positionierung.
+Large-scale research across seven parallel tracks: the OSS landscape, hands-on code inspection (six repos cloned and reviewed), competing products, team practices, the design-system vendor perspective, research, and market positioning.
 
-## Kernbefund
+## Key Finding
 
-**Niemand baut unsere volle Kette.** Der Markt ist fragmentiert in drei Lager, die jeweils EIN Segment lösen:
+**No one is building our complete pipeline.** The market is fragmented into three camps, each solving ONE segment:
 
-| Lager | Vertreter | Was sie lösen |
+| Category | Examples | What they solve |
 |---|---|---|
-| Ingest-Tools | arvindrk/extract-design-system, DESIGN.md-Generatoren (design.dev, getdesign.md), Project Wallace | Live-CSS → Tokens/Markdown — aber kein Kit, keine Komponenten, kein Loop |
-| Konsum-Formate | shadcn registry.json (149 Registries, De-facto-Standard), Storybook Component-Manifest + MCP | maschinenlesbare Komponenten-Wahrheit — aber kein Ingest, kein Prototyp-Loop |
-| SaaS-Plattformen | Claude Design, v0 (Custom Registries), Figma Make (Make Kits), Subframe, Polymet, Lovable (Brand Kit), neu: Figr/Alloy (Live-Capture) | End-to-End, aber gehostet, Editor-gebunden, Lock-in |
+| Ingestion tools | arvindrk/extract-design-system, DESIGN.md generators (design.dev, getdesign.md), Project Wallace | Live CSS → tokens/Markdown—but no kit, no components, no loop |
+| Consumption formats | shadcn registry.json (149 registries, the de facto standard), Storybook component manifest + MCP | machine-readable component truth—but no ingestion, no prototype loop |
+| SaaS platforms | Claude Design, v0 (Custom Registries), Figma Make (Make Kits), Subframe, Polymet, Lovable (Brand Kit), new: Figr/Alloy (Live-Capture) | end to end, but hosted, tied to an editor, and locked in |
 
-Unsere Lücke (durch Markt-Scout bestätigt): **lokal, CLI-nativ, bring-your-own-Designsystem in beliebiger Form, eigenständige Kits ohne Hosting — bis zum Prototyp aus einem Satz.** Kein Wettbewerber kombiniert Multi-Input-Ingest + eingefrorenes Kit-Repo + eine destillierte Skill + Auto-Routing-Loop.
+Our opportunity (confirmed by market research): **local, CLI-native, bring-your-own design system in any form, with self-contained kits that require no hosting—all the way to a prototype from a single sentence.** No competitor combines multi-input ingestion, a frozen kit repo, a distilled skill, and an automatic routing loop.
 
-**Wissenschaftliche Bestätigung der Architektur:** CHI-2026-Studie „Design System-Compliant UI Generation with LLM Agents" ([ACM](https://dl.acm.org/doi/10.1145/3772363.3798616)) vergleicht Styleguide-im-Prompt vs. Kontext-Fragmente vs. **registry-based** (fertige Komponenten) — registry-based erreicht **95 % Compliance** und schlägt beide Prompt-Varianten. Genau unser Kit-Modell. „Compliance Rate" (Anteil generierter UI aus echten Kit-Komponenten) wäre die validierte Metrik, falls je gemessen werden soll.
+**Scientific validation of the architecture:** the CHI 2026 study “Design System-Compliant UI Generation with LLM Agents” ([ACM](https://dl.acm.org/doi/10.1145/3772363.3798616)) compares a style guide in the prompt, context fragments, and a **registry-based** approach (ready-made components). The registry-based approach achieves **95% compliance** and outperforms both prompt variants. This is exactly our kit model. “Compliance Rate” (the proportion of generated UI built from genuine kit components) would be the validated metric if measurement is ever needed.
 
-Zweite Bestätigung: „Eine Skill pro Designsystem, die jede Session vorlädt" ist 2026 Branchenkonvention geworden (Anthropic-eigene Doku, Community-Praxis) — unser Modell, unabhängig erfunden.
+A second validation: “one skill per design system, preloaded in every session” has become an industry convention in 2026 (Anthropic’s own documentation and community practice)—the same model we developed independently.
 
-## Die interessantesten Mechaniken im Detail (Hands-on)
+## The Most Interesting Mechanics in Detail (Hands-On)
 
-- **extract-design-system**: sauberes Zod-Schema für normalisierte Extraktion; **`audit`-Kommando** matcht Code-Rohwerte fuzzy gegen die Token-Palette → `coveragePct`. Skill-und-MCP als zwei Interfaces über derselben Logik; „Safety Boundaries"-Abschnitt in der SKILL.md.
-- **Google Labs `design.md`** (seit 04/2026, mit `npx @google/design.md lint`): EIN Markdown mit YAML-Frontmatter, feste Sektionsfolge, **`omitted`-Feld** deklariert bewusst fehlende Sektionen mit Begründung — Anti-Halluzinations-Muster für Lücken. Kandidat für einen künftigen Standard; beobachten.
-- **Storybook MCP**: react-docgen-Manifeste + zweistufiger Discovery-Flow; zentrale Instruktion **„Never hallucinate component properties"** als First-Class-Regel; eigener `eval/`-Ordner mit ~50 standardisierten Agent-Tasks als Benchmark.
-- **Project Wallace css-design-tokens**: **stabile Hash-IDs pro Token** (diffbar über Läufe) + `$extensions` mit usage-count und Fundstellen — Provenienz-Vorbild.
-- **v0/registry-starter**: Tokens+Komponenten+Blocks in einem Registry-Format über HTTP/MCP — Cross-Tool-Konsum (auch Cursor/Windsurf) ohne Repo-Zugriff.
-- **Claude Design**: prüft Output aktiv gegen das importierte DS und **korrigiert automatisch nach**; Admin kann ein DS als verbindlich sperren; `/design-sync` als bidirektionale Brücke. (Herstelleraussagen, keine unabhängige Prüfung gefunden.)
-- **DESIGN.md-Community-Muster**: „Token, Regel und **Rationale** in derselben Datei" + expliziter Do's/Don'ts-Abschnitt — damit Agenten bei fehlenden Patterns systemkonform extrapolieren statt zu driften.
+- **extract-design-system**: a clean Zod schema for normalized extraction; the **`audit` command** fuzzy-matches raw code values against the token palette → `coveragePct`. Skill and MCP serve as two interfaces over the same logic; the SKILL.md includes a “Safety Boundaries” section.
+- **Google Labs `design.md`** (since 04/2026, with `npx @google/design.md lint`): ONE Markdown file with YAML frontmatter, a fixed section order, and an **`omitted` field** that explicitly declares intentionally missing sections and explains why—an anti-hallucination pattern for gaps. A candidate for a future standard; monitor it.
+- **Storybook MCP**: react-docgen manifests plus a two-stage discovery flow; the central instruction **“Never hallucinate component properties”** as a first-class rule; a dedicated `eval/` directory containing ~50 standardized agent tasks as a benchmark.
+- **Project Wallace css-design-tokens**: **stable hash IDs per token** (diffable across runs) plus `$extensions` containing usage-count and source locations—a model for provenance.
+- **v0/registry-starter**: tokens, components, and blocks in one registry format over HTTP/MCP—cross-tool consumption (including Cursor/Windsurf) without repo access.
+- **Claude Design**: actively checks output against the imported design system and **corrects it automatically**; an admin can lock a design system as mandatory; `/design-sync` provides a bidirectional bridge. (Vendor claims; no independent verification found.)
+- **DESIGN.md community pattern**: “token, rule, and **rationale** in the same file” plus an explicit do’s/don’ts section—enabling agents to extrapolate in a system-compliant way when patterns are missing instead of drifting.
 
-## DS-Hersteller-Seite (woran wir andocken)
+## Design-System Vendor Perspective (Where We Integrate)
 
-Kein großes DS ist voll „agent-ready" (bestes Audit-Ergebnis: shadcn 3/5). Konvergenzpunkte: **DTCG v2025.10** für Tokens (lesen wir schon), **registry.json** für Komponenten-Distribution, **llms.txt** (selten — nur Atlassian; also Differenzierungschance), MCP-Server vereinzelt (Carbon, Polaris, Atlassian). Empfehlung: bevorzugt LESEN: DTCG, Figma-MCP, registry.json, llms.txt; zusätzlich ERZEUGEN im Kit: llms.txt (billig, selten, anschlussfähig), optional registry.json bei React-Kits, DTCG bleibt ohnehin unser Format.
+No major design system is fully “agent-ready” (best audit result: shadcn at 3/5). Points of convergence: **DTCG v2025.10** for tokens (already supported for reading), **registry.json** for component distribution, **llms.txt** (rare—only Atlassian, which creates an opportunity for differentiation), and occasional MCP servers (Carbon, Polaris, Atlassian). Recommendation: prioritize READING DTCG, Figma-MCP, registry.json, and llms.txt; additionally GENERATE llms.txt in the kit (inexpensive, rare, interoperable), optionally generate registry.json for React kits, and retain DTCG as our format.
 
-## Wissenschaft (Kurzfassung)
+## Research (Summary)
 
-- Registry-Ansatz > Prompt-Kontext (CHI 2026, s.o.).
-- Screenshot-to-code-Benchmarks 2026 (DesignBench, WebGen-V, WebMMU): Konsens tendiert zu „Screenshots + Tokens kombiniert" — Tokens allein erfassen Rhythmus/Dichte/Hierarchie nicht.
-- Strukturierte Schemas schlagen Prosa bei API-Treue deutlich, kosten aber 40–60 % Token-Overhead — spricht für unsere Trennung „Fakten maschinenlesbar, Konzept als Prosa-Skill".
-- Keine publizierte Studie zu „Story-Code vs. Prop-Listen" gefunden; unser Primer-Praxisbefund (Story-Code ersetzt Raten) bleibt Praxiswissen.
+- Registry approach > prompt context (CHI 2026, see above).
+- Screenshot-to-code benchmarks from 2026 (DesignBench, WebGen-V, WebMMU): the consensus favors “screenshots + tokens combined”—tokens alone do not capture rhythm, density, or hierarchy.
+- Structured schemas significantly outperform prose in API fidelity, but incur 40–60% token overhead—supporting our separation of “machine-readable facts, concept as a prose skill.”
+- No published study on “story code vs. prop lists” was found; our practical finding from the primer (story code eliminates guesswork) remains practitioner knowledge.
 
-## Markt/Publishing
+## Market/Publishing
 
-- Rezeption vergleichbarer Publishes: positiv, wenn ein realer Schmerz getroffen wird („AI baut hässliche UIs ohne DS-Standard"); Standard-Kritik an Claude-gebundenen Tools: „warum nicht generisch/MCP?" — Antwort vorbereiten (bewusste Ein-Agent-Tiefe statt Cross-Tool-Breite; Kits selbst sind tool-neutral lesbar).
-- Kommerzielle Anbieter monetarisieren alle über gehostete Editoren/Canvas + Sync-Lock-in → unsere OSS-Lücke ist glaubwürdig.
-- Naming: „Prototype Builder"/„RapidPrototype" sind generisch vorbelastet; **„Design System Compiler" ist als Begriff frei** und präzise (gut als Tagline unter einem eigenständigen Namen). Vor Publish: npm-/Trademark-Check.
-- Marken-Tokens aus öffentlichem CSS in Beispielen: gängige, deklarierte Praxis („reverse-engineered, nicht autorisiert") — Beispiel-Kits vor Publish entsprechend kennzeichnen oder ausschließen; keine Rechtsberatung.
-- Lizenz: MIT (Vertrauenssignal, OpenCode-Vorbild) oder Apache 2.0 (Patent-Grant) — Owner-Entscheid.
+- Reception of comparable releases is positive when they address a real pain point (“AI builds ugly UIs without a design-system standard”); the standard criticism of Claude-specific tools is “why not generic/MCP?”—prepare an answer (deliberate single-agent depth instead of cross-tool breadth; the kits themselves are readable by any tool).
+- Commercial vendors all monetize through hosted editors/canvases plus sync lock-in → our OSS opportunity is credible.
+- Naming: “Prototype Builder”/“RapidPrototype” already carry generic associations; **“Design System Compiler” is available as a term** and precise (a strong tagline beneath a distinctive name). Before publishing: check npm and trademarks.
+- Brand tokens sourced from public CSS in examples: a common practice when disclosed (“reverse-engineered, not authorized”)—label example kits accordingly before publishing or exclude them; this is not legal advice.
+- License: MIT (trust signal, following OpenCode’s example) or Apache 2.0 (patent grant)—owner decision.
 
-## Übernahme-Backlog (priorisiert)
+## Adoption Backlog (Prioritized)
 
-**P1 — billig, sofort:**
-1. Anti-Halluzinations-Regel wörtlich in die Skill-Vorlage: „Prop nicht in components-meta.json → nicht verwenden" (Storybook-Muster).
-2. `omitted`-Konzept: fehlende Token-Kategorien/Sektionen im Kit explizit deklarieren mit Begründung, statt still leer (design.md-Muster; erweitert unser „Angenommen, nicht belegt").
-3. Rationale neben Token: die Skill nennt bei Token-Rollen das WARUM (DESIGN.md-Muster) — steht teilweise schon drin, als Pflicht in die Vorlage.
+**P1—inexpensive, immediate:**
+1. Add the anti-hallucination rule verbatim to the skill template: “Prop not in components-meta.json → do not use it” (Storybook pattern).
+2. `omitted` concept: explicitly declare missing token categories/sections in the kit and explain why, instead of leaving them silently empty (design.md pattern; extends our “assumed, not evidenced” convention).
+3. Rationale alongside each token: the skill states WHY each token role exists (DESIGN.md pattern)—partially present already; make it mandatory in the template.
 
-**P2 — nächster Ausbauschritt:**
-4. Kit-Exporte für Ökosystem-Anschluss: `llms.txt` immer, `registry.json` optional bei React-Kits.
-5. Token-Provenienz erweitern: usage-count + Fundstelle + stabile IDs (Wallace-Muster) — macht das Nachschärfen diffbar.
-6. Nachschärfen-Befehl formalisieren: Re-Ingest → Diff gegen eingefrorene Tokens → Owner entscheidet (Muster southleft-MCP/`/design-sync`; passt zu unserem bestehenden Nachschärfen-Abschnitt).
-7. Zero-Setup-Onboarding für Nicht-Entwickler im Kit-README (ein Befehl, keine Env-Kenntnis) — bestätigter Schmerzpunkt.
+**P2—next expansion step:**
+4. Kit exports for ecosystem integration: always provide `llms.txt`; make `registry.json` optional for React kits.
+5. Extend token provenance with usage count, source location, and stable IDs (Wallace pattern)—making refinement diffable.
+6. Formalize the refinement command: re-ingest → diff against frozen tokens → owner decides (southleft-MCP/`/design-sync` pattern; aligns with our existing refinement section).
+7. Zero-setup onboarding for non-developers in the Kit-README (one command, no environment knowledge)—a confirmed pain point.
 
-**Bewusst NICHT übernommen:**
-- `audit`/Coverage als Gate und Claude-Designs Auto-Korrektur-Schleife — kollidiert mit dem No-Gates-Entscheid (Explorations-Werkzeug). Höchstens als freiwilliger Einmal-Check beim Nachschärfen denkbar, Owner-Entscheid.
-- Registry-Hosting/HTTP-Endpunkte (v0-Muster) — wir sind bewusst lokal.
-- Mono-DESIGN.md statt Kit — skaliert nicht über Komponentenzahl; wir bleiben bei Skill + Meta getrennt, können aber DESIGN.md als Export-Projektion ergänzen, falls der Google-Standard Zugkraft bekommt.
+**Deliberately NOT adopted:**
+- `audit`/coverage as a gate and Claude Design’s automatic correction loop—conflicts with the No-Gates decision (this is an exploration tool). At most, consider it as an optional one-time check during refinement; owner decision.
+- Registry hosting/HTTP endpoints (v0 pattern)—we are intentionally local.
+- Mono-DESIGN.md instead of a kit—does not scale with the number of components; we will keep skill and metadata separate, but could add DESIGN.md as an export projection if the Google standard gains traction.
 
-## Quellen (Auswahl)
+## Sources (Selection)
 CHI 2026: https://dl.acm.org/doi/10.1145/3772363.3798616 · extract-design-system: https://github.com/arvindrk/extract-design-system · Google design.md: google-labs-code/design.md · Storybook MCP: https://github.com/storybookjs/mcp · Wallace: https://github.com/projectwallace/css-design-tokens · registry-starter: https://github.com/vercel/registry-starter · shadcn registry: https://ui.shadcn.com/docs/registry · awesome-design-md: https://github.com/VoltAgent/awesome-design-md · southleft/design-systems-mcp · v0: https://vercel.com/blog/ai-powered-prototyping-with-design-systems · Subframe: https://www.subframe.com/design-systems · Lovable Brand Kit: https://docs.lovable.dev/features/design-systems · DS-Audit: designsystems.one · DTCG: https://www.designtokens.org/

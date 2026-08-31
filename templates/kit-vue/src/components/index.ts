@@ -1,25 +1,25 @@
 /*
- * Sammelexport aller Komponenten des Designsystems.
+ * Barrel export for all design-system components.
  *
  *   import { DsButton } from '../../components'
  *
- * Ein Import pro Screen statt einer Zeile pro Komponente. Prototypen
- * importieren IMMER über diesen Barrel, nie über den Dateipfad — so bleibt
- * der Screen-Code auch dann gültig, wenn eine Komponente umzieht.
+ * One import per screen instead of one line per component. Prototypes ALWAYS
+ * import from this barrel, never from a file path, so screen code remains valid
+ * even when a component moves.
  *
- * GENERATOR-DATEI: `/basis` schreibt hier alle Komponenten des Ziel-DS hin,
- * je Komponente Wert- und Typ-Exporte (die Typen brauchen Prototypen für
- * eigene Props). Die maschinenlesbare API-Wahrheit steht in
- * design/components-meta.json — Props und Varianten dort nachschlagen, nicht
- * aus dem Gedächtnis schreiben.
+ * GENERATOR FILE: `/basis` writes all target design-system components here,
+ * with value and type exports for each component (prototypes need the types for
+ * their own props). The machine-readable API source of truth is
+ * design/components-meta.json. Look up props and variants there instead of
+ * relying on memory.
  *
- * Vue-Eigenheit: eine SFC hat immer genau einen Default-Export. Der Barrel
- * benennt ihn um (`export { default as X }`); Typen kommen aus dem normalen
- * <script lang="ts">-Block derselben Datei und werden separat re-exportiert.
+ * Vue detail: an SFC always has exactly one default export. The barrel renames
+ * it (`export { default as X }`); types come from the regular
+ * <script lang="ts"> block in the same file and are re-exported separately.
  *
- * Nutzt das Kit eine fertige Komponentenbibliothek (z.B. sit-onyx), zeigt
- * dieser Barrel auf das Paket statt auf eigene Dateien — Prototypen merken
- * den Unterschied nicht.
+ * If the kit uses an existing component library (such as sit-onyx), this barrel
+ * points to the package instead of local files; prototypes do not need to know
+ * the difference.
  */
 
 export { default as DsButton } from './DsButton.vue'

@@ -1,29 +1,29 @@
 [
   {
     "name": "DsButton",
-    "extends": "Fallthrough-Attribute (Vue `$attrs`) landen am `<button>` — inkl. `disabled`, `aria-*` und Listenern wie `@click`. `class` wird von Vue automatisch mit den Basisklassen gemerged. Dieses Feld ist Pflicht: es sagt, welche Attribute durchgereicht werden und wo `class` landet — bei Komponenten mit `inheritAttrs: false` steht hier, an welches innere Element die Attribute gebunden werden (oder \"— keine Fallthrough-Attribute\").",
-    "description": "Beispiel-Komponente des Templates. Zeigt die erwartete Form eines Eintrags — der Generator ersetzt dieses Array vollständig durch das Inventar des Ziel-Designsystems.",
+    "extends": "Fallthrough attributes (Vue `$attrs`) are applied to `<button>`, including `disabled`, `aria-*`, and listeners such as `@click`. Vue automatically merges `class` with the base classes. This field is required: it documents which attributes are forwarded and where `class` is applied. For components with `inheritAttrs: false`, specify the inner element receiving the attributes (or \"— no fallthrough attributes\").",
+    "description": "Template example component. Demonstrates the expected entry structure; the generator replaces this array completely with the target design system's inventory.",
     "props": [
       {
         "name": "variant",
         "type": "'primary' | 'secondary' | 'ghost'",
         "default": "'primary'",
         "required": false,
-        "description": "Visuelle Gewichtung. Pro Screen höchstens eine primary-Aktion."
+        "description": "Visual emphasis. Use at most one primary action per screen."
       },
       {
         "name": "size",
         "type": "'sm' | 'md'",
         "default": "'md'",
         "required": false,
-        "description": "Höhe und Innenabstand."
+        "description": "Height and internal spacing."
       },
       {
         "name": "type",
         "type": "'button' | 'submit' | 'reset'",
         "default": "'button'",
         "required": false,
-        "description": "HTML-Buttontyp. Default bewusst 'button', damit kein Formular ungewollt abschickt."
+        "description": "HTML button type. The default is deliberately 'button' to prevent unintended form submission."
       }
     ],
     "variants": {
@@ -34,7 +34,7 @@
     "slots": [
       {
         "name": "default",
-        "description": "Label des Buttons. Verb im Imperativ, kein Satzzeichen."
+        "description": "Button label. Use an imperative verb with no punctuation."
       }
     ],
     "source": "src/components/DsButton.vue"

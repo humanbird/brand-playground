@@ -1,20 +1,20 @@
 /*
- * src/styles.css — Tailwind + Zuordnung der Designsystem-Tokens auf Utilities.
+ * src/styles.css: Tailwind and design-system token mappings to utilities.
  *
- * GENERATOR-DATEI (Teil): der @theme-Block spiegelt die Token-Namen aus
- * design/tokens.css. Ändert der Generator dort die Namen, muss er hier mitziehen.
- * Der Rest der Datei bleibt, wie er ist.
+ * GENERATOR FILE (partial): the @theme block mirrors the token names from
+ * design/tokens.css. If the generator changes names there, it must update them
+ * here as well. The rest of the file remains unchanged.
  *
- * Grundsatz: In Prototypen gibt es keine Hex- und keine px-Werte. Alles, was
- * gebraucht wird, ist hier als Utility verfügbar — bg-accent, text-ink,
+ * Principle: prototypes contain no hex or px values. Everything they need is
+ * available here as a utility: bg-accent, text-ink,
  * border-line, rounded-md, p-6 …
  *
- * Die Default-Paletten von Tailwind (Farben, Radien, Schatten, Schriftgrößen,
- * Breakpoints) sind mit `*: initial` gelöscht. Das ist die wichtigste Zeile
- * jedes Namespace: ohne sie erzeugt Tailwind `bg-gray-100`, `rounded-3xl`,
- * `text-9xl` oder `2xl:` klaglos weiter — der Prototyp sieht richtig aus und
- * hat trotzdem Fremdfarben im Build. Der Generator darf die Guards NICHT
- * entfernen; er ersetzt nur die Listen darunter durch die des Ziel-DS.
+ * Tailwind's default palettes (colors, radii, shadows, font sizes, breakpoints)
+ * are cleared with `*: initial`. This is the most important line in every
+ * namespace: without it, Tailwind will happily generate `bg-gray-100`,
+ * `rounded-3xl`, `text-9xl`, or `2xl:`. The prototype may look right while the
+ * build still contains foreign colors. The generator must NOT remove these
+ * guards; it only replaces the lists below with those from the target design system.
  */
 
 @import "tailwindcss" source(none);
@@ -23,12 +23,12 @@
 
 @theme {
   /*
-   * Farben → bg-accent, text-ink, border-line …
+   * Colors → bg-accent, text-ink, border-line …
    *
-   * Die Namen hier sind generisch (Rolle statt Marke), damit die nicht
-   * gepflegten Gerüstdateien (HomeView, router, NotFound) in jedem Kit
-   * funktionieren. Ein generiertes Kit ergänzt darüber die Namen des
-   * Ziel-DS und behält diese Aliasse als Zuordnung auf dessen Tokens.
+   * These names are generic (role rather than brand), allowing unmaintained
+   * scaffold files (HomeView, router, NotFound) to work in every kit. A generated
+   * kit adds the target design system's names and retains these aliases as
+   * mappings to its tokens.
    */
   --color-*: initial;
   --color-transparent: transparent;
@@ -44,24 +44,24 @@
   --color-danger: var(--ds-color-danger);
 
   /*
-   * Abstände: die numerische Skala leitet sich aus der DS-Grundeinheit ab,
-   * p-4 = 4 × unit. Damit ist jeder Abstand token-gebunden.
+   * Spacing: the numeric scale derives from the design system's base unit;
+   * p-4 = 4 × unit. This binds every spacing value to a token.
    *
-   * STOLPERSTEIN für den Generator: benannte Stufen (--spacing-md, --spacing-2xl …)
-   * hier NICHT ergänzen. Der spacing-Namespace beschattet in Tailwind v4 die
-   * container-Skala — `--spacing-2xl: 3rem` macht aus `max-w-2xl` stillschweigend
-   * 3rem statt 42rem. Hat das Ziel-DS eine nicht-lineare Spacing-Skala, gehören
-   * deren Stufen unter einen kollisionsfreien Präfix (z.B. --spacing-ds-200).
+   * GENERATOR PITFALL: do NOT add named steps (--spacing-md, --spacing-2xl …)
+   * here. In Tailwind v4, the spacing namespace shadows the container scale;
+   * `--spacing-2xl: 3rem` silently changes `max-w-2xl` from 42rem to 3rem. If the
+   * target design system has a non-linear spacing scale, place its steps under a
+   * collision-free prefix (for example --spacing-ds-200).
    */
   --spacing: var(--ds-spacing-unit);
 
   /*
    * Breakpoints → sm: md: lg: xl:
    *
-   * Ebenfalls geguarded: die Default-Stufen von Tailwind sind eine fremde
-   * Design-Entscheidung. Das Ziel-DS hat fast immer eigene Werte (und oft
-   * andere Namen) — hier die belegten eintragen, nicht die geerbten stehen
-   * lassen. `2xl:` gibt es bewusst nicht, bis ein DS es belegt.
+   * Also guarded: Tailwind's default steps are an external design decision. The
+   * target design system almost always has its own values (and often different
+   * names). Add supported values here instead of retaining inherited ones.
+   * `2xl:` is intentionally unavailable until a design system defines it.
    */
   --breakpoint-*: initial;
   --breakpoint-sm: 40rem;
@@ -69,7 +69,7 @@
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
 
-  /* Radien → rounded-md */
+  /* Radii → rounded-md */
   --radius-*: initial;
   --radius-none: var(--ds-radius-none);
   --radius-sm: var(--ds-radius-sm);
@@ -77,7 +77,7 @@
   --radius-lg: var(--ds-radius-lg);
   --radius-full: var(--ds-radius-full);
 
-  /* Typografie → font-sans, text-lg, font-medium */
+  /* Typography → font-sans, text-lg, font-medium */
   --font-sans: var(--ds-font-sans);
   --font-mono: var(--ds-font-mono);
 
@@ -99,7 +99,7 @@
   --font-weight-medium: var(--ds-font-weight-medium);
   --font-weight-bold: var(--ds-font-weight-bold);
 
-  /* Schatten → shadow-sm */
+  /* Shadows → shadow-sm */
   --shadow-*: initial;
   --shadow-sm: var(--ds-shadow-sm);
   --shadow-md: var(--ds-shadow-md);

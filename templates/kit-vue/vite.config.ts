@@ -5,7 +5,7 @@ import { viteSingleFile } from 'vite-plugin-singlefile'
 
 // `pnpm dev`    → Dev-Server auf festem Port 5300
 // `pnpm export` → statischer Einzeldatei-Export nach export/index.html
-//                 (per Doppelklick im Browser lauffähig, daher Hash-History + base './')
+//                 (opens directly in the browser via double-click, hence hash history + base './')
 export default defineConfig({
   plugins: [vue(), tailwindcss(), viteSingleFile()],
   base: './',

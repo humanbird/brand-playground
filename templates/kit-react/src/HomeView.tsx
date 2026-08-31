@@ -1,9 +1,9 @@
 /*
- * Automatische Übersicht aller Prototypen. Wird nie von Hand gepflegt —
- * sie liest, was unter src/prototypes/ liegt.
+ * Automatic overview of all prototypes. It is never maintained manually;
+ * it reads the contents of src/prototypes/.
  *
- * Zwei Gruppen: konvergente Prototypen (/proto) und Ideen (/ideate, Slug-Präfix
- * `idea-`). Die Ideen-Gruppe erscheint erst, wenn es Ideen gibt.
+ * Two groups: convergent prototypes (/proto) and ideas (/ideate, slug prefix
+ * `idea-`). The ideas group appears only when ideas exist.
  */
 
 import { Link } from 'react-router'
@@ -28,7 +28,7 @@ function PrototypeCard({ prototype }: { prototype: Prototype }) {
 
       <p className="mt-1 text-sm text-ink-muted">
         {screenCountLabel(screens.length)}
-        {missingIndex ? ' · keine index.tsx' : null}
+        {missingIndex ? ' · no index.tsx' : null}
       </p>
 
       {screens.length > 1 ? (
@@ -66,10 +66,10 @@ function Section({ title, hint, items }: { title: string; hint: string; items: P
 function EmptyState() {
   return (
     <div className="mt-12 rounded-lg border border-line border-dashed p-8">
-      <p className="text-base text-ink">Noch kein Prototyp vorhanden.</p>
+      <p className="text-base text-ink">No prototypes yet.</p>
       <p className="mt-3 text-sm text-ink-muted">
-        Ordner unter <code className="font-mono">src/prototypes/</code> anlegen, darin eine{' '}
-        <code className="font-mono">index.tsx</code> — die Route existiert dann sofort.
+        Create a folder under <code className="font-mono">src/prototypes/</code> and add an{' '}
+        <code className="font-mono">index.tsx</code>; the route will be available immediately.
       </p>
     </div>
   )
@@ -81,9 +81,9 @@ export function HomeView() {
   return (
     <main className="mx-auto max-w-5xl px-6 py-12">
       <header>
-        <h1 className="text-2xl font-bold text-ink">Prototypen</h1>
+        <h1 className="text-2xl font-bold text-ink">Prototypes</h1>
         <p className="mt-3 max-w-2xl text-base text-ink-muted">
-          Der Prototyp ist die Frage, nicht die Antwort.
+          The prototype is the question, not the answer.
         </p>
       </header>
 
@@ -91,16 +91,16 @@ export function HomeView() {
 
       {protoPrototypes.length > 0 ? (
         <Section
-          title="Prototypen"
-          hint="Ein Strang, sauber durchgebaut."
+          title="Prototypes"
+          hint="One path, developed end to end."
           items={protoPrototypes}
         />
       ) : null}
 
       {ideaPrototypes.length > 0 ? (
         <Section
-          title="Ideen"
-          hint="Divergente Varianten zu einer Fragestellung — grob, schnell, nebeneinander."
+          title="Ideas"
+          hint="Divergent approaches to one question: rough, fast, and side by side."
           items={ideaPrototypes}
         />
       ) : null}

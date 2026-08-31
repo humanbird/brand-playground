@@ -1,10 +1,10 @@
 /*
- * Sammelexport des Icon-Sets.
+ * Barrel export for the icon set.
  *
  *   import { DsIcon, dsIconNames, type DsIconName } from '../../icons'
  *
- * Der Generator fasst nur `icons.ts` an (das ICONS-Objekt). `DsIcon.vue` und
- * diese Datei bleiben, wie sie sind.
+ * The generator edits only `icons.ts` (the ICONS object). `DsIcon.vue` and this
+ * file remain unchanged.
  */
 
 export { default as DsIcon } from './DsIcon.vue'

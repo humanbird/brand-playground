@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-// Reihenfolge ist bedeutsam:
-// 1. Fonts   — selbst gehostete @font-face-Regeln (kein CDN)
-// 2. Tokens  — die eingefrorenen Werte des Designsystems
-// 3. Tailwind + @theme — bildet die Tokens auf Utilities ab
-// 4. Fixes   — dokumentierte Korrekturen, gewinnen zuletzt
+// Order matters:
+// 1. Fonts   — self-hosted @font-face rules (no CDN)
+// 2. Tokens  — frozen design-system values
+// 3. Tailwind + @theme — maps tokens to utilities
+// 4. Fixes   — documented corrections loaded last
 import '../design/fonts.css'
 import '../design/tokens.css'
 import './styles.css'
@@ -14,7 +14,7 @@ import '../design/fixes.css'
 import { AppRouter } from './router'
 
 const container = document.getElementById('root')
-if (!container) throw new Error('#root fehlt in index.html')
+if (!container) throw new Error('#root is missing from index.html')
 
 createRoot(container).render(
   <StrictMode>

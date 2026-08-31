@@ -1,11 +1,11 @@
 /*
- * src/prototypes/beispiel/Detail.tsx  →  Route /p/beispiel/detail
+ * src/prototypes/example/Detail.tsx  →  Route /p/example/detail
  *
- * Zweiter Screen desselben Prototyps. Der Dateiname wird für die Route klein
- * geschrieben; ein weiterer Screen wäre einfach eine weitere Datei daneben.
+ * Second screen in the same prototype. The file name is lowercased for the
+ * route; another screen would simply be another file alongside it.
  *
- * Parameter kommen über die Query (?id=…) — das funktioniert auch im
- * Einzeldatei-Export hinter dem Hash: #/p/beispiel/detail?id=A-2481
+ * Parameters are passed through the query string (?id=…), which also works in
+ * the single-file export after the hash: #/p/example/detail?id=A-2481
  */
 
 import { Link, useSearchParams } from 'react-router'
@@ -20,20 +20,20 @@ export default function Detail() {
 
   if (!auftrag) {
     return (
-      <Shell titel="Auftrag" zurueck={{ to: '/p/beispiel', label: 'Aufträge' }}>
-        <p className="text-base text-ink">Dieser Auftrag existiert nicht.</p>
+      <Shell titel="Work order" zurueck={{ to: '/p/example', label: 'Work orders' }}>
+        <p className="text-base text-ink">This work order does not exist.</p>
         <p className="mt-3 text-sm text-ink-muted">
-          Leerer Zustand — mitgedacht, nicht weggelassen.
+          Empty state: considered explicitly, not omitted.
         </p>
-        <Link to="/p/beispiel" className="mt-6 inline-block">
-          <DsButton variant="secondary">Zurück zur Liste</DsButton>
+        <Link to="/p/example" className="mt-6 inline-block">
+          <DsButton variant="secondary">Back to list</DsButton>
         </Link>
       </Shell>
     )
   }
 
   return (
-    <Shell titel={auftrag.titel} zurueck={{ to: '/p/beispiel', label: 'Aufträge' }}>
+    <Shell titel={auftrag.titel} zurueck={{ to: '/p/example', label: 'Work orders' }}>
       <div className="flex flex-wrap items-center gap-4">
         <span className="font-mono text-sm text-ink-muted">{auftrag.id}</span>
         <span
@@ -45,22 +45,22 @@ export default function Detail() {
 
       <dl className="mt-6 grid gap-4 sm:grid-cols-2">
         <div>
-          <dt className="text-xs text-ink-muted">Kunde</dt>
+          <dt className="text-xs text-ink-muted">Customer</dt>
           <dd className="mt-1 text-base text-ink">{auftrag.kunde}</dd>
         </div>
         <div>
-          <dt className="text-xs text-ink-muted">Einsatzort</dt>
+          <dt className="text-xs text-ink-muted">Service location</dt>
           <dd className="mt-1 text-base text-ink">{auftrag.ort}</dd>
         </div>
         <div>
-          <dt className="text-xs text-ink-muted">Fällig</dt>
+          <dt className="text-xs text-ink-muted">Due</dt>
           <dd className="mt-1 text-base text-ink">{auftrag.faellig}</dd>
         </div>
       </dl>
 
       <p className="mt-6 max-w-2xl text-base text-ink">{auftrag.beschreibung}</p>
 
-      <h2 className="mt-8 text-lg font-medium text-ink">Positionen</h2>
+      <h2 className="mt-8 text-lg font-medium text-ink">Line items</h2>
       <ul className="mt-4 divide-y divide-line rounded-lg border border-line">
         {auftrag.positionen.map((position) => (
           <li key={position.bezeichnung} className="flex justify-between gap-4 p-4">
@@ -71,10 +71,10 @@ export default function Detail() {
       </ul>
 
       <div className="mt-8 flex flex-wrap gap-3">
-        <DsButton>Abschließen</DsButton>
-        <DsButton variant="secondary">Termin verschieben</DsButton>
+        <DsButton>Complete</DsButton>
+        <DsButton variant="secondary">Reschedule</DsButton>
         <DsButton variant="ghost" size="sm">
-          Protokoll ansehen
+          View service report
         </DsButton>
       </div>
     </Shell>

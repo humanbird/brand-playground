@@ -2,18 +2,18 @@
 
 **Turn any design system into your brand's playground.**
 
-The design system compiler: vorne kommt Designsystem-Input in beliebiger Form rein (Figma-Library, Code-Library, Live-Website, Specs, Screenshots — auch gemischt), hinten fällt eine AI-ready Basis raus, mit der sich schnell CI-treue Prototypen bauen lassen.
+The design system compiler: feed it design system input in any form (Figma library, code library, live website, specifications, screenshots—or any combination), and it produces an AI-ready foundation for rapidly building prototypes that faithfully follow the corporate identity.
 
-Status: **M1+M2 stehen** und wurden über vier reale Szenarien getestet: an einer öffentlichen Konzern-Website erprobt, Code-first Onyx sowie Figma lückenhaft/reich — inkl. Blindtests und E2E-Läufen. Konzept in `docs/konzept.md`, Recherche in `docs/research/`.
+Status: **M1+M2 are complete** and have been tested across four real-world scenarios: a public corporate website, code-first Onyx, and both sparse and comprehensive Figma inputs—including blind tests and E2E runs. The concept is documented in `docs/concept.md`, with research in `docs/research/`.
 
-## Aufsetzen
+## Setup
 
-Es gibt nichts zu installieren außer dem Repo selbst — der Generator ist eine projektlokale Claude-Code-Skill (`.claude/skills/basis/`), die Templates liegen daneben.
+There is nothing to install beyond the repository itself—the generator is a project-local Claude Code skill (`.claude/skills/basis/`), with the templates stored alongside it.
 
-**Voraussetzungen** (einmalig pro Rechner):
-- [Claude Code](https://claude.com/claude-code) installiert und eingeloggt
-- Node.js >= 22.22 (aktuelles LTS empfohlen) und pnpm (`corepack enable`)
-- Nur für Figma-Input: der offizielle Figma-MCP-Server, verbunden mit einem Account, der das Ziel-File lesen kann — Hauptweg: `claude mcp add --transport http figma-remote-mcp https://mcp.figma.com/mcp`
+**Prerequisites** (once per machine):
+- [Claude Code](https://claude.com/claude-code) installed and signed in
+- Node.js >= 22.22 (current LTS recommended) and pnpm (`corepack enable`)
+- For Figma input only: the official Figma MCP server, connected to an account that can read the target file—the primary setup is `claude mcp add --transport http figma-remote-mcp https://mcp.figma.com/mcp`
 
 **Setup:**
 
@@ -23,47 +23,47 @@ cd brand-playground
 claude
 ```
 
-Das ist alles. In dieser Session steht `/basis` zur Verfügung, weil die Skill im Repo liegt.
+That is all. `/basis` is available in this session because the skill lives in the repository.
 
-## Benutzen
+## Usage
 
-**1. Basis generieren** — in der Framework-Session den Input benennen, egal in welcher Form:
+**1. Generate the foundation**—in the framework session, name the input in whatever form you have:
 
 ```
-/basis Unser Designsystem: https://www.beispiel.de — bau mir die Basis. Ziel ~/dev/beispiel-rapidprototype.
+/basis Our design system: https://www.example.com — build the foundation for me. Target ~/dev/example-rapidprototype.
 ```
 
-Input ist alles, was du im Satz benennst oder in die Session gibst — auch gemischt, und was fehlt, fragt Claude nach:
+Input means anything you mention in the request or provide in the session—including combinations. Claude asks for anything that is missing:
 
-| Form | So gießt du sie rein |
+| Format | How to provide it |
 |---|---|
-| Live-Website | URL in den Satz: `/basis https://www.beispiel.de …` |
-| Figma | File-Link einfügen (Figma-MCP muss verbunden sein und das File lesen dürfen) |
-| Code-Library | Repo-Pfad oder npm-Paketname nennen |
-| Specs/MD | Dateipfad nennen oder die Datei ins Terminal ziehen |
-| Screenshots | Bilder in einen Ordner legen und den Pfad nennen, oder direkt ins Terminal ziehen/pasten |
+| Live website | Include the URL in the request: `/basis https://www.example.com …` |
+| Figma | Paste the file link (Figma MCP must be connected and authorized to read the file) |
+| Code library | Provide the repository path or npm package name |
+| Specs/MD | Provide the file path or drag the file into the terminal |
+| Screenshots | Put images in a directory and provide its path, or drag/paste them directly into the terminal |
 
-Heraus fällt ein eigenständiges Kit-Repo (Tokens eingefroren, Komponenten, eine DS-Skill, Referenz-Screen). Am Ende steht deine visuelle Abnahme: Referenz-Screen neben Original, Korrekturen fließen zurück, dann ist die Basis eingefroren.
+The result is a standalone kit repository (frozen tokens, components, a DS skill, and a reference screen). The final step is your visual sign-off: compare the reference screen with the original, feed corrections back into the kit, and then freeze the foundation.
 
-**2. Prototypen bauen** — ab jetzt arbeitest du nur noch im Kit, das Framework-Repo brauchst du erst wieder bei neuem DS-Input:
+**2. Build prototypes**—from this point on, work only in the kit. You need the framework repository again only when you have new DS input:
 
 ```bash
-cd ~/dev/beispiel-rapidprototype
+cd ~/dev/example-rapidprototype
 claude
 ```
 
-Ein Satz genügt — „Baue mir einen Prototyp für …" (proto) oder „Ich will Ideen sammeln zu …" (ideate). `pnpm dev` zeigt alles unter einem Port, `pnpm export` baut eine teilbare Einzeldatei.
+One sentence is enough—“Build me a prototype for …” (proto) or “I want to explore ideas for …” (ideate). `pnpm dev` serves everything on a single port, and `pnpm export` creates a shareable single file.
 
-Das Kit ist self-contained (eigene CLAUDE.md, eigene Skill, gepinnte Dependencies) — es funktioniert auch auf einem anderen Rechner, auf dem nur Claude Code + Node/pnpm installiert sind; das Framework-Repo muss dort nicht liegen.
+The kit is self-contained (its own CLAUDE.md, its own skill, and pinned dependencies). It also works on another machine with only Claude Code and Node/pnpm installed; the framework repository does not need to be present.
 
-## Struktur
+## Structure
 
 ```
-.claude/skills/basis/   der Generator (/basis)
-templates/kit-react/    Kit-Template (Default)
-templates/kit-vue/      Kit-Template für Vue-Designsysteme
-templates/kit-common/   CLAUDE.md-/SKILL.md-Vorlagen + craft.md (DS-unabhängiges Handwerk)
-docs/                   Konzept + Recherche
+.claude/skills/basis/   the generator (/basis)
+templates/kit-react/    kit template (default)
+templates/kit-vue/      kit template for Vue design systems
+templates/kit-common/   CLAUDE.md/SKILL.md templates + craft.md (DS-independent craft)
+docs/                   concept + research
 ```
 
 [MIT License](LICENSE)

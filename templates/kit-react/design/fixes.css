@@ -1,19 +1,19 @@
 /*
- * design/fixes.css — dokumentierte Mini-Korrekturen.
+ * design/fixes.css: documented, narrowly scoped corrections.
  *
- * Wird als LETZTE Stylesheet-Datei geladen und gewinnt deshalb gegen Tokens
- * und Utilities. Genau dafür ist sie da — und nur dafür.
+ * Loaded as the LAST stylesheet, so it overrides tokens and utilities. That is
+ * its exact and only purpose.
  *
- * Regeln:
- *  - Jede Regel bekommt einen Kommentar: WAS ist kaputt, WARUM hier, WANN prüfbar.
- *  - Keine neuen Design-Entscheidungen. Wer hier Farben erfindet, umgeht die Tokens.
- *  - Beim Versionswechsel des Designsystems: Liste durchgehen, Erledigtes löschen.
+ * Rules:
+ *  - Every rule gets a comment: WHAT is broken, WHY it is fixed here, WHEN to review it.
+ *  - No new design decisions. Adding colors here bypasses the tokens.
+ *  - When the design-system version changes, review the list and delete resolved fixes.
  *
- * Beispiel:
+ * Example:
  *
- *   // DsSelect v2.4: Pfeil-Icon sitzt 2px zu tief (Upstream-Bug, Issue #123).
- *   // Prüfen, sobald v2.5 gepinnt ist.
+ *   // DsSelect v2.4: arrow icon sits 2px too low (upstream bug, issue #123).
+ *   // Review after pinning v2.5.
  *   .ds-select__icon { transform: translateY(-2px); }
  *
- * Im frisch generierten Kit ist diese Datei leer.
+ * This file is empty in a newly generated kit.
  */

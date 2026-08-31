@@ -1,23 +1,22 @@
 <!--
-  Ein Icon aus dem Set in src/icons/icons.ts.
+  An icon from the set in src/icons/icons.ts.
 
-  Größe kommt über Utilities (`h-5 w-5`), Farbe über den Textkontext
-  (currentColor) — nie per fill-Prop.
+  Size comes from utilities (`h-5 w-5`) and color from the text context
+  (currentColor), never from a fill prop.
 
       <DsIcon name="Close" />
-      <DsIcon name="Arrow-Right" title="Weiter" class="h-5 w-5" />
+      <DsIcon name="Arrow-Right" title="Continue" class="h-5 w-5" />
 
-  Diese Datei bleibt beim Generieren unverändert; ausgetauscht wird nur das
-  ICONS-Objekt daneben.
+  This file remains unchanged during generation; only the adjacent ICONS object
+  is replaced.
 -->
 
 <script lang="ts">
 export type DsIconProps = {
   name: DsIconName
   /**
-   * Beschriftung für Screenreader. Fehlt sie, gilt das Icon als dekorativ und
-   * wird mit aria-hidden ausgeblendet — das ist der Normalfall neben einem
-   * Textlabel.
+   * Accessible label for screen readers. Without one, the icon is decorative
+   * and hidden with aria-hidden, which is the normal case beside a text label.
    */
   title?: string
 }
@@ -43,7 +42,7 @@ const icon = computed(() => ICONS[name])
     focusable="false"
   >
     <title v-if="title">{{ title }}</title>
-    <!-- eslint-disable-next-line vue/no-v-html -- Inhalt stammt ausschliesslich aus ICONS -->
+    <!-- eslint-disable-next-line vue/no-v-html -- Content comes exclusively from ICONS -->
     <g v-html="icon.body" />
   </svg>
 </template>

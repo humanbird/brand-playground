@@ -1,15 +1,15 @@
 /*
- * Auto-Routing, nicht anfassen.
+ * Automatic routing. Do not edit.
  *
- * Die Routen entstehen aus der Ordnerstruktur unter src/prototypes/ (siehe
- * src/prototypes.ts). Hier wird nichts eingetragen, hier wird nichts gepflegt.
+ * Routes are derived from the folder structure under src/prototypes/ (see
+ * src/prototypes.ts). Nothing is registered or maintained here.
  *
- * HashRouter statt BrowserRouter, damit der Einzeldatei-Export
- * (`pnpm export` → export/index.html) ohne Server funktioniert: Routen leben
- * hinter dem #, das Dateisystem sieht nur eine index.html.
+ * HashRouter is used instead of BrowserRouter so the single-file export
+ * (`pnpm export` → export/index.html) works without a server: routes live after
+ * the #, while the file system only sees one index.html.
  *
- * Der Scroll-Reset beim Routenwechsel sitzt ebenfalls hier — einmal für alle
- * Prototypen. Sonst startet der nächste Screen mittendrin.
+ * The scroll reset on route changes also lives here, once for all prototypes.
+ * Otherwise, the next screen could open halfway down the page.
  */
 
 import { useEffect } from 'react'
@@ -21,22 +21,22 @@ import { screens } from './prototypes'
 function NotFound() {
   return (
     <main className="mx-auto max-w-2xl px-6 py-12">
-      <h1 className="text-xl font-bold text-ink">Diese Route gibt es nicht</h1>
+      <h1 className="text-xl font-bold text-ink">This route does not exist</h1>
       <p className="mt-3 text-base text-ink-muted">
-        Routen entstehen aus Dateien unter <code className="font-mono">src/prototypes/</code>.
-        Fehlt eine, fehlt die Datei.
+        Routes are generated from files under <code className="font-mono">src/prototypes/</code>.
+        If a route is missing, its file is missing.
       </p>
       <Link to="/" className="mt-6 inline-block text-base text-accent underline underline-offset-4">
-        Zur Übersicht
+        Back to overview
       </Link>
     </main>
   )
 }
 
 /**
- * Der HashRouter behält die Scrollposition über Routenwechsel hinweg. Jeder
- * Screen soll aber oben beginnen — Ankersprünge gibt es im Hash-Modus ohnehin
- * nicht. Gehört in den Router, nicht in die AppShell eines Prototyps.
+ * HashRouter retains the scroll position across route changes, but every screen
+ * should start at the top. Anchor navigation is unavailable in hash mode anyway.
+ * This belongs in the router, not in a prototype's AppShell.
  */
 function ScrollReset() {
   const { pathname, search } = useLocation()

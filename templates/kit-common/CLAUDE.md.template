@@ -1,71 +1,71 @@
-{{STACK: bei kit-vue durch Vue-Entsprechungen ersetzen}}
+{{STACK: replace with Vue equivalents for kit-vue}}
 
 # {{KIT_NAME}}
 
-Ein Satz Anforderung rein, laufendes {{DS_NAME}}-Frontend raus. Das ist der ganze Zweck.
+One sentence describing a requirement goes in; a working {{DS_NAME}} frontend comes out. That is the entire purpose.
 
-## Vor jeder UI-Arbeit
+## Before every UI task
 
-Die Skill `{{DS_SLUG}}` lesen. Sie enthält das Design System auf Konzeptebene — Seiten-Anatomie,
-Layout, Tokens, Komponentenwahl — und `craft.md` daneben das DS-unabhängige Handwerk (Zustände,
-Motion, Anti-Patterns). Exakte Komponenten-APIs kommen aus `design/components-meta.json` und dem
-Quellcode unter `src/components/`, nie aus dem Gedächtnis.
+Read the `{{DS_SLUG}}` skill. It describes the design system at a conceptual level—page anatomy,
+layout, tokens, component selection—while the adjacent `craft.md` covers DS-independent craft
+(states, motion, anti-patterns). Exact component APIs come from `design/components-meta.json` and
+the source code under `src/components/`, never from memory.
 
-Es gibt bewusst nur diese eine Skill. Wenn Wissen fehlt, gehört es dort hinein — nicht in eine zweite.
+There is deliberately only one skill. Missing knowledge belongs there, not in a second one.
 
-## Aufbau
+## Structure
 
-Vite + React + TypeScript + Tailwind, ein einziges Paket, kein Workspace.
+Vite + React + TypeScript + Tailwind, a single package, no workspace.
 
 ```
-src/prototypes/<slug>/*.tsx    Prototypen — Datei anlegen, Route existiert (/p/<slug>)
-src/prototypes/<slug>/_shared  Gemeinsame Shell/Mockdaten eines Prototyps (wird nicht geroutet)
-src/router.tsx                 Auto-Routing, nicht anfassen
-src/HomeView.tsx               Automatische Übersicht aller Prototypen
-src/components/                Die {{DS_NAME}}-Komponenten — benutzen, nicht neu erfinden
-design/tokens.css              Eingefrorene Tokens — nie regenerieren, nur bewusst editieren
-design/components-meta.json    API-Wahrheit: alle Komponenten mit Props/Varianten
-design/fixes.css               Dokumentierte Mini-Korrekturen
-.claude/skills/{{DS_SLUG}}/    Die Skill (+ craft.md)
+src/prototypes/<slug>/*.tsx    prototypes—create a file and its route exists (/p/<slug>)
+src/prototypes/<slug>/_shared  shared shell/mock data for a prototype (not routed)
+src/router.tsx                 automatic routing; do not modify
+src/HomeView.tsx               automatic overview of all prototypes
+src/components/                the {{DS_NAME}} components—use them, do not reinvent them
+design/tokens.css              frozen tokens—never regenerate; edit only deliberately
+design/components-meta.json    API source of truth: all components with props/variants
+design/fixes.css               documented small corrections
+.claude/skills/{{DS_SLUG}}/    the skill (+ craft.md)
 ```
 
-## Befehle
+## Commands
 
 ```bash
 pnpm dev        # Port 5300
 pnpm typecheck
-pnpm export     # Statischer Einzeldatei-Export aller Prototypen nach export/index.html
+pnpm export     # Static single-file export of all prototypes to export/index.html
 ```
 
-Läuft auf dem Port bereits ein Dev-Server dieses Kits, mitnutzen; sonst eigenen starten und
-am Ende den eigenen Prozess (per PID) beenden. Nie fremde Prozesse beenden, nie `pkill` nach
-Namen.
+If a development server for this kit is already running on the port, reuse it. Otherwise, start
+your own and stop only your own process (by PID) when finished. Never terminate processes owned by
+others, and never use `pkill` by name.
 
-## Modi
+## Modes
 
-- **proto** (Default): eine konkrete Idee als durchklickbaren Prototyp bauen. Beschreibt der
-  Auftrag einen Ablauf, mehrere Screens bauen und verlinken.
-- **ideate**: divergent — zu einer Fragestellung 3–5 bewusst unterschiedliche Richtungen als
-  grobe Einzel-Screens unter `src/prototypes/idea-<thema>-<variante>/` (Thema kurz und über
-  alle Varianten identisch — es gruppiert die Startseite). Wenig Detail, maximale
-  Unterschiedlichkeit der Ansätze. Jede Richtung benennt ihre Wette in einem Satz im
-  Datei-Header-Kommentar. „Fertig heißt" gilt abgeschwächt: typecheck, Konsole und Tokens ja —
-  Zustands-Vollständigkeit und Abläufe nur, wo sie die Idee tragen. Header/Footer-Shell ist
-  optional; ein nackter Content-Screen reicht, wenn die Idee nicht vom Rahmen lebt. Die beste
-  Richtung wird danach als richtiger Prototyp ausgebaut.
+- **proto** (default): build a specific idea as a clickable prototype. If the request
+  describes a flow, build and link multiple screens.
+- **ideate**: work divergently—create 3–5 deliberately distinct directions for a question as
+  rough standalone screens under `src/prototypes/idea-<thema>-<variante>/` (keep the topic short and
+  identical across all variants so the home page groups them). Use little detail and maximize the
+  difference between approaches. State each direction's hypothesis in one sentence in the
+  file-header comment. “Done means” applies in a reduced form: typecheck, console, and tokens still
+  matter; complete states and flows only where they support the idea. The header/footer shell is
+  optional; an unframed content screen is enough if the idea does not depend on its surroundings.
+  The best direction is then developed into a complete prototype.
 
-## Arbeitsweise
+## Working approach
 
-Nicht nachfragen, was der Nutzer genau meint — bauen. Annahmen im Prototyp sichtbar machen
-und danach benennen, statt vorher zu klären. Der Prototyp ist die Frage, nicht die Antwort.
+Do not ask what exactly the user means—build. Make assumptions visible in the prototype and
+state them afterward instead of clarifying them first. The prototype is the question, not the answer.
 
-Realistische Inhalte: echte Begriffe der Domäne, plausible Zahlen, kein Lorem Ipsum, keine
-`Item 1/Item 2`-Listen. Der Prototyp wird nach dem Inhalt beurteilt, nicht nach dem Layout.
+Use realistic content: real domain terminology, plausible numbers, no Lorem Ipsum, and no
+`Item 1/Item 2` lists. The prototype is judged by its content, not by its layout.
 
-## Fertig heißt
+## Done means
 
-1. `pnpm typecheck` läuft durch.
-2. Im Browser bei mindestens 1280px Breite geprüft, keine Konsolenfehler.
-3. Kein hartkodierter Farb- oder Abstandswert im Diff — alles kommt aus Tokens.
-4. Jeder Ablauf einmal durchgeklickt; Leer-, Lade- und Fehlerzustände existieren, wo sie
-   im echten Produkt existieren würden.
+1. `pnpm typecheck` passes.
+2. Checked in a browser at a width of at least 1280px, with no console errors.
+3. No hardcoded color or spacing value in the diff—everything comes from tokens.
+4. Every flow has been clicked through once; empty, loading, and error states exist wherever they
+   would exist in the real product.

@@ -1,9 +1,8 @@
 <!--
-  src/prototypes/beispiel/index.vue  →  Route /p/beispiel
+  src/prototypes/example/index.vue  →  Route /p/example
 
-  Einstiegs-Screen. Verlinkt auf Detail.vue (→ /p/beispiel/detail), damit der
-  Ablauf durchklickbar ist: ein Prototyp, den man nicht durchklicken kann,
-  beantwortet keine Frage.
+  Entry screen. Links to Detail.vue (→ /p/example/detail), making the flow
+  clickable. A prototype that cannot be clicked through answers no question.
 -->
 
 <script setup lang="ts">
@@ -15,10 +14,10 @@ import Shell from './_shared/Shell.vue'
 </script>
 
 <template>
-  <Shell titel="Aufträge">
+  <Shell titel="Work orders">
     <div class="flex flex-wrap items-baseline justify-between gap-4">
-      <p class="text-base text-ink-muted">{{ auftraege.length }} Aufträge in dieser Woche</p>
-      <DsButton>Auftrag anlegen</DsButton>
+      <p class="text-base text-ink-muted">{{ auftraege.length }} work orders this week</p>
+      <DsButton>Create work order</DsButton>
     </div>
 
     <ul class="mt-6 divide-y divide-line rounded-lg border border-line">
@@ -29,13 +28,13 @@ import Shell from './_shared/Shell.vue'
       >
         <div class="min-w-0 flex-1">
           <RouterLink
-            :to="`/p/beispiel/detail?id=${auftrag.id}`"
+            :to="`/p/example/detail?id=${auftrag.id}`"
             class="text-base font-medium text-ink underline-offset-4 hover:text-accent hover:underline"
           >
             {{ auftrag.titel }}
           </RouterLink>
           <p class="mt-1 text-sm text-ink-muted">
-            <span class="font-mono">{{ auftrag.id }}</span> · {{ auftrag.kunde }} · fällig
+            <span class="font-mono">{{ auftrag.id }}</span> · {{ auftrag.kunde }} · due
             {{ auftrag.faellig }}
           </p>
         </div>
@@ -50,8 +49,8 @@ import Shell from './_shared/Shell.vue'
     </ul>
 
     <p class="mt-8 text-sm text-ink-muted">
-      Annahme: Aufträge sind einer Woche zugeordnet und werden nicht paginiert. Ab etwa
-      40 Einträgen trägt diese Liste nicht mehr.
+      Assumption: work orders are assigned to a week and are not paginated. This list
+      stops working well at around 40 entries.
     </p>
   </Shell>
 </template>

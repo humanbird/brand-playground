@@ -1,15 +1,15 @@
 /*
- * DsButton — Beispiel-Komponente des Templates.
+ * DsButton: template example component.
  *
- * GENERATOR-ORDNER: `/basis` ersetzt src/components/ durch die Komponenten des
- * Ziel-Designsystems (übernommen aus einer Code-Library oder generiert).
- * DsButton bleibt nur, wenn das Ziel-DS keine eigene Button-Komponente hat.
+ * GENERATOR FOLDER: `/basis` replaces src/components/ with the target design
+ * system's components (adopted from a code library or generated).
+ * DsButton remains only when the target design system has no button component.
  *
- * Muster, an das sich generierte Komponenten halten:
- *  - keine Hex-, keine px-Werte — ausschliesslich Token-Utilities aus src/styles.css
- *  - Varianten als String-Union, nicht als Boolean-Schwarm
- *  - native Attribute durchreichen, damit Prototypen nicht am Typ scheitern
- *  - der Eintrag in design/components-meta.json ist Teil der Komponente
+ * Pattern for generated components:
+ *  - no hex or px values; use only token utilities from src/styles.css
+ *  - variants as a string union, not a collection of booleans
+ *  - forward native attributes so prototype types remain compatible
+ *  - the design/components-meta.json entry is part of the component
  */
 
 import type { ButtonHTMLAttributes } from 'react'

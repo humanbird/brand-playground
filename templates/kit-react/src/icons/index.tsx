@@ -1,23 +1,21 @@
 /*
- * src/icons — das eingefrorene Icon-Set des Designsystems.
+ * src/icons: the frozen design-system icon set.
  *
- * GENERATOR-DATEI: `/basis` ersetzt `ICONS` durch das echte Set des Ziel-DS
- * (aus dem SVG-Sprite, der Icon-Library oder den Figma-Komponenten), eingefroren
- * als React-Komponenten. Kein externer Request, kein `<use>` auf eine
- * Sprite-Datei, kein Icon-npm-Paket zur Laufzeit — der Einzeldatei-Export muss
- * offline laufen. Die beiden Symbole unten sind nur das Formbeispiel.
+ * GENERATOR FILE: `/basis` replaces `ICONS` with the target design system's
+ * actual set (from the SVG sprite, icon library, or Figma components), frozen as
+ * React components. No external requests, no `<use>` reference to a sprite file,
+ * and no runtime icon npm package: the single-file export must work offline.
+ * The two symbols below only demonstrate the expected structure.
  *
- * Konventionen, die für JEDES Set gelten:
- *  - Pfade tragen `fill="currentColor"` — die Farbe kommt IMMER aus dem
- *    Textkontext (`text-ink`, `text-accent`). Nie eine `fill`-Prop, nie ein
- *    Hex im Pfad: sonst ist das Icon das einzige Element im Prototyp, das
- *    nicht auf Tokens hört.
- *  - Größe über Utilities (`h-5 w-5`), nicht über width/height-Attribute.
- *  - EIN Set, ein Stil. Nie ein zweites (Lucide, Feather, Material)
- *    dazumischen — der Bruch fällt sofort auf. Fehlt ein Symbol, wird es im
- *    Stil des Sets ergänzt.
- *  - Die Namen sind die des Originals, damit Ingest-Report und Kit dieselbe
- *    Sprache sprechen.
+ * Conventions for EVERY set:
+ *  - Paths use `fill="currentColor"`; color ALWAYS comes from the text context
+ *    (`text-ink`, `text-accent`). Never add a `fill` prop or a hex value to a
+ *    path, or the icon becomes the only prototype element that ignores tokens.
+ *  - Set size with utilities (`h-5 w-5`), not width/height attributes.
+ *  - ONE set, one style. Never mix in a second set (Lucide, Feather, Material),
+ *    because the inconsistency is immediately visible. Add missing symbols in
+ *    the set's own style.
+ *  - Keep the original names so the ingest report and kit use the same terms.
  */
 
 import type { JSX, SVGProps } from 'react'
@@ -47,25 +45,24 @@ const ICONS = {
   },
 } satisfies Record<string, IconDef>
 
-/** Alle Symbolnamen des Sets. */
+/** All symbol names in the set. */
 export type DsIconName = keyof typeof ICONS
 
-/** Namensliste zur Laufzeit (für Icon-Übersichten, Picker, Tests). */
+/** Runtime name list for icon overviews, pickers, and tests. */
 export const dsIconNames = Object.keys(ICONS) as DsIconName[]
 
 export type DsIconProps = Omit<SVGProps<SVGSVGElement>, 'name'> & {
   name: DsIconName
   /**
-   * Beschriftung für Screenreader. Fehlt sie, gilt das Icon als dekorativ und
-   * wird mit aria-hidden ausgeblendet — das ist der Normalfall neben einem
-   * Textlabel.
+   * Accessible label for screen readers. Without one, the icon is decorative
+   * and hidden with aria-hidden, which is the normal case beside a text label.
    */
   title?: string
 }
 
 /**
- * Ein Icon aus dem Set. Größe kommt über Utilities (`h-5 w-5`), Farbe über den
- * Textkontext (currentColor) — nie per fill-Prop.
+ * An icon from the set. Size comes from utilities (`h-5 w-5`) and color from
+ * the text context (currentColor), never from a fill prop.
  */
 export function DsIcon({ name, title, className, ...rest }: DsIconProps) {
   const icon = ICONS[name]

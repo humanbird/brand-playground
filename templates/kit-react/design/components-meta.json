@@ -1,29 +1,29 @@
 [
   {
     "name": "DsButton",
-    "extends": "ButtonHTMLAttributes<HTMLButtonElement>; className wird an die Basisklassen angehängt. Dieses Feld ist Pflicht: es sagt, welche HTML-Attribute durchgereicht werden und wo className landet — bei Komponenten ohne Spread steht hier \"— keine Rest-Props\".",
-    "description": "Beispiel-Komponente des Templates. Zeigt die erwartete Form eines Eintrags — der Generator ersetzt dieses Array vollständig durch das Inventar des Ziel-Designsystems.",
+    "extends": "ButtonHTMLAttributes<HTMLButtonElement>; className is appended to the base classes. This field is required: it documents which HTML attributes are forwarded and where className is applied. For components without a spread, use \"— no rest props\".",
+    "description": "Template example component. Demonstrates the expected entry structure; the generator replaces this array completely with the target design system's inventory.",
     "props": [
       {
         "name": "variant",
         "type": "'primary' | 'secondary' | 'ghost'",
         "default": "'primary'",
         "required": false,
-        "description": "Visuelle Gewichtung. Pro Screen höchstens eine primary-Aktion."
+        "description": "Visual emphasis. Use at most one primary action per screen."
       },
       {
         "name": "size",
         "type": "'sm' | 'md'",
         "default": "'md'",
         "required": false,
-        "description": "Höhe und Innenabstand."
+        "description": "Height and internal spacing."
       },
       {
         "name": "disabled",
         "type": "boolean",
         "default": "false",
         "required": false,
-        "description": "Standard-Button-Attribut."
+        "description": "Standard button attribute."
       }
     ],
     "variants": {
@@ -33,7 +33,7 @@
     "slots": [
       {
         "name": "children",
-        "description": "Label des Buttons. Verb im Imperativ, kein Satzzeichen."
+        "description": "Button label. Use an imperative verb with no punctuation."
       }
     ],
     "source": "src/components/DsButton.tsx"

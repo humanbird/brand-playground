@@ -1,5 +1,5 @@
 <!--
-  Fallback-Route. Wird nie gepflegt, nicht anfassen.
+  Fallback route. Never maintained; do not edit.
 -->
 
 <script setup lang="ts">
@@ -8,16 +8,16 @@ import { RouterLink } from 'vue-router'
 
 <template>
   <main class="mx-auto max-w-2xl px-6 py-12">
-    <h1 class="text-xl font-bold text-ink">Diese Route gibt es nicht</h1>
+    <h1 class="text-xl font-bold text-ink">This route does not exist</h1>
     <p class="mt-3 text-base text-ink-muted">
-      Routen entstehen aus Dateien unter <code class="font-mono">src/prototypes/</code>.
-      Fehlt eine, fehlt die Datei.
+      Routes are generated from files under <code class="font-mono">src/prototypes/</code>.
+      If a route is missing, its file is missing.
     </p>
     <RouterLink
       to="/"
       class="mt-6 inline-block text-base text-accent underline underline-offset-4"
     >
-      Zur Übersicht
+      Back to overview
     </RouterLink>
   </main>
 </template>

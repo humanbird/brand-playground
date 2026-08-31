@@ -1,106 +1,104 @@
 ---
 name: {{DS_SLUG}}
-description: Das {{DS_NAME}} Design System auf Konzeptebene — Seiten-Anatomie, Layout, Tokens, Komponentenwahl und der Weg zur exakten API. Nutze diese Skill immer, wenn in diesem Repo ein Screen, eine Ansicht, ein Formular, ein Prototyp oder irgendeine UI gebaut oder geändert wird.
+description: Describes the {{DS_NAME}} design system at a conceptual level—page anatomy, layout, tokens, component selection, and how to find the exact API. It is used whenever a screen, view, form, prototype, or any other UI is built or changed in this repository.
 ---
 
-{{STACK: bei kit-vue durch Vue-Entsprechungen ersetzen}}
+{{STACK: replace with Vue equivalents for kit-vue}}
 
-# {{DS_NAME}} bauen
+# Build with {{DS_NAME}}
 
-Dieses Repo hat genau einen Zweck: aus einem Satz Anforderung ein laufendes {{DS_NAME}}-Frontend
-machen. Diese Skill erklärt das System — nicht die Komponenten. Komponenten schlägst du nach.
-Das DS-unabhängige Handwerk (Zustände, Motion, Anti-Patterns) steht in `craft.md` im selben
-Ordner — bei jeder UI-Arbeit mitlesen.
+This repository has exactly one purpose: turn a one-sentence requirement into a working {{DS_NAME}}
+frontend. This skill explains the system, not the components. Look up the components themselves.
+The DS-independent craft guidance (states, motion, anti-patterns) is in `craft.md` in the same
+directory—read it for every UI task.
 
-## Der Loop
+## The loop
 
-Ein Prototyp ist ein Ordner. Mehr Registrierung gibt es nicht.
+A prototype is a directory. No additional registration is required.
 
 ```
 src/prototypes/<slug>/index.tsx    ->  /p/<slug>
 src/prototypes/<slug>/Detail.tsx   ->  /p/<slug>/detail
 ```
 
-Datei anlegen, Route existiert. Startseite listet alles automatisch. `pnpm dev` läuft auf
-Port 5300. Kein Config-File anfassen, kein Router-Eintrag, keine Registry.
+Create a file and its route exists. The home page lists everything automatically. `pnpm dev` runs on
+port 5300. Do not touch a configuration file or add a router entry or registry.
 
-Routen laufen hinter dem Hash: `/p/<slug>` heißt im Browser `/#/p/<slug>` — der
-Einzeldatei-Export braucht das; direkte Pfade ohne `#` landen auf der Startseite.
+Routes use the hash: `/p/<slug>` becomes `/#/p/<slug>` in the browser—the
+single-file export requires it; direct paths without `#` open the home page.
 
-**Eine Datei = eine feste Route. Keine Pfadparameter.** `Detail.tsx` wird `/p/<slug>/detail`
-— ein `/p/<slug>/detail/:id` gibt es nicht. IDs reisen im Query-String (`?id=…`, gelesen mit
-`useSearchParams`), gemeinsamer Zustand im Store unter `_shared/`. Den Scroll-Reset beim
-Routenwechsel bringt der Router mit; keine Shell baut ihn nach.
+**One file = one fixed route. No path parameters.** `Detail.tsx` becomes `/p/<slug>/detail`;
+there is no `/p/<slug>/detail/:id`. IDs travel in the query string (`?id=…`, read with
+`useSearchParams`), and shared state belongs in the store under `_shared/`. The router handles
+scroll reset on route changes; shells must not reimplement it.
 
-Baue **mehrere Screens**, sobald der Auftrag einen Ablauf beschreibt, und verlinke sie.
-Ein Prototyp, den man nicht durchklicken kann, beantwortet keine Frage.
+Build **multiple screens** as soon as the request describes a flow, and link them.
+A prototype that cannot be clicked through does not answer a question.
 
-## Nie raten
+## Never guess
 
-Props und Varianten **nie** aus dem Gedächtnis schreiben. Eine Prop, die nicht in
-`components-meta.json` oder im Quellcode steht, existiert nicht — nicht verwenden, nicht
-erfinden. Fehlt etwas wirklich, ist das ein Kit-Befund (Stolperstein/Meta ergänzen), kein
-Freibrief zum Raten.
+**Never** write props or variants from memory. A prop that is not in
+`components-meta.json` or the source code does not exist—do not use or invent it.
+If something is genuinely missing, it is a kit finding (add a pitfall/metadata), not
+permission to guess.
 
-1. `design/components-meta.json` — alle Komponenten mit Props, Varianten, Slots und dem Feld
-   `extends` (welche HTML-Attribute durchgereicht werden und wo `className` landet). Mit
-   einem Dreizeiler filtern; das ist schneller und sicherer als jede Erinnerung.
-2. Echte Verwendung: der Quellcode unter `src/components/<Name>.tsx` (importiert wird
-   über den Barrel: `import { … } from '../../components'`).
-   {{CODE_FIRST: Ist das DS ein gepinntes Paket, gibt es src/components/ und src/icons/ NICHT — Punkt 2 verweist dann auf node_modules-Quellen und offizielle examples/stories, importiert wird direkt aus dem Paket. Der Generator schreibt alle src/components/-Verweise in dieser Skill und in CLAUDE.md entsprechend um.}}
-3. Token-Namen stehen vollständig in `design/tokens.css` — es gibt keine anderen.
+1. `design/components-meta.json`—all components with props, variants, slots, and the
+   `extends` field (which HTML attributes are forwarded and where `className` is applied). Filter it
+   with a three-line script; that is faster and safer than relying on memory.
+2. Real usage: the source code under `src/components/<Name>.tsx` (import through
+   the barrel: `import { … } from '../../components'`).
+   {{CODE_FIRST: If the DS is a pinned package, src/components/ and src/icons/ DO NOT exist—item 2 must instead reference sources in node_modules and official examples/stories, with imports directly from the package. The generator rewrites every src/components/ reference in this skill and in CLAUDE.md accordingly.}}
+3. All token names are defined in `design/tokens.css`; there are no others.
 
-{{ICONS: Wie Icons eingebunden werden. Das Set ist als React-Komponenten in `src/icons/index.tsx` eingefroren: `import { DsIcon } from '../../icons'`, Name aus dem Typ `DsIconName` (Laufzeitliste: `dsIconNames`), Größe über Utilities (`h-5 w-5`), Farbe über den Textkontext (currentColor) — nie eine fill-Prop, nie ein zweites Icon-Set. Hier ergänzen: Quelle und Stil des Sets, die Rendergrößen des Originals und die 5–10 am häufigsten gebrauchten Namen. Vom Generator füllen oder Abschnitt entfernen, wenn das DS keine Icons hat.}}
+{{ICONS: How to use icons. The set is frozen as React components in `src/icons/index.tsx`: `import { DsIcon } from '../../icons'`; take the name from the `DsIconName` type (runtime list: `dsIconNames`), set size with utilities (`h-5 w-5`), and inherit color from the text context (currentColor)—never use a fill prop and never add a second icon set. Add the set's source and style, the original render sizes, and the 5–10 most frequently used names here. The generator fills this in or removes the section if the DS has no icons.}}
 
-## Seiten-Anatomie
+## Page anatomy
 
-{{ANATOMIE: Die 3–5 Regionen einer typischen {{DS_NAME}}-Seite als Tabelle (Region | Komponente/Muster | Rolle), danach EIN funktionierendes Gerüst-Beispiel als Code-Block, das Header/Nav, Content-Container und Footer korrekt zusammensteckt — mit echten Komponenten-Namen aus diesem Kit. Regeln für gemeinsame Shell mehrerer Screens (_shared/AppShell.tsx, _shared/data.ts als reaktiver Mock-Store).}}
+{{ANATOMIE: Describe the 3–5 regions of a typical {{DS_NAME}} page in a table (Region | Component/Pattern | Role), followed by ONE functional scaffold example in a code block that correctly combines the header/navigation, content container, and footer using real component names from this kit. Include rules for a shared shell across multiple screens (_shared/AppShell.tsx, _shared/data.ts as a reactive mock store).}}
 
-Aus einer `.tsx` in `_shared/` werden **nur Komponenten** exportiert. Ein zusätzlicher
-Konstanten- oder Helfer-Export in derselben Datei bricht Fast Refresh (die Seite lädt bei
-jeder Änderung komplett neu, der Prototyp-Store ist wieder leer) — solche Exporte gehören in
-eine eigene `.ts`.
+A `.tsx` file in `_shared/` may export **components only**. An additional constant or helper export
+from the same file breaks Fast Refresh (the page reloads completely after every change and resets
+the prototype store); place such exports in a separate `.ts` file.
 
 ## Layout
 
-{{LAYOUT: Container-Breiten, Grid-/Spalten-Logik und das Layout-Modell des DS mit konkreten Werten aus dem Ingest — Viewport-Breakpoints ODER container-basiert (manche DS wie Onyx rechnen nach Containerbreite; dann gelten Container-Stufen, nicht Fensterbreiten). Die nicht-offensichtlichen Fallen explizit (z.B. was bei schmalen Containern passiert). Regel: Layoutwerkzeug erster Wahl benennen; eigene Flex-Konstruktionen erst, wenn das nachweislich nicht reicht.}}
+{{LAYOUT: Document container widths, grid/column logic, and the DS layout model with specific values from ingestion—viewport breakpoints OR container-based behavior (some design systems such as Onyx calculate by container width; in that case, container tiers apply, not viewport widths). Explicitly identify non-obvious pitfalls (for example, what happens in narrow containers). State the preferred layout tool; use custom flex constructions only when it demonstrably cannot meet the need.}}
 
-## Tokens statt Werte
+## Tokens, not values
 
-Alles Visuelle kommt aus den semantischen CSS-Variablen in `design/tokens.css`. Hex, rgb, hsl
-und px-Abstände im Prototyp-Code sind Fehler, keine Abkürzungen.
+All visual styling comes from the semantic CSS variables in `design/tokens.css`. Hex, rgb, hsl,
+and px spacing values in prototype code are errors, not shortcuts.
 
-{{TOKENS: Die Token-Gruppen mit Namensmuster und Anwendungsregel (welche Farbe wofür, Spacing-Stufen, Typo-Stufen mit Line-Heights, Radius-Sprache, Schatten). Kurz halten — die Datei selbst ist die Referenz. Zu jeder Rolle das WARUM in einem Halbsatz (z.B. „Schatten nur am Header, weil das System sonst flächenbasiert trennt") — Begründungen lassen den Agenten bei fehlenden Patterns systemkonform extrapolieren statt zu driften. Explizit: welche Rolle hat die Markenfarbe, was ist Text-Hierarchie (primär/sekundär/soft), was sind Flächen-Abstufungen. IMMER benennen: welche Fläche/Farbe markiert Auswahl bzw. den aktiven Zustand (gewählte Option, aktiver Filter, aktive Navigation) — und welche ähnliche Farbe dafür NICHT gemeint ist. Ohne diesen Satz greift jeder Prototyp-Agent zur nächstbesten Pastellfläche. Kategorien, die das DS bewusst NICHT hat (z.B. keine Schatten, keine Animationen, keine Verläufe), als „Fehlt bewusst: … — Grund" deklarieren statt still wegzulassen — sonst erfindet der nächste Agent sie.}}
+{{TOKENS: Document token groups with their naming patterns and usage rules (which color is used where, spacing tiers, typography tiers with line heights, radius language, shadows). Keep it brief—the file itself is the reference. For each role, include the REASON in half a sentence (for example, “Use shadows only on the header because the system otherwise separates content with surfaces”) so agents can extrapolate missing patterns consistently instead of drifting. Explicitly state the role of the brand color, the text hierarchy (primary/secondary/soft), and the surface tiers. ALWAYS specify which surface/color indicates selection or an active state (selected option, active filter, active navigation), and which similar color is NOT intended for that purpose. Without this sentence, every prototype agent reaches for the nearest pastel surface. Declare categories the DS deliberately DOES NOT have (for example, no shadows, animations, or gradients) as “Intentionally absent: …—reason” instead of silently omitting them; otherwise the next agent will invent them.}}
 
-Breiten aus der Utility-Skala des CSS-Frameworks (`max-w-*`, `min-w-*`) sind erlaubt, solange
-sie rem-basiert sind und es kein Token-Äquivalent gibt — sie deckeln Inhalte innerhalb einer
-Sektion. Alles Farbige, Abstände und Typo kommen weiterhin ausschließlich aus Tokens.
+Widths from the CSS framework's utility scale (`max-w-*`, `min-w-*`) are allowed as long as
+they are rem-based and no token equivalent exists; they constrain content within a section.
+All colors, spacing, and typography must still come exclusively from tokens.
 
-## Komponenten wählen
+## Choosing components
 
-Native Elemente sind fast immer die falsche Antwort. `<button>` → `<DsButton>`, `<input>` →
-die Formular-Komponenten dieses Kits. Vor dem Selbstbauen: `components-meta.json` prüfen —
-{{ANZAHL}} Komponenten existieren.
+Native elements are almost always the wrong answer. `<button>` → `<DsButton>`, `<input>` →
+the form components in this kit. Before building anything custom, check `components-meta.json`—
+{{ANZAHL}} components exist.
 
-{{KOMPONENTENWAHL: Tabelle native/Absicht → Kit-Komponente; die Auswahl-Muster (Radio/Checkbox/Optionskachel) gehören mit hinein. Danach „Typische Kompositionen": 5–10 wiederkehrende Muster (Datenseite, Formular, Karte/Teaser, Leerzustand, Bestätigungsdialog, …) mit den konkreten Komponenten-Kombinationen dieses Kits, je 1–3 Zeilen. Immer dabei: das TABELLEN-/DATENMUSTER — Linienfarbe, Kopfzeilen-Gewicht, Ausrichtung, Zahlenformatierung (tabular-nums), horizontales Scrollen — denn eine Tabelle baut jeder Agent sonst frei erfunden.}}
+{{KOMPONENTENWAHL: Provide a table mapping native element/intent → kit component, including selection patterns (radio/checkbox/option tile). Then add “Typical compositions”: 5–10 recurring patterns (data page, form, card/teaser, empty state, confirmation dialog, and so on), each with the specific component combination used in this kit and described in 1–3 lines. Always include the TABLE/DATA PATTERN—line color, header weight, alignment, number formatting (tabular-nums), horizontal scrolling—because otherwise every agent invents its own table design.}}
 
-Bildplatzhalter: unterhalb von etwa 120px Kantenlänge (Listenzeilen, Tabellenköpfe,
-Thumbnails) passt kein Text mehr auf die Fläche. Dort ein Icon zentrieren und die
-Motivbeschreibung als `sr-only`-Text mitgeben — beschnittener Platzhaltertext sieht nach
-Fehler aus, nicht nach Platzhalter.
+For image placeholders smaller than roughly 120px on either side (list rows, table headers,
+thumbnails), text no longer fits on the surface. Center an icon there and provide the subject
+description as `sr-only` text—clipped placeholder text looks like an error, not a placeholder.
 
-## Stolpersteine
+## Pitfalls
 
-{{STOLPERSTEINE: Bekannte Fallen dieses Kits/dieser DS-Version. Wächst mit der Nutzung — jede beim Bauen gefundene Falle wird HIER eingetragen (und ggf. in design/fixes.css dokumentiert korrigiert). Initial vom Generator mit dem befüllen, was beim Referenz-Screen-Nachbau auffiel.}}
+{{STOLPERSTEINE: Document known pitfalls of this kit/DS version. This section grows with use—record EVERY pitfall discovered during implementation HERE (and, where appropriate, document the correction in design/fixes.css). Initially, the generator fills it with issues found while recreating the reference screen.}}
 
-## Haltung
+## Visual stance
 
-{{HALTUNG: 4–6 Grundsätze der visuellen Sprache dieses CD, aus dem Ingest-Report destilliert (z.B. Ausrichtung, Weißraum vs. Rahmen, Bildsprache, Tonalität der Texte). Plus immer: Inhalt bestimmt Struktur, nicht umgekehrt. Zustände mitdenken — ein Prototyp ohne Leer-/Lade-/Fehlerzustand sieht fertiger aus, als er ist.}}
+{{HALTUNG: Distill 4–6 principles of this corporate design's visual language from the ingestion report (for example, alignment, whitespace versus borders, image style, copy tone). Always include: content determines structure, not the other way around. Design for states—a prototype without empty/loading/error states looks more complete than it is.}}
 
-## Fertig heißt
+## Done means
 
-1. `pnpm typecheck` läuft durch.
-2. Im Browser bei mindestens 1280px geprüft{{BREITE_HINWEIS: ggf. DS-spezifischen Hinweis ergänzen, was unterhalb passiert}}.
-3. Keine Konsolenfehler.
-4. Kein hartkodierter Farb- oder Abstandswert im Diff. {{GREP_AUSNAHMEN: Falls das DS sanktionierte Ausnahme-Tokens hat (z.B. eine 1px-Rahmenbreite als Token), hier benennen — sonst schlägt die Prüfung auf korrekt gebaute Borders an.}}
-5. Jeder Ablauf einmal durchgeklickt, inkl. Leerzustand.
+1. `pnpm typecheck` passes.
+2. Checked in a browser at a width of at least 1280px{{BREITE_HINWEIS: add any DS-specific note about what happens below this width}}.
+3. No console errors.
+4. No hardcoded color or spacing values in the diff. {{GREP_AUSNAHMEN: If the DS has sanctioned exception tokens (for example, a 1px border width represented by a token), list them here; otherwise the check flags correctly built borders.}}
+5. Every flow has been clicked through once, including the empty state.

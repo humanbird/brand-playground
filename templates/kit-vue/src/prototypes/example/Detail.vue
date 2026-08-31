@@ -1,11 +1,11 @@
 <!--
-  src/prototypes/beispiel/Detail.vue  →  Route /p/beispiel/detail
+  src/prototypes/example/Detail.vue  →  Route /p/example/detail
 
-  Zweiter Screen desselben Prototyps. Der Dateiname wird für die Route klein
-  geschrieben; ein weiterer Screen wäre einfach eine weitere Datei daneben.
+  Second screen in the same prototype. The file name is lowercased for the
+  route; another screen would simply be another file alongside it.
 
-  Parameter kommen über die Query (?id=…) — das funktioniert auch im
-  Einzeldatei-Export hinter dem Hash: #/p/beispiel/detail?id=A-2481
+  Parameters are passed through the query string (?id=…), which also works in
+  the single-file export after the hash: #/p/example/detail?id=A-2481
 -->
 
 <script setup lang="ts">
@@ -22,17 +22,17 @@ const id = computed(() => {
   return typeof value === 'string' ? value : null
 })
 const auftrag = computed(() => auftragById(id.value))
-const zurueck = { to: '/p/beispiel', label: 'Aufträge' }
+const zurueck = { to: '/p/example', label: 'Work orders' }
 </script>
 
 <template>
-  <Shell v-if="!auftrag" titel="Auftrag" :zurueck="zurueck">
-    <p class="text-base text-ink">Dieser Auftrag existiert nicht.</p>
+  <Shell v-if="!auftrag" titel="Work order" :zurueck="zurueck">
+    <p class="text-base text-ink">This work order does not exist.</p>
     <p class="mt-3 text-sm text-ink-muted">
-      Leerer Zustand — mitgedacht, nicht weggelassen.
+      Empty state: considered explicitly, not omitted.
     </p>
-    <RouterLink to="/p/beispiel" class="mt-6 inline-block">
-      <DsButton variant="secondary">Zurück zur Liste</DsButton>
+    <RouterLink to="/p/example" class="mt-6 inline-block">
+      <DsButton variant="secondary">Back to list</DsButton>
     </RouterLink>
   </Shell>
 
@@ -49,22 +49,22 @@ const zurueck = { to: '/p/beispiel', label: 'Aufträge' }
 
     <dl class="mt-6 grid gap-4 sm:grid-cols-2">
       <div>
-        <dt class="text-xs text-ink-muted">Kunde</dt>
+        <dt class="text-xs text-ink-muted">Customer</dt>
         <dd class="mt-1 text-base text-ink">{{ auftrag.kunde }}</dd>
       </div>
       <div>
-        <dt class="text-xs text-ink-muted">Einsatzort</dt>
+        <dt class="text-xs text-ink-muted">Service location</dt>
         <dd class="mt-1 text-base text-ink">{{ auftrag.ort }}</dd>
       </div>
       <div>
-        <dt class="text-xs text-ink-muted">Fällig</dt>
+        <dt class="text-xs text-ink-muted">Due</dt>
         <dd class="mt-1 text-base text-ink">{{ auftrag.faellig }}</dd>
       </div>
     </dl>
 
     <p class="mt-6 max-w-2xl text-base text-ink">{{ auftrag.beschreibung }}</p>
 
-    <h2 class="mt-8 text-lg font-medium text-ink">Positionen</h2>
+    <h2 class="mt-8 text-lg font-medium text-ink">Line items</h2>
     <ul class="mt-4 divide-y divide-line rounded-lg border border-line">
       <li
         v-for="position in auftrag.positionen"
@@ -77,9 +77,9 @@ const zurueck = { to: '/p/beispiel', label: 'Aufträge' }
     </ul>
 
     <div class="mt-8 flex flex-wrap gap-3">
-      <DsButton>Abschließen</DsButton>
-      <DsButton variant="secondary">Termin verschieben</DsButton>
-      <DsButton variant="ghost" size="sm">Protokoll ansehen</DsButton>
+      <DsButton>Complete</DsButton>
+      <DsButton variant="secondary">Reschedule</DsButton>
+      <DsButton variant="ghost" size="sm">View service report</DsButton>
     </div>
   </Shell>
 </template>

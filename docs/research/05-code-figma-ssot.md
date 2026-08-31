@@ -1,27 +1,27 @@
-# Recherche: Code ↔ Figma Single Source of Truth (Stand 2026-08)
+# Research: Code ↔ Figma Single Source of Truth (as of 2026-08)
 
-## Kernbefund
-Für einen einzelnen UX Designer mit Ziel HTML-Prototypen ist bidirektionale Figma-Sync 2026 **Overkill**. Branchentrend: **Code als Source of Truth, Figma als Input/Downstream-Ansicht** — umgekehrt zur klassischen Annahme.
+## Key Finding
+For an individual UX designer building HTML prototypes, bidirectional Figma sync is **overkill** in 2026. The industry trend is toward **code as the source of truth, with Figma as an input/downstream view**—the reverse of the traditional assumption.
 
 ## Details
 
 ### Code → Figma (generate_figma_design & Co.)
-Brauchbar für einfache bis mittlere Screens, aber: kein Feedback-Loop (sieht das gerenderte Ergebnis nicht), erfindet ohne Code-Connect-Mappings Ad-hoc-Styles, reduziert Logik auf einen statischen Frame-Zustand, Auto-Layout/Variants oft manuell nachzuziehen.
+Useful for simple to moderately complex screens, but it has no feedback loop (it cannot see the rendered result), invents ad hoc styles without Code Connect mappings, reduces logic to a static frame state, and often requires manual cleanup of auto layout and variants.
 
 ### Figma → Code (Tokens)
-Lücke 2026 weitgehend geschlossen: Figma Variables → DTCG-JSON-Export („Export to JSON" pro Collection) → Style Dictionary v4 → CSS-Vars/Tailwind. Round-Trip mit vernünftiger Fidelity möglich.
+The gap is largely closed in 2026: Figma Variables → DTCG JSON export (“Export to JSON” per collection) → Style Dictionary v4 → CSS variables/Tailwind. A round trip with reasonable fidelity is possible.
 
-### Wer ist Source of Truth?
-- JumpCloud dokumentiert öffentlich den Wechsel: Figma wurde „upstream input, not downstream truth" — das DS im Code ist der Vertrag.
-- Figma bleibt wertvoll für Token-Management, visuelle Exploration, Stakeholder-Kommunikation — verliert aber die Rolle als alleinige Wahrheit.
-- Praxisberichte (UX Collective): Solo-Designer wechseln zu Prototyping direkt in Code, weil der Figma-Sync-und-Rebuild-Loop „strukturell unnötig" wurde.
+### What Is the Source of Truth?
+- JumpCloud has publicly documented the shift: Figma became “upstream input, not downstream truth”—the design system in code is the contract.
+- Figma remains valuable for token management, visual exploration, and stakeholder communication, but it is losing its role as the sole source of truth.
+- Field reports (UX Collective) show solo designers moving to prototyping directly in code because the Figma sync-and-rebuild loop has become “structurally unnecessary.”
 
-## Empfehlung mit Ausbaustufen (Scout)
-- **MVP: keine Sync-Pipeline.** HTML-Prototypen als primäres Artefakt; Figma nur punktuell als Input; gelegentlich generate_figma_design für Stakeholder-Ansichten, ohne Konsistenz-Garantie.
-- **Stufe 2** (wenn Zielsystem/Team entsteht): unidirektionale Token-Pipeline Figma Variables → DTCG → Style Dictionary → CSS-Vars.
-- **Stufe 3** (nur bei echtem Team-Handoff): Code Connect für gemeinsames Vokabular. Volle bidirektionale Sync bleibt fragil — Hilfsmittel, keine verlässliche Automatisierung.
+## Recommended Roadmap (Scout)
+- **MVP: no sync pipeline.** HTML prototypes are the primary artifact; Figma is used selectively as input; generate_figma_design may occasionally produce stakeholder views, with no consistency guarantee.
+- **Stage 2** (once a target system or team emerges): a unidirectional token pipeline from Figma Variables → DTCG → Style Dictionary → CSS variables.
+- **Stage 3** (only for a genuine team handoff): Code Connect for a shared vocabulary. Full bidirectional sync remains fragile—useful as an aid, but not as reliable automation.
 
-## Quellen
+## Sources
 - https://www.builder.io/blog/figma-mcp-server · https://developers.figma.com/docs/figma-mcp-server/
 - https://levelup.gitconnected.com/how-to-build-a-figma-to-code-design-token-pipeline-part-1-8b66ef9a45d4
 - https://medium.com/@jc-design/figma-is-no-longer-the-source-of-truth-adb89feabafb
