@@ -16,18 +16,31 @@
 
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 
+import DeviceFrame from './DeviceFrame.vue'
 import HomeView from './HomeView.vue'
 import NotFound from './NotFound.vue'
-import { screens } from './prototypes'
+import { exportedOnly, screens } from './prototypes'
+import { FRAME_PREFIX, openPath, resolveViewport } from './viewport'
 
 const routes: RouteRecordRaw[] = [
-  { path: '/', name: 'home', component: HomeView },
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView,
+    // A `pnpm export --only <slug>` build contains one prototype; the overview
+    // would list exactly that one, so open it directly at its declared viewport.
+    beforeEnter: () =>
+      exportedOnly
+        ? openPath(exportedOnly.path, resolveViewport(exportedOnly.judgeAt, 'auto'))
+        : true,
+  },
   ...screens.map(
     (screen): RouteRecordRaw => ({
       path: screen.path,
       component: screen.component,
     }),
   ),
+  { path: `${FRAME_PREFIX}/:target(.*)`, name: 'frame', component: DeviceFrame },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
 ]
 

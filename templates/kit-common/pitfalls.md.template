@@ -1,0 +1,15 @@
+# {{DS_NAME}} pitfalls
+
+Everything that has already gone wrong once in this kit. This file grows without limit and is
+not part of the skill's 500-line budget. Read it before every UI task; append to it whenever you
+had to work around something. If a pitfall has a code-level fix, put the fix in `design/fixes.css`
+and reference it here.
+
+Entry format — one heading per pitfall, newest last:
+
+## <Symptom in one line>
+- **Seen**: <where — component, screen, width>
+- **Cause**: <why it happens>
+- **Do instead**: <the rule or the fix; reference `design/fixes.css` if applicable>
+
+{{PITFALLS: The generator seeds this file with the issues found while building the reference screen. Remove this placeholder once at least one entry exists.}}

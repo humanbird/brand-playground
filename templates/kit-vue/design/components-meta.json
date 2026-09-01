@@ -1,8 +1,9 @@
 [
   {
     "name": "DsButton",
+    "status": "verified",
     "extends": "Fallthrough attributes (Vue `$attrs`) are applied to `<button>`, including `disabled`, `aria-*`, and listeners such as `@click`. Vue automatically merges `class` with the base classes. This field is required: it documents which attributes are forwarded and where `class` is applied. For components with `inheritAttrs: false`, specify the inner element receiving the attributes (or \"— no fallthrough attributes\").",
-    "description": "Template example component. Demonstrates the expected entry structure; the generator replaces this array completely with the target design system's inventory.",
+    "description": "Template example component. Demonstrates the expected entry structure; the generator replaces this array completely with the target design system's inventory. `status` is required on every entry: verified = read from code or measured; derived = inferred from a deterministic source (CSS bundle, Figma variables); estimated = LLM judgment (screenshots, prose specs).",
     "props": [
       {
         "name": "variant",

@@ -1,0 +1,92 @@
+{{STACK: replace with Vue equivalents for kit-vue}}
+
+# {{KIT_NAME}}
+
+One sentence describing a requirement goes in; a working {{DS_NAME}} frontend comes out. That is the entire purpose.
+
+This file is the canonical instruction set for every agent working in this repository (Claude Code,
+Cursor, Copilot, Codex, and others). `CLAUDE.md` only imports it. Do not duplicate content elsewhere.
+
+## Before every UI task
+
+Read `.claude/skills/{{DS_SLUG}}/SKILL.md`. It describes the design system at a conceptual
+level—page anatomy, layout, tokens, component selection. The adjacent `craft.md` covers
+DS-independent craft (states, motion, anti-patterns), and `pitfalls.md` lists everything that has
+already gone wrong once in this kit. Exact component APIs come from `design/components-meta.json`
+and the source code under `src/components/`, never from memory.
+
+There is deliberately only one skill. Missing knowledge belongs there, not in a second one.
+The skill stays under 500 lines and links at most one level of reference files next to it;
+`pitfalls.md` is that one level and grows freely—add a pitfall there, not to the skill body.
+
+## Structure
+
+Vite + React + TypeScript + Tailwind, a single package, no workspace.
+
+```
+src/prototypes/<slug>/*.tsx    prototypes—create a file and its route exists (/p/<slug>)
+src/prototypes/<slug>/_shared  shared shell/mock data for a prototype (not routed)
+src/prototypes/<slug>/_shared/meta.ts  optional: title, description, judgeAt ('desktop' | 'mobile' | px), reference
+src/router.tsx                 automatic routing; do not modify
+src/HomeView.tsx               automatic overview of all prototypes
+src/components/                the {{DS_NAME}} components—use them, do not reinvent them
+design/tokens.css              frozen tokens—never regenerate; edit only deliberately
+design/tokens.json             the same tokens as DTCG with provenance (source of every value)
+design/components-meta.json    API source of truth: all components with props/variants/status
+design/fixes.css               documented small corrections
+design/kit.json                provenance stamp: which generator template built this kit
+.claude/skills/{{DS_SLUG}}/    the skill (+ craft.md, pitfalls.md)
+```
+
+The scaffold files (`src/router.tsx`, `src/prototypes.ts`, `src/HomeView.tsx`, `src/main.tsx`,
+`src/kit.css`, `src/viewport.ts`, `src/DeviceFrame.tsx`, `scripts/`, `vite.config.ts`, `tsconfig.json`) are generator-owned and get refreshed from the
+generator; do not customize them—kit-specific styling belongs in `src/styles.css` and `design/`.
+
+## Commands
+
+```bash
+pnpm dev                    # Port {{PORT}} (runs pnpm preflight first: Node, pnpm, deps, port)
+pnpm typecheck
+pnpm export                 # Static single-file export of all prototypes to export/index.html
+pnpm export --only <slug>   # One prototype as a single file, for sharing
+```
+
+If a development server for this kit is already running on the port, reuse it. Otherwise, start
+your own and stop only your own process (by PID) when finished. Never terminate processes owned by
+others, and never use `pkill` by name.
+
+## Modes
+
+- **proto** (default): build a specific idea as a clickable prototype. If the request
+  describes a flow, build and link multiple screens.
+- **ideate**: work divergently—create 3–5 deliberately distinct directions for a question as
+  rough standalone screens under `src/prototypes/idea-<topic>-<variant>/` (keep the topic short and
+  identical across all variants so the home page groups them). Use little detail and maximize the
+  difference between approaches. State each direction's hypothesis in one sentence in the
+  file-header comment. "Done means" applies in a reduced form: typecheck, console, and tokens still
+  matter; complete states and flows only where they support the idea. The header/footer shell is
+  optional; an unframed content screen is enough if the idea does not depend on its surroundings.
+  The best direction is then developed into a complete prototype.
+
+## Working approach
+
+Do not ask what exactly the user means—build. Make assumptions visible in the prototype and
+state them afterward instead of clarifying them first. The prototype is the question, not the answer.
+
+Use realistic content: real domain terminology, plausible numbers, no Lorem Ipsum, and no
+`Item 1/Item 2` lists. The prototype is judged by its content, not by its layout.
+
+If the user hands over licensed brand assets (fonts, logos, icons), use them exactly as delivered
+and replace any substitute the kit shipped with; note the swap at the top of `design/fonts.css`.
+
+## Done means
+
+1. `pnpm typecheck` passes.
+2. Checked in a browser **at the width the prototype targets**, with no console errors. Default:
+   desktop at 1280px or wider. If the brief is mobile-first or names a device, set `judgeAt:
+   'mobile'` in `_shared/meta.ts` and also check at 375px—open `/#/frame/p/<slug>` or use the
+   overview's Auto / Desktop / Mobile toggle (Auto follows `judgeAt`).
+3. No hardcoded color or spacing value in the diff—everything comes from tokens.
+4. Every flow has been clicked through once; empty, loading, and error states exist wherever they
+   would exist in the real product.
+5. Anything you had to work around is recorded in `.claude/skills/{{DS_SLUG}}/pitfalls.md`.

@@ -1,7 +1,7 @@
 /*
  * DsButton: template example component.
  *
- * GENERATOR FOLDER: `/basis` replaces src/components/ with the target design
+ * GENERATOR FOLDER: `/playground` replaces src/components/ with the target design
  * system's components (adopted from a code library or generated).
  * DsButton remains only when the target design system has no button component.
  *

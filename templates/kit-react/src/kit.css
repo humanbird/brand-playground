@@ -1,0 +1,238 @@
+/*
+ * src/kit.css: styles for the kit's own scaffold (overview, device frame,
+ * not-found page).
+ *
+ * GENERATOR-OWNED: copied verbatim into every kit and re-copied on refresh.
+ * Never edited per design system, never used by prototypes.
+ *
+ * The scaffold files (HomeView, DeviceFrame, NotFound, router) use ONLY the
+ * `.kit-*` classes below, never Tailwind utilities. A design system may rename
+ * or remove `text-2xl`, `sm:` or `max-w-2xl` in src/styles.css; the scaffold
+ * must survive that unchanged. Everything here resolves to the generic `--ds-*`
+ * aliases every design/tokens.css provides (colors, spacing unit, radii, fonts,
+ * font sizes, weights, line heights, border width, shadows). Nothing else is
+ * assumed, and no value is hard-coded except layout widths.
+ */
+
+@layer kit {
+  /* ---- Page ---------------------------------------------------------- */
+  .kit-page {
+    max-width: 64rem;
+    margin-inline: auto;
+    padding: calc(var(--ds-spacing-unit) * 12) calc(var(--ds-spacing-unit) * 6);
+  }
+  .kit-page-narrow {
+    max-width: 42rem;
+  }
+  .kit-section {
+    margin-top: calc(var(--ds-spacing-unit) * 12);
+  }
+  .kit-section > .kit-heading + .kit-muted {
+    margin-top: var(--ds-spacing-unit);
+  }
+  .kit-stack > * + * {
+    margin-top: calc(var(--ds-spacing-unit) * 3);
+  }
+  .kit-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: calc(var(--ds-spacing-unit) * 4);
+  }
+
+  /* ---- Text ---------------------------------------------------------- */
+  .kit-title,
+  .kit-heading,
+  .kit-lead,
+  .kit-text,
+  .kit-muted {
+    margin: 0;
+  }
+  .kit-title {
+    font-size: var(--ds-font-size-2xl);
+    font-weight: var(--ds-font-weight-bold);
+    line-height: var(--ds-line-height-tight);
+    color: var(--ds-color-ink);
+  }
+  .kit-heading {
+    font-size: var(--ds-font-size-lg);
+    font-weight: var(--ds-font-weight-medium);
+    line-height: var(--ds-line-height-tight);
+    color: var(--ds-color-ink);
+  }
+  .kit-lead {
+    max-width: 42rem;
+    font-size: var(--ds-font-size-base);
+    line-height: var(--ds-line-height-normal);
+    color: var(--ds-color-ink-muted);
+  }
+  .kit-text {
+    font-size: var(--ds-font-size-base);
+    line-height: var(--ds-line-height-normal);
+    color: var(--ds-color-ink);
+  }
+  .kit-muted {
+    font-size: var(--ds-font-size-sm);
+    line-height: var(--ds-line-height-normal);
+    color: var(--ds-color-ink-muted);
+  }
+  .kit-code {
+    font-family: var(--ds-font-mono);
+    font-size: 0.9em;
+  }
+  .kit-link {
+    color: var(--ds-color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .kit-link:hover {
+    color: var(--ds-color-accent-hover);
+  }
+
+  /* ---- Cards and tags ------------------------------------------------ */
+  .kit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: calc(var(--ds-spacing-unit) * 6);
+    margin-top: calc(var(--ds-spacing-unit) * 6);
+  }
+  .kit-card {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--ds-spacing-unit) * 3);
+    padding: calc(var(--ds-spacing-unit) * 6);
+    border: var(--ds-border-width) solid var(--ds-color-line);
+    border-radius: var(--ds-radius-lg);
+    background: var(--ds-color-canvas);
+    box-shadow: var(--ds-shadow-sm);
+  }
+  .kit-card-title {
+    font-size: var(--ds-font-size-lg);
+    font-weight: var(--ds-font-weight-medium);
+    line-height: var(--ds-line-height-tight);
+    color: var(--ds-color-ink);
+    text-decoration: none;
+  }
+  .kit-card-title:hover {
+    color: var(--ds-color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .kit-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--ds-spacing-unit) * 2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .kit-tag {
+    display: inline-block;
+    padding: var(--ds-spacing-unit) calc(var(--ds-spacing-unit) * 3);
+    border-radius: var(--ds-radius-sm);
+    background: var(--ds-color-surface);
+    font-family: var(--ds-font-mono);
+    font-size: var(--ds-font-size-xs);
+    line-height: var(--ds-line-height-normal);
+    color: var(--ds-color-ink-muted);
+    text-decoration: none;
+  }
+  a.kit-tag:hover {
+    color: var(--ds-color-accent);
+  }
+  .kit-badge {
+    display: inline-block;
+    margin-left: calc(var(--ds-spacing-unit) * 2);
+    padding: 0 calc(var(--ds-spacing-unit) * 2);
+    border: var(--ds-border-width) solid var(--ds-color-accent);
+    border-radius: var(--ds-radius-full);
+    font-size: var(--ds-font-size-xs);
+    font-weight: var(--ds-font-weight-medium);
+    line-height: var(--ds-line-height-normal);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ds-color-accent);
+    vertical-align: middle;
+  }
+  .kit-empty {
+    margin-top: calc(var(--ds-spacing-unit) * 12);
+    padding: calc(var(--ds-spacing-unit) * 8);
+    border: var(--ds-border-width) dashed var(--ds-color-line);
+    border-radius: var(--ds-radius-lg);
+  }
+
+  /* ---- Viewport toggle ----------------------------------------------- */
+  .kit-toggle {
+    display: inline-flex;
+    padding: 2px;
+    border: var(--ds-border-width) solid var(--ds-color-line);
+    border-radius: var(--ds-radius-full);
+    background: var(--ds-color-surface);
+  }
+  .kit-toggle-option {
+    padding: var(--ds-spacing-unit) calc(var(--ds-spacing-unit) * 3);
+    border: 0;
+    border-radius: var(--ds-radius-full);
+    background: transparent;
+    font: inherit;
+    font-size: var(--ds-font-size-sm);
+    line-height: var(--ds-line-height-normal);
+    color: var(--ds-color-ink-muted);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .kit-toggle-option:hover {
+    color: var(--ds-color-ink);
+  }
+  .kit-toggle-option[aria-pressed="true"],
+  .kit-toggle-option[aria-current] {
+    background: var(--ds-color-canvas);
+    color: var(--ds-color-ink);
+    box-shadow: var(--ds-shadow-sm);
+  }
+
+  /* ---- Device frame -------------------------------------------------- */
+  .kit-frame-page {
+    min-height: 100vh;
+    background: var(--ds-color-surface);
+  }
+  .kit-bar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: calc(var(--ds-spacing-unit) * 4);
+    padding: calc(var(--ds-spacing-unit) * 3) calc(var(--ds-spacing-unit) * 6);
+    border-bottom: var(--ds-border-width) solid var(--ds-color-line);
+    background: var(--ds-color-canvas);
+  }
+  .kit-bar-title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: var(--ds-font-size-sm);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--ds-color-ink);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .kit-frame {
+    --kit-frame-width: 375px;
+    width: min(var(--kit-frame-width), 100%);
+    height: min(812px, calc(100vh - 8rem));
+    margin: calc(var(--ds-spacing-unit) * 8) auto;
+    overflow: hidden;
+    border: var(--ds-border-width) solid var(--ds-color-line);
+    border-radius: var(--ds-radius-lg);
+    background: var(--ds-color-canvas);
+    box-shadow: var(--ds-shadow-md);
+  }
+  .kit-frame > iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}

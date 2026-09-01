@@ -1,8 +1,9 @@
 [
   {
     "name": "DsButton",
+    "status": "verified",
     "extends": "ButtonHTMLAttributes<HTMLButtonElement>; className is appended to the base classes. This field is required: it documents which HTML attributes are forwarded and where className is applied. For components without a spread, use \"— no rest props\".",
-    "description": "Template example component. Demonstrates the expected entry structure; the generator replaces this array completely with the target design system's inventory.",
+    "description": "Template example component. Demonstrates the expected entry structure; the generator replaces this array completely with the target design system's inventory. `status` is required on every entry: verified = read from code or measured; derived = inferred from a deterministic source (CSS bundle, Figma variables); estimated = LLM judgment (screenshots, prose specs).",
     "props": [
       {
         "name": "variant",

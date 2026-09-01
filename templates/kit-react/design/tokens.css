@@ -1,7 +1,7 @@
 /*
  * design/tokens.css: the frozen design-system tokens.
  *
- * GENERATOR FILE: `/basis` overwrites this file once when creating the kit.
+ * GENERATOR FILE: `/playground` overwrites this file once when creating the kit.
  * It is NEVER regenerated automatically afterward, only edited manually and deliberately.
  *
  * This file contains values only. Mapping them to Tailwind utilities happens in
@@ -9,6 +9,17 @@
  *
  * The values below are neutral placeholders that let the template run on its own.
  * They are intentionally understated, with no target brand or claim of fidelity.
+ *
+ * SCAFFOLD CONTRACT: the generic `--ds-*` names in this file are what the kit's
+ * scaffold (src/kit.css, overview, device frame) is built on. A generated kit
+ * may add any number of design-system tokens, but must keep every one of these
+ * names defined, mapped via var() to its own tokens if it likes:
+ *   --ds-color-{canvas,surface,line,ink,ink-muted,accent,accent-hover,on-accent,success,danger}
+ *   --ds-spacing-unit
+ *   --ds-radius-{none,sm,md,lg,full}
+ *   --ds-font-{sans,mono}, --ds-font-size-{xs,sm,base,lg,xl,2xl}
+ *   --ds-font-weight-{regular,medium,bold}, --ds-line-height-{tight,normal}
+ *   --ds-border-width, --ds-shadow-{sm,md}
  */
 
 :root {

@@ -17,12 +17,13 @@ directory—read it for every UI task.
 A prototype is a directory. No additional registration is required.
 
 ```
-src/prototypes/<slug>/index.tsx    ->  /p/<slug>
-src/prototypes/<slug>/Detail.tsx   ->  /p/<slug>/detail
+src/prototypes/<slug>/index.tsx        ->  /p/<slug>
+src/prototypes/<slug>/Detail.tsx       ->  /p/<slug>/detail
+src/prototypes/<slug>/_shared/meta.ts  ->  optional `meta`: title, description, judgeAt, reference
 ```
 
 Create a file and its route exists. The home page lists everything automatically. `pnpm dev` runs on
-port 5300. Do not touch a configuration file or add a router entry or registry.
+port {{PORT}}. Do not touch a configuration file or add a router entry or registry.
 
 Routes use the hash: `/p/<slug>` becomes `/#/p/<slug>` in the browser—the
 single-file export requires it; direct paths without `#` open the home page.
@@ -42,9 +43,10 @@ A prototype that cannot be clicked through does not answer a question.
 If something is genuinely missing, it is a kit finding (add a pitfall/metadata), not
 permission to guess.
 
-1. `design/components-meta.json`—all components with props, variants, slots, and the
-   `extends` field (which HTML attributes are forwarded and where `className` is applied). Filter it
-   with a three-line script; that is faster and safer than relying on memory.
+1. `design/components-meta.json`—all components with props, variants, slots, the
+   `extends` field (which HTML attributes are forwarded and where `className` is applied), and a
+   `status` (`verified`, `derived`, or `estimated`—treat `estimated` entries as a hypothesis and
+   check the source). Filter it with a three-line script; that is faster and safer than relying on memory.
 2. Real usage: the source code under `src/components/<Name>.tsx` (import through
    the barrel: `import { … } from '../../components'`).
    {{CODE_FIRST: If the DS is a pinned package, src/components/ and src/icons/ DO NOT exist—item 2 must instead reference sources in node_modules and official examples/stories, with imports directly from the package. The generator rewrites every src/components/ reference in this skill and in CLAUDE.md accordingly.}}
@@ -54,7 +56,7 @@ permission to guess.
 
 ## Page anatomy
 
-{{ANATOMY: Describe the 3–5 regions of a typical {{DS_NAME}} page in a table (Region | Component/Pattern | Role), followed by ONE functional scaffold example in a code block that correctly combines the header/navigation, content container, and footer using real component names from this kit. Include rules for a shared shell across multiple screens (_shared/AppShell.tsx, _shared/data.ts as a reactive mock store).}}
+{{ANATOMY: Describe the 3–5 regions of a typical {{DS_NAME}} page in a table (Region | Component/Pattern | Role), followed by ONE functional scaffold example in a code block that correctly combines the header/navigation, content container, and footer using real component names from this kit. Include rules for a shared shell across multiple screens (_shared/Shell.tsx, _shared/data.ts as a reactive mock store).}}
 
 A `.tsx` file in `_shared/` may export **components only**. An additional constant or helper export
 from the same file breaks Fast Refresh (the page reloads completely after every change and resets
@@ -89,7 +91,8 @@ description as `sr-only` text—clipped placeholder text looks like an error, no
 
 ## Pitfalls
 
-{{PITFALLS: Document known pitfalls of this kit/DS version. This section grows with use—record EVERY pitfall discovered during implementation HERE (and, where appropriate, document the correction in design/fixes.css). Initially, the generator fills it with issues found while recreating the reference screen.}}
+Known pitfalls of this kit live in `pitfalls.md` next to this file—read it before every UI task
+and append every new one there (it grows freely and does not count against this skill's size).
 
 ## Visual stance
 
@@ -98,7 +101,7 @@ description as `sr-only` text—clipped placeholder text looks like an error, no
 ## Done means
 
 1. `pnpm typecheck` passes.
-2. Checked in a browser at a width of at least 1280px{{WIDTH_NOTE: add any DS-specific note about what happens below this width}}.
+2. Checked in a browser at the width the prototype targets: desktop at 1280px or wider by default, plus 375px when the brief is mobile-first (the home page's viewport toggle switches between them){{WIDTH_NOTE: add any DS-specific note about what happens at the DS breakpoints}}.
 3. No console errors.
 4. No hardcoded color or spacing values in the diff. {{GREP_EXCEPTIONS: If the DS has sanctioned exception tokens (for example, a 1px border width represented by a token), list them here; otherwise the check flags correctly built borders.}}
 5. Every flow has been clicked through once, including the empty state.

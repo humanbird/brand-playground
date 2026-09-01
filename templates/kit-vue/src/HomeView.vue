@@ -1,77 +1,121 @@
 <!--
   Automatic overview of all prototypes. It is never maintained manually;
-  it reads the contents of src/prototypes/.
+  it reads the contents of src/prototypes/ (titles and descriptions come from
+  each prototype's `_shared/meta.ts`, see src/prototypes.ts).
 
   Two groups: convergent prototypes (/proto) and ideas (/ideate, slug prefix
-  `idea-`). The ideas group appears only when ideas exist.
+  `idea-`). The ideas group appears only when ideas exist. The reference screen
+  is marked and listed first.
+
+  Styling uses only the `.kit-*` classes from src/kit.css so this file works
+  unchanged in every kit, whatever the design system renames.
 -->
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
 import { ideaPrototypes, protoPrototypes, type Prototype } from './prototypes'
+import {
+  openPath,
+  readViewportChoice,
+  resolveViewport,
+  viewportLabel,
+  writeViewportChoice,
+  type ViewportChoice,
+} from './viewport'
+
+const VIEWPORT_OPTIONS: { value: ViewportChoice; label: string; hint: string }[] = [
+  { value: 'auto', label: 'Auto', hint: 'Open each prototype at the viewport it declares' },
+  { value: 'desktop', label: 'Desktop', hint: 'Open every prototype full width' },
+  { value: 'mobile', label: 'Mobile', hint: 'Open every prototype in a 375 px device frame' },
+]
+
+const choice = ref<ViewportChoice>(readViewportChoice())
+
+function choose(next: ViewportChoice) {
+  writeViewportChoice(next)
+  choice.value = next
+}
 
 const hasAny = protoPrototypes.length + ideaPrototypes.length > 0
 
-const gruppen: { title: string; hint: string; items: Prototype[] }[] = [
+const groups: { title: string; hint: string; items: Prototype[] }[] = [
   { title: 'Prototypes', hint: 'One path, developed end to end.', items: protoPrototypes },
   {
     title: 'Ideas',
     hint: 'Divergent approaches to one question: rough, fast, and side by side.',
     items: ideaPrototypes,
   },
-].filter((gruppe) => gruppe.items.length > 0)
+].filter((group) => group.items.length > 0)
 
 function screenCountLabel(count: number) {
-  return count === 1 ? '1 Screen' : `${count} Screens`
+  return count === 1 ? '1 screen' : `${count} screens`
+}
+
+function open(path: string, prototype: Prototype) {
+  return openPath(path, resolveViewport(prototype.judgeAt, choice.value))
 }
 </script>
 
 <template>
-  <main class="mx-auto max-w-5xl px-6 py-12">
-    <header>
-      <h1 class="text-2xl font-bold text-ink">Prototypes</h1>
-      <p class="mt-3 max-w-2xl text-base text-ink-muted">
-        The prototype is the question, not the answer.
-      </p>
+  <main class="kit-page">
+    <header class="kit-toolbar">
+      <div class="kit-stack">
+        <h1 class="kit-title">Prototypes</h1>
+        <p class="kit-lead">The prototype is the question, not the answer.</p>
+      </div>
+
+      <div class="kit-toggle" role="group" aria-label="Open prototypes at">
+        <button
+          v-for="option in VIEWPORT_OPTIONS"
+          :key="option.value"
+          type="button"
+          class="kit-toggle-option"
+          :aria-pressed="choice === option.value"
+          :title="option.hint"
+          @click="choose(option.value)"
+        >
+          {{ option.label }}
+        </button>
+      </div>
     </header>
 
-    <div v-if="!hasAny" class="mt-12 rounded-lg border border-line border-dashed p-8">
-      <p class="text-base text-ink">No prototypes yet.</p>
-      <p class="mt-3 text-sm text-ink-muted">
-        Create a folder under <code class="font-mono">src/prototypes/</code> and add an
-        <code class="font-mono">index.vue</code>; the route will be available immediately.
+    <div v-if="!hasAny" class="kit-empty kit-stack">
+      <p class="kit-text">No prototypes yet.</p>
+      <p class="kit-muted">
+        Create a folder under <code class="kit-code">src/prototypes/</code> and add an
+        <code class="kit-code">index.vue</code>; the route will be available immediately.
       </p>
     </div>
 
-    <section v-for="gruppe in gruppen" :key="gruppe.title" class="mt-12">
-      <h2 class="text-lg font-medium text-ink">{{ gruppe.title }}</h2>
-      <p class="mt-1 text-sm text-ink-muted">{{ gruppe.hint }}</p>
+    <section v-for="group in groups" :key="group.title" class="kit-section">
+      <h2 class="kit-heading">{{ group.title }}</h2>
+      <p class="kit-muted">{{ group.hint }}</p>
 
-      <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <article
-          v-for="prototype in gruppe.items"
-          :key="prototype.slug"
-          class="flex flex-col rounded-lg border border-line bg-canvas p-6 shadow-sm"
-        >
-          <RouterLink
-            :to="prototype.path"
-            class="text-lg font-medium text-ink underline-offset-4 hover:text-accent hover:underline"
-          >
-            {{ prototype.slug }}
-          </RouterLink>
+      <div class="kit-grid">
+        <article v-for="prototype in group.items" :key="prototype.slug" class="kit-card">
+          <div>
+            <RouterLink :to="open(prototype.path, prototype)" class="kit-card-title">
+              {{ prototype.title }}
+            </RouterLink>
+            <span v-if="prototype.isReference" class="kit-badge">Reference</span>
+          </div>
 
-          <p class="mt-1 text-sm text-ink-muted">
+          <p v-if="prototype.description" class="kit-text">{{ prototype.description }}</p>
+
+          <p class="kit-muted">
+            <code class="kit-code">{{ prototype.slug }}</code> ·
             {{ screenCountLabel(prototype.screens.length) }}
+            <template v-if="prototype.judgeAt !== 'desktop'">
+              · {{ viewportLabel(prototype.judgeAt) }}
+            </template>
             <template v-if="prototype.missingIndex"> · no index.vue</template>
           </p>
 
-          <ul v-if="prototype.screens.length > 1" class="mt-4 flex flex-wrap gap-2">
+          <ul v-if="prototype.screens.length > 1" class="kit-tags">
             <li v-for="screen in prototype.screens" :key="screen.path">
-              <RouterLink
-                :to="screen.path"
-                class="inline-block rounded-sm bg-surface px-3 py-1 font-mono text-xs text-ink-muted hover:text-accent"
-              >
+              <RouterLink :to="open(screen.path, prototype)" class="kit-tag">
                 {{ screen.label }}
               </RouterLink>
             </li>

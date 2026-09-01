@@ -1,7 +1,7 @@
 /*
  * src/icons/icons.ts: the frozen design-system icon set.
  *
- * GENERATOR FILE: `/basis` replaces `ICONS` with the target design system's
+ * GENERATOR FILE: `/playground` replaces `ICONS` with the target design system's
  * actual set (from the SVG sprite, icon library, or Figma components), frozen as
  * path markup. No external requests, no `<use>` reference to a sprite file, and
  * no runtime icon npm package: the single-file export must work offline. The two
