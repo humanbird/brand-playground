@@ -1,9 +1,11 @@
 {
-  "$description": "Provenance stamp written by /playground at scaffold time. Refresh reads it to find the template and the framework commit this kit was generated from. Do not edit by hand.",
+  "$description": "Provenance stamp written by /playground at scaffold time. Refresh reads it to find the template and framework commit, preserves generatedAt, and records the prior commit and refresh time. Null refresh fields mean this freshly generated kit has not been refreshed. Do not edit by hand.",
   "generator": "brand-playground",
   "template": "kit-react",
   "templateCommit": "{{TEMPLATE_COMMIT}}",
+  "previousTemplateCommit": null,
   "generatedAt": "{{GENERATED_AT}}",
+  "refreshedAt": null,
   "stack": {
     "framework": "react",
     "styling": "tailwind",

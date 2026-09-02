@@ -74,7 +74,60 @@ Place the reference screen(s) beside the original or specification for the user 
 End the run by printing the "What now" card from [reference/what-now.md](reference/what-now.md) — start command, three example requests, where the reference screen lives, how to share. The kit's `README.md` carries the same card; keep both identical.
 
 ## Refresh (`/playground --refresh <kit>`)
-Brings a kit's scaffold up to the current template without touching its design system. Read `design/kit.json` for template and `templateCommit`, then compare ONLY the files in the template's `TEMPLATE.md` "Generator-owned files" list against the kit. Never touch `design/` (tokens, meta, ingest), `src/components/`, `src/icons/`, `src/prototypes/`, `src/styles.css`, the skill directory, `AGENTS.md`, `README.md`, or `llms.txt`. Present the diff per file, apply only what the user confirms, update `templateCommit` and `generatedAt`, commit as `playground: refresh <short commit>`. The contract that makes this safe: scaffold files use only `@layer kit` classes and generic `--ds-*` aliases, so they are identical in every kit and can be re-copied verbatim. Files that carry kit-specific values (`package.json`, `vite.config.ts`, `.claude/launch.json`, `index.html`) are shown as a three-way diff and never overwritten blindly.
+Brings a kit's scaffold up to the current template without changing its design system.
+
+0. **Recover legacy provenance.** Read `design/kit.json` for the template and
+   `templateCommit`. If the file is missing because the kit predates provenance stamps, infer
+   `kit-react` or `kit-vue` from `vite.config.ts` and `package.json`, take `generatedAt` from the
+   first kit commit, and start a stamp with `templateCommit: null` plus a `$note` explaining that
+   the original template commit is unknown. This refresh writes the stamp.
+1. **Build the refresh diff.** Compare only the files in that template's `TEMPLATE.md`
+   "Generator-owned files" list, using the recorded template commit as the base when available
+   and the current framework commit as the incoming version. Present the diff per file and apply
+   only what the user confirms. Files carrying kit-specific values (`package.json`,
+   `vite.config.ts`, `.claude/launch.json`, `index.html`) always get a three-way diff and are never
+   overwritten blindly.
+2. **Contract check before copying.** Grep every alias named by the current template's SCAFFOLD
+   CONTRACT comment in its `design/tokens.css` against the kit's `design/tokens.css`. If any are
+   missing, propose an additive `:root` alias block as the one sanctioned design-token edit: map
+   every added alias with `var()` to the kit's own tokens, following the semantic role choices its
+   `src/styles.css` `@theme` aliases already make wherever available. Never change an existing
+   line. Without the complete contract, the re-copied scaffold renders unstyled.
+3. **Re-copy confirmed scaffold files.** The safety contract is that these files use only
+   `@layer kit` classes and the generic `--ds-*` aliases, so confirmed generator-owned files can
+   be copied verbatim. Never touch `SKILL.md` or an existing `pitfalls.md`; `craft.md` is re-copied
+   if it is identical to any archived version of `templates/kit-common/craft.md` (including the
+   version at `templateCommit`), otherwise show it as a diff. Apart from the additive alias block
+   and provenance stamp, never touch `design/`, `src/components/`, `src/icons/`,
+   `src/prototypes/`, or `src/styles.css`; preserve existing `AGENTS.md`, `README.md`, and
+   `llms.txt`.
+4. **Create missing support files.** If `AGENTS.md` is missing, migrate the kit's existing
+   `CLAUDE.md` content into it, preserving the kit's language, and add sections newly required by
+   the current `templates/kit-common/AGENTS.md.template`. Replace `CLAUDE.md` with the import stub
+   from `CLAUDE.md.template`, or create that stub if the file is absent. Create a missing
+   `llms.txt` using the current entry-point convention, a missing `pitfalls.md` from the template
+   with no entries, and a missing `scripts/` from the selected kit template. These are
+   create-or-migrate operations only; do not overwrite existing content. Scaffold UI strings and
+   `craft.md` are English by design and are not localized to the kit's language.
+5. **Merge `package.json`.** Keep the kit's `name`, `version`, and `dependencies`; take
+   `scripts`, `engines`, and `packageManager` from the template; show all remaining fields in the
+   three-way diff. Keep kit-specific port, title, and theme choices while merging the other
+   kit-specific files from Step 1.
+6. **Flag undiscoverable reference prototypes.** If a reference prototype uses a slug that does
+   not start with `reference-` (for example, a localized slug), tell the user to add
+   `_shared/meta.ts` with `reference: true`. Refresh never edits `src/prototypes/`.
+7. **Update provenance.** Keep `generatedAt`; set `previousTemplateCommit` to the pre-refresh
+   `templateCommit`, `templateCommit` to the current framework commit, and `refreshedAt` to the
+   current ISO-8601 timestamp. Preserve the legacy `$note` when the original commit was unknown.
+8. **Verify and checkpoint.** Run `pnpm install --frozen-lockfile`; if it fails specifically
+   because accepted template dependency changes made the lockfile stale, run `pnpm install` and
+   show the resulting lockfile diff. Then run `pnpm preflight`, `pnpm typecheck`, `pnpm export`,
+   and `pnpm export --only <slug>`. At the kit's configured port, inspect the overview and
+   `/#/frame/p/<slug>` in a browser. If another session owns that port, never kill its process:
+   rerun preflight with `pnpm preflight -- --no-port`, start Vite with
+   `pnpm exec vite --port <temporary-port>`, and verify there. Append
+   `refresh <templateCommit>` to `design/ingest/PROGRESS.md`, then commit as
+   `playground: refresh <short commit>`.
 
 ## Refinement
 New input (for example, later access to Figma) goes through ingestion again. Present conflicts with frozen tokens to the user as a diff; never overwrite them silently. The `id` and `usage` fields in `tokens.json` make that diff mechanical.
