@@ -20,6 +20,8 @@ Three kits generated from public sources, each photographed at its reference scr
 
 **Figma → Material 3 Design Kit.** The Figma file provided names and values via the Figma MCP; the machine-readable `@material/web` token files served as the deterministic cross-check (all overlapping values matched). Result: 28 components with state layers, 40 Material Symbols, a reference app with list, detail, and a component matrix.
 
+**Try one without cloning:** the Material 3 kit is published as [brand-playground-example-material3](https://github.com/humanbird/brand-playground-example-material3) — its single-file export runs live at [humanbird.github.io/brand-playground-example-material3](https://humanbird.github.io/brand-playground-example-material3/), and the repo shows exactly what `/playground` leaves behind (`AGENTS.md`, `design/`, the skill, the reference prototype).
+
 The example kits are reverse-engineered from public sources for demonstration. They are not affiliated with or endorsed by dm, GitHub, or Google, and the screens show fictional content.
 
 ## What you get
